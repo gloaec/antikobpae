@@ -7,7 +7,7 @@ gem 'rails', '3.2.3'
 
 gem 'sqlite3'
 gem 'devise'
-gem 'devise_ldap_authenticatable'
+gem 'devise_ldap_authenticatable', :path => 'lib/devise_ldap_authenticatable'
 gem 'acts_as_tree'
 
 # Gems used only for assets and not required

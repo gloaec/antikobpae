@@ -1,3 +1,10 @@
+PATH
+  remote: lib/devise_ldap_authenticatable
+  specs:
+    devise_ldap_authenticatable (0.7.0)
+      devise (~> 2.0)
+      net-ldap (~> 0.2.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -45,9 +52,6 @@ GEM
       orm_adapter (~> 0.1)
       railties (~> 3.1)
       warden (~> 1.2.1)
-    devise_ldap_authenticatable (0.6.1)
-      devise (>= 2.0.0)
-      net-ldap (~> 0.2.2)
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
@@ -121,7 +125,7 @@ DEPENDENCIES
   acts_as_tree
   coffee-rails (~> 3.2.1)
   devise
-  devise_ldap_authenticatable
+  devise_ldap_authenticatable!
   jquery-rails
   rails (= 3.2.3)
   sass-rails (~> 3.2.3)

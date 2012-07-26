@@ -1,0 +1,6 @@
+[submodule "vendor/plugins/devise_ldap_authenticatable"]
+	path = vendor/plugins/devise_ldap_authenticatable
+	url = git@github.com:ghis182/devise_ldap_authenticatable.git
+[submodule "lib/devise_ldap_authenticatable"]
+	path = lib/devise_ldap_authenticatable
+	url = git@github.com:ghis182/devise_ldap_authenticatable.git
