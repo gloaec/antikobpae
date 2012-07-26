@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Antikobpae</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<p style="color:#F00"><%= flash[:alert] %></p>
+<p style="color:#0FF"><%= flash[:notice] %></p>
+
+<%= yield %>
+
+</body>
+</html>
