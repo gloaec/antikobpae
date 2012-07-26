@@ -1,0 +1,4 @@
+antikobpae
+==========
+
+Plagiarism Detection Software
