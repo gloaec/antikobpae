@@ -1,0 +1,13 @@
+#!/bin/bash
+echo -e "\033[38;5;111m=> Installing Chardet\033[39m"
+
+APT_PKG=(python-chardet)
+
+APT_PKG_JOIN="${APT_PKG[*]}"
+sudo apt-get install $APT_PKG_JOIN
+sudo easy_install http://pypi.python.org/packages/2.5/c/chardet/chardet-1.0.1-py2.5.egg#md5=aa49cb7ef2793fc83e5b08abcf2dff79
+
+if which chardet &> /dev/null;
+  then echo -e "\033[38;5;148m=> 'chardet' installed successfully\033[39m";
+  else echo -e "\033[38;5;1m=> 'chardet' not installed\033[39m" && exit 1
+fi

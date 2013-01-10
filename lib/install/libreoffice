@@ -1,0 +1,18 @@
+#!/bin/bash
+echo -e "\033[38;5;111m=> Installing LibreOffice\033[39m"
+
+#APT_PKG=(libreoffice)
+
+#APT_PKG_JOIN="${APT_PKG[*]}"
+#sudo apt-get install $APT_PKG_JOIN
+
+sudo curl -O http://oss.mmu.edu.my/pub/tdf/libreoffice/stable/3.6.1/deb/x86_64/LibO_3.6.1_Linux_x86-64_install-deb_en-US.tar.gz
+tar -zxvf LibO_3.6.1_Linux_x86-64_install-deb_en-US.tar.gz 
+cd LibO_3.6.1_Linux_x86-64_install-deb_en-US/DEBS/
+sudo dpkg -i *.deb
+cd ../../
+
+if which /opt/libreoffice3.5/program/soffice &> /dev/null/;
+  then echo -e "\033[38;5;148m=> 'soffice' installed successfully\033[39m";
+  else echo -e "\033[38;5;1m=> 'soffice' not installed\033[39m" && exit 1
+fi

@@ -4,4 +4,4 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-Antikobpae::Application.config.secret_token = '8dbe6be4fd7efd602d74cb3ffba9d53e565e460a2fab569803a7d7237b5ea59f2ab2be69445561c8d86fab7c1b0fa4a65cf8948356891f6873b7a491ab32e379'
+AntiKobpae::Application.config.secret_token = '3e5168a5a756aa140ac4037af0d2329ed0bdab22fd1ad0ce7b7745dd21a6d6551bf0c26e37bbc3f8e6fee713956ef7d6a70b16682ee2f8db6390fb5204acdd6b'

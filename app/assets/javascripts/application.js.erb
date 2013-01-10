@@ -1,0 +1,127 @@
+//= require jquery
+//= require jquery_ujs
+//= require jquery-tmpl
+//= require jquery.ui.slider
+//= require jquery.ui.accordion
+//= require jquery.effects.transfer
+//= require ckeditor/init
+//= require fancybox
+//= require app
+//= require_tree .
+//= require_tree ../templates
+//= require plupload
+//= require jquery.plupload.queue 
+//= require plupload.settings 
+//= require plupload.flash        
+//= require plupload.silverlight  
+//= require plupload.html4        
+//= require plupload.html5        
+//= require plupload.gears        
+//= require plupload.browserplus
+//= require i18n
+//= require i18n/translations
+/*
+Event.observe(window, 'load', function() {
+	fadeout.delay(1.5, 'notice');
+	fadeout.delay(1.5, 'alert');
+});
+*/
+$(document).ready(function(){
+	$('a.iframe').fancybox();
+	$('.toggle_content, .private').hide();
+	$('#sidebar .toggle_btn').click(function(e){	
+		e.preventDefault();
+		if($(this).hasClass('on')){
+			$(this).removeClass('on');
+			$(this).next().slideUp();
+		} else {
+			$(this).addClass('on');
+			$(this).next().slideDown();
+		}
+	});
+
+	$('.trigger').each(function(){ 
+		var alt = $(this).hasClass('alt');
+		//$(this).hover(function(e){e.stopPropagation();});
+		$(this).qtip({
+		    content: {
+				text: $(this).next('.popup')
+			},
+			position: {
+			    at: alt ? 'middle right' : 'middle left',
+			    my: alt ? 'left middle' : 'right middle',
+			       //target: 'mouse',
+			       //adjust: { mouse: false } // ...but don't follow it!
+			},
+			tooltip: $('.duplicated') ,
+			style: {
+			    name: 'dark',
+			    classes: 'source source_'+$(this).data('document')+' ui-tooltip-bootstrap ui-tooltip-rounded ui-tooltip-shadow',
+			    width: { max: 700 }, // Set a high max width so the text doesn't wrap
+				tip: true // Give them tips with auto corner detection
+			},
+			show: {
+			    //event: 'click'
+			},
+			hide: {
+			    fixed: true// leave: false
+			    //distance: 15 // Hide it after we move 15 pixels away from the origin
+			},
+			events: {
+			    show: function(event, api) {
+			    	event.stopPropagation(); // Stop it!
+			    }
+			},
+			api: { onRender: function(){console.log('render',this); } }
+		});
+	});	
+});
+
+function show_element(element) {
+	if($('#'+element) == null) { element = 'files_and_folders'; }
+	$('#files_and_folders, #permissions, #clipboard').fadeOut('fast')
+	$('#'+element).fadeIn('fast');
+
+}
+
+function update_counter(element, counter) {
+	$(counter).innerHTML = element.value.length;
+	$(counter).style.color = element.value.length > 256 ? '#F00' : '#000';
+}
+
+function document_status(i){
+	var status = new Array(
+		{ icon: '<%= image_tag("icons/uploading.png").html_safe %>', text: I18n.t('upload') },
+		{ icon: '<%= image_tag("icons/pending.png").html_safe %>', text: I18n.t('in_queue') },
+		{ icon: '<%= image_tag("icons/loading.gif").html_safe %>', text: I18n.t('indexing') },
+		{ icon: '<%= image_tag("icons/yes.png").html_safe %>', text: I18n.t('ready') }			
+	);
+	return (i<0 || i>=status.length) ? { icon: '<%= image_tag("icons/no.png").html_safe %>', text: I18n.t('error') } : status[i];
+}
+
+function scan_status(i){
+	var status = new Array(
+		{ icon: '<%= image_tag("icons/pending.png").html_safe %>', text: I18n.t('in_queue') },
+		{ icon: '<%= image_tag("icons/loading.gif").html_safe %>', text: I18n.t('scanning') },
+		{ icon: '<%= image_tag("icons/yes.png").html_safe %>', text: I18n.t('completed') }	
+	);
+	return (i<0 || i>=status.length) ? { icon: '<%= image_tag("icons/no.png").html_safe %>', text: I18n.t('error') } : status[i];
+}
+
+function truncate(str, limit) {
+	var bits, i;
+	bits = str.split('');
+	if (bits.length > limit) {
+		for (i = bits.length - 1; i > -1; --i) {
+			if (i > limit) {
+				bits.length = i;
+			}
+			else if (' ' === bits[i]) {
+				bits.length = i;
+				break;
+			}
+		}
+		bits.push('...');
+	}
+	return bits.join('');
+}

@@ -1,0 +1,62 @@
+<%= form_for @user do |f| %>
+	<%= f.error_messages %>
+	<p>
+		<%= f.label :name %>:<br>
+		<%= f.text_field :name, { :class => 'text_input' } %>
+	</p>
+	<p>
+		<%= f.label :email %>:<br>
+		<%= f.text_field :email, { :class => 'text_input' } %>
+	</p>
+	<p>
+		<%= f.label :password %>:<br>
+		<%= f.password_field :password, { :class => 'text_input' } %>
+	</p>
+	<p>
+		<%= label_tag t(:confirm_password) %>:<br>
+		<%= f.password_field :password_confirmation, { :class => 'text_input' } %>
+	</p>
+	<% if current_user.member_of_admins? -%>
+	<p>
+		<%= t :member_of_these_groups %>:
+		<table class="user_groups">
+			
+			<% Group.all.each do |group| -%>
+			<tr>
+				<% if @user.is_admin && group.is_admins_group? -%>
+					<td class="group nowrap disabled">
+						<label for="<%= group.id %>"><%= group.name %></label>
+					</td>
+					<td class="group nowrap disabled">
+						<input type="checkbox" checked="checked" disabled="disabled" />
+					</td>
+				<% else -%>
+					<td class="group nowrap">
+						<label for="group_<%= group.id %>"><%= group.name %></label>
+					</td>
+					<td class="group nowrap">
+						<%= check_box_tag('user[group_ids][]', group.id, user_belongs_to_group(group), :id => "group_#{group.id}") %>
+					</td>
+				<% end -%>
+			</tr>
+			<% end -%>
+		</table>
+		<% content_for :head do %>
+			<script type="text/javascript">
+				(function($){
+					$(document).ready(function() {
+						$('input[type=checkbox]').iToggle({
+							easing: 'easeOutExpo',
+							keepLabel: true,
+							speed: 300
+						});
+					});
+				})(jQuery);
+			</script>
+		<% end %>
+	</p>
+	<% end -%>
+	<p>
+		<%= f.submit t(:save) %>
+	</p>
+<% end %>

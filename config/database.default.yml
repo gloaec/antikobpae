@@ -1,0 +1,41 @@
+# SQLite version 3.x
+#   gem install sqlite3-ruby (not necessary on OS X Leopard)
+development:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: antikobpae_development
+  pool: 10
+  username: root
+  password: turtoise
+  socket: /tmp/mysql.sock
+  timeout: 2147483
+  wait_timeout: 2147483
+  flags: <%= 65536 | 131072 %>
+  reconnect: true
+
+test:
+    adapter: mysql2
+    encoding: utf8
+    reconnect: false
+    database: antikobpae_test
+    pool: 5
+    username: root
+    password: turtoise
+    socket: /tmp/mysql.sock
+    timeout: 10000
+    reconnect: true
+
+production:
+    adapter: mysql2
+    encoding: utf8
+    reconnect: false
+    database: antikobpae_production
+    pool: 5
+    username: root
+    password: turtoise
+    socket: /tmp/mysql.sock
+    timeout: 10000
+    reconnect: true
+
+

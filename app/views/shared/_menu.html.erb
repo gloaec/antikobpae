@@ -1,0 +1,35 @@
+<li class="span-6" id="logo">
+  <%= link_to image_tag('logo-small.png', :style => 'vertical-align: bottom') + content_tag(:small, 'v2.0'), root_path %>
+</li>
+
+<% if signed_in? -%>
+  <li>
+    <%= t :hello %>, <%= current_user.name %></strong>
+  </li>
+  <li>
+  	<%= link_to t(:scans), scans_path %>
+  </li>
+  <li>
+	<%= link_to t(:folders), folders_path %>
+  </li>
+  <% if current_user.member_of_admins? -%>
+    <li>
+  	  <%= link_to t(:users), users_path %>
+  	</li>
+  	<li>
+	  <%= link_to t(:groups), groups_path %>
+	</li>
+	<!--<li>
+	  <%#= link_to t(:shared_files), share_links_path %>
+	</li>-->
+  <% end -%>
+  <li>
+    <%= link_to t(:settings), edit_user_path(current_user) %>
+  </li>
+  <li>
+    <%= link_to t(:sign_out), destroy_user_session_path, :method => :delete %>
+  </li>
+  <li>
+	<%= link_to image_tag('icons/locale/en.png'), :locale => :en %> - <%= link_to image_tag('icons/locale/th.png'), :locale => :th %>
+  </li>
+<% end -%>

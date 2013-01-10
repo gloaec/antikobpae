@@ -1,0 +1,14 @@
+#!/bin/bash
+
+APT_PKG=(mysql-server mysql-client libmysqlclient15-dev mysql-common)
+
+APT_PKG_JOIN="${APT_PKG[*]}"
+sudo apt-get install $APT_PKG_JOIN
+
+if which mysql &> /dev/null;
+  then echo -e "\033[38;5;148m=> 'mysql' installed successfully\033[39m";
+  else echo -e "\033[38;5;1m=> 'mysql' not installed\033[39m" && exit 1
+fi
+
+echo -e "\033[38;5;111m=> Starting Mysql\033[39m"
+sudo /etc/init.d/mysql reload

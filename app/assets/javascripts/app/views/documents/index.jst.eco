@@ -1,0 +1,12 @@
+<h1>Listing Documents</h1>
+
+<% for document in @documents: %>
+  <div class="item" data-id="<%= document.id %>">
+    <a data-type="show"><%= document.name %></a>
+    
+    <a data-type="edit">Edit</a> 
+    <a data-type="destroy">Destroy</a>
+  </div>
+<% end %>
+
+<p><a data-type="new">New Document</a></p>

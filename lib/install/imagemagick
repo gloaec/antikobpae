@@ -1,0 +1,18 @@
+#!/bin/bash
+
+PKG_CONFIG=$(dirname $(sudo find / -name MagickCore.pc))
+
+echo -n "PKG_CONFIG_PATH ? ($PKG_CONFIG): "
+read path
+
+if $path &> /dev/null; then
+  path=$PKG_CONFIG
+fi
+
+echo "export PKG_CONFIG_PATH=$PKG_CONFIG # This loads PKG_CONFIG" >> ~/.bashrc
+source $HOME/.bashrc
+
+sudo apt-get install imagemagick libmagickcore-dev libmagickwand-dev --fix-missing
+
+sudo ln -s /usr/local/include/ImageMagick/wand /usr/local/include/wand
+sudo ln -s /usr/local/include/ImageMagick/magick /usr/local/include/magick

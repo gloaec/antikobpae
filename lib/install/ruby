@@ -1,0 +1,14 @@
+#!/bin/bash
+echo -e "\033[38;5;111m=> Installing Ruby / RubyGems\033[39m"
+
+rvm install 1.9.3 -C --with-openssl-dir=$HOME/.rvm/usr,--with-iconv-dir=$HOME/.rvm/usr
+rvm --default 1.9.3
+rvm use 1.9.3
+
+sudo apt-get install rubygems1.8
+gem install bundler
+
+if which ruby &> /dev/null;
+  then echo -e "\033[38;5;148m=> 'ruby' installed successfully\033[39m";
+  else echo -e "\033[38;5;1m=> 'ruby' not installed\033[39m" && exit 1
+fi

@@ -1,0 +1,54 @@
+<h1>New Folder</h1>
+
+<a data-type="back">Back</a>
+
+<form>
+  
+  <label>
+    <span>Name</span>
+    <input 
+      type="text" name="name" 
+      value="<%= @name %>" required
+ autofocus>
+    <br />
+  </label>
+  
+  <label>
+    <span>Private</span>
+    <input 
+      type="text" name="private" 
+      value="<%= @private %>" required
+>
+    <br />
+  </label>
+  
+  <label>
+    <span>Parent</span>
+    <input 
+      type="text" name="parent_id" 
+      value="<%= @parent_id %>" required
+>
+    <br />
+  </label>
+  
+  <label>
+    <span>Created At</span>
+    <input 
+      type="text" name="created_at" 
+      value="<%= @created_at %>" required
+>
+    <br />
+  </label>
+  
+  <label>
+    <span>Updated At</span>
+    <input 
+      type="text" name="updated_at" 
+      value="<%= @updated_at %>" required
+>
+    <br />
+  </label>
+  
+  <button>Create</button>
+
+</form>

@@ -1,0 +1,20 @@
+#!/bin/bash
+echo -e "\033[38;5;111m=> Installing Sphinx\033[39m"
+
+sudo curl -O http://sphinxsearch.com/files/sphinx-2.0.4-release.tar.gz 
+sudo tar -zxvf sphinx-2.0.4-release.tar.gz
+cd sphinx-2.0.4-release
+./configure --without-iconv
+make CFLAGS=-liconv
+sudo make install
+cd ../
+
+if which indexer &> /dev/null;
+  then echo -e "\033[38;5;148m=> 'indexer' installed successfully\033[39m";
+  else echo -e "\033[38;5;1m=> 'indexer' not installed\033[39m" && exit 1
+fi
+
+if which searchd &> /dev/null;
+  then echo -e "\033[38;5;148m=> 'searchd' installed successfully\033[39m";
+  else echo -e "\033[38;5;1m=> 'searchd' not installed\033[39m" && exit 1
+fi

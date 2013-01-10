@@ -1,0 +1,138 @@
+th:
+  activerecord:
+    models:
+      ckeditor/asset: ckeditor/asset  #g
+      ckeditor/attachment_file: ckeditor/attachment_file  #g
+      ckeditor/picture: ckeditor/picture  #g
+      duplicate_range: duplicate_range  #g
+      folder: folder  #g
+      group: group  #g
+      group_folder_permission: group_folder_permission  #g
+      scan: scan  #g
+      scan_file: scan_file  #g
+      share_link: share_link  #g
+      similarity: similarity  #g
+      user: user  #g
+      document: document  #g
+      user_folder_permission: user_folder_permission  #g
+
+    attributes:
+      ckeditor/asset:
+        data_file_name: data_file_name  #g
+        data_content_type: data_content_type  #g
+        data_file_size: data_file_size  #g
+        assetable_type: assetable_type  #g
+        assetable: assetable  #g
+
+      ckeditor/attachment_file:
+        data_file_name: data_file_name  #g
+        data_content_type: data_content_type  #g
+        data_file_size: data_file_size  #g
+        assetable_type: assetable_type  #g
+        assetable: assetable  #g
+
+      ckeditor/picture:
+        data_file_name: data_file_name  #g
+        data_content_type: data_content_type  #g
+        data_file_size: data_file_size  #g
+        assetable_type: assetable_type  #g
+        assetable: assetable  #g
+
+      duplicate_range:
+        from_word: from_word  #g
+        to_word: to_word  #g
+        from_char: from_char  #g
+        to_char: to_char  #g
+        document: document  #g
+        similarity: similarity  #g
+
+      folder:
+        name: name  #g
+        private: private  #g
+        parent: parent  #g
+        children: children  #g
+        documents: documents  #g
+        group_folder_permissions: group_folder_permissions  #g
+        user_folder_permissions: user_folder_permissions  #g
+        user: user  #g
+        private_folder: private_folder  #g
+        scans_folder: scans_folder  #g
+        scan: scan  #g
+        scans: scans  #g
+
+      group:
+        name: name  #g
+        group_folder_permissions: group_folder_permissions  #g
+        users: users  #g
+
+      group_folder_permission:
+        can_create: can_create  #g
+        can_read: can_read  #g
+        can_update: can_update  #g
+        can_delete: can_delete  #g
+        group: group  #g
+        folder: folder  #g
+
+      scan:
+        web: web  #g
+        recursive: recursive  #g
+        tolerance: tolerance  #g
+        folder: folder  #g
+        scan_files: scan_files  #g
+        documents: documents  #g
+
+      scan_file:
+        status: status  #g
+        progress: progress  #g
+        score: score  #g
+        scan: scan  #g
+        document: document  #g
+
+      share_link:
+        emails: emails  #g
+        link_token: link_token  #g
+        link_expires_at: link_expires_at  #g
+        document: document  #g
+
+      similarity:
+        is_exception: is_exception  #g
+        is_validated: is_validated  #g
+        scan_file_duplicate_range: scan_file_duplicate_range  #g
+        document_duplicate_range: document_duplicate_range  #g
+
+      user:
+        name: name  #g
+        email: email  #g
+        hashed_password: hashed_password  #g
+        password_salt: password_salt  #g
+        is_admin: is_admin  #g
+        remember_token: remember_token  #g
+        reset_password_token: reset_password_token  #g
+        reset_password_token_expires_at: reset_password_token_expires_at  #g
+        groups: groups  #g
+        user_folder_permissions: user_folder_permissions  #g
+        private_folder: private_folder  #g
+        scans_folder: scans_folder  #g
+
+      document:
+        name: name  #g
+        status: status  #g
+        content: content  #g
+        attachment_file_type: attachment_file_type  #g
+        attachment_file_name: attachment_file_name  #g
+        attachment_content_type: attachment_content_type  #g
+        attachment_file_size: attachment_file_size  #g
+        attachment_updated_at: attachment_updated_at  #g
+        folder: folder  #g
+        scan_file: scan_file  #g
+        share_links: share_links  #g
+        duplicate_ranges: duplicate_ranges  #g
+        similarities: similarities  #g
+
+      user_folder_permission:
+        can_create: can_create  #g
+        can_read: can_read  #g
+        can_update: can_update  #g
+        can_delete: can_delete  #g
+        folder: folder  #g
+        user: user  #g

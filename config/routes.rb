@@ -1,61 +1,78 @@
-Antikobpae::Application.routes.draw do
+AntiKobpae::Application.routes.draw do
 
-  devise_for :users
+  root :to => 'scans#index'
+  
+  mount Ckeditor::Engine => '/ckeditor'
+  
+  match 'plupload_rails/_plupload_uploader', 
+    :controller => 'documents', 
+    :action => '_plupload_uploader', 
+    :as => 'pluploader'
 
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
-
-  # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Sample resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Sample resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Sample resource route with more complex sub-resources
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', :on => :collection
-  #     end
-  #   end
-
-  # Sample resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
-
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
-  root :to => 'home#index'
-
-  # See how all your routes lay out with "rake routes"
-
-  # This is a legacy wild controller route that's not recommended for RESTful applications.
-  # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id))(.:format)'
+  devise_for :users, :path_prefix => 'auth', :controllers => {
+    :sessions => 'users/sessions',
+    :registrations => 'users/registrations'
+  }
+  
+  resources :users, :except => :show
+  resources :groups, :except => :show
+  
+  resources :clipboard, :only => [:create, :destroy] do
+    member do
+      post 'copy'
+      post 'move'
+      put 'reset'
+    end
+  end
+  
+  # Update a collection of permissions
+  resources :group_folder_permissions, :only => :update_multiple do
+    put :update_multiple, :on => :collection
+  end
+  
+  resources :user_folder_permissions, :only => :update_multiple do
+    put :update_multiple, :on => :collection
+  end
+  
+  # Nested resources
+  resources :folders, :shallow => true, :except => [:new, :create] do
+    resources :folders, :only => [:new, :create]
+    resources :documents, :only => [:new, :create] 
+  end
+  
+  resources :documents, :except => [:index, :new, :create] 
+  
+  resources :documents do
+    member do
+      get :image
+      get :download
+      get :xmlpipe
+    end
+  end
+	
+  resources :documents, :shallow => :true, :only => :show do
+    resources :share_links, :only => [:new, :create]
+  end
+  
+  resources :folders  do
+    get :statement, :on => :member
+  end
+  
+  resources :scans  do
+    member do
+      get :start
+      get :statement
+      get :statements
+    end
+  end
+  
+  resources :scans, :shallow => true, :except => [:new, :create] do
+    resources :scans, :only => [:new, :create] 
+    resources :documents, :only => [:new, :create] 
+    resources :folders, :only => [:new, :create]
+  end
+   
+  resources :scan_files, :shallow => true, :except => [:new, :create] do
+    resources :similarities, :only => [:index, :new, :create]
+  end
 end

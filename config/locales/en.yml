@@ -1,5 +1,472 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+# US English translations for Ruby on Rails
+#
+# Use this as the base for the locale file of your language.
+# see: https://github.com/svenfuchs/rails-i18n/blob/master/rails/locale/en-US.yml
 
-en:
-  hello: "Hello world"
+"en":
+  date:
+    formats:
+      default: "%Y-%m-%d"
+      short: "%b %d"
+      long: "%B %d, %Y"
+
+    day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
+    abbr_day_names: [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
+
+    month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
+    abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+    order:
+      - :year
+      - :month
+      - :day
+
+  time:
+    formats:
+      default: "%a, %d %b %Y %H:%M:%S %z"
+      short: "%d %b %H:%M"
+      very_short: "%d %b %Y"
+      long: "%B %d, %Y %H:%M"
+    am: "am"
+    pm: "pm"
+
+  support:
+    array:
+      words_connector: ", "
+      two_words_connector: " and "
+      last_word_connector: ", and "
+
+    select:
+      prompt: "Please select"
+
+  number:
+    format:
+      separator: "."
+      delimiter: ","
+      precision: 3
+      significant: false
+      strip_insignificant_zeros: false
+
+    currency:
+      format:
+        format: "%u%n"
+        unit: "$"
+        separator: "."
+        delimiter: ","
+        precision: 2
+        significant: false
+        strip_insignificant_zeros: false
+
+    percentage:
+      format:
+        delimiter: ""
+
+    precision:
+      format:
+        delimiter: ""
+
+    human:
+      format:
+        delimiter: ""
+        precision: 3
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one: "Byte"
+            other: "Bytes"
+          kb: "KB"
+          mb: "MB"
+          gb: "GB"
+          tb: "TB"
+      decimal_units:
+        format: "%n %u"
+        units:
+          unit: ""
+          thousand: Thousand
+          million: Million
+          billion: Billion
+          trillion: Trillion
+          quadrillion: Quadrillion
+
+  datetime:
+    distance_in_words:
+      half_a_minute: "half a minute"
+      less_than_x_seconds:
+        one: "less than 1 second"
+        other: "less than %{count} seconds"
+      x_seconds:
+        one: "1 second"
+        other: "%{count} seconds"
+      less_than_x_minutes:
+        one: "less than a minute"
+        other: "less than %{count} minutes"
+      x_minutes:
+        one: "1 minute"
+        other: "%{count} minutes"
+      about_x_hours:
+        one: "about 1 hour"
+        other: "about %{count} hours"
+      x_days:
+        one: "1 day"
+        other: "%{count} days"
+      about_x_months:
+        one: "about 1 month"
+        other: "about %{count} months"
+      x_months:
+        one: "1 month"
+        other: "%{count} months"
+      about_x_years:
+        one: "about 1 year"
+        other: "about %{count} years"
+      over_x_years:
+        one: "over 1 year"
+        other: "over %{count} years"
+      almost_x_years:
+        one: "almost 1 year"
+        other: "almost %{count} years"
+    prompts:
+      year: "Year"
+      month: "Month"
+      day: "Day"
+      hour: "Hour"
+      minute: "Minute"
+      second: "Seconds"
+
+  helpers:
+    select:
+      prompt: "Please select"
+
+    submit:
+      create: 'Create %{model}'
+      update: 'Update %{model}'
+      submit: 'Save %{model}'
+
+  errors:
+    format: "%{attribute} %{message}"
+
+    messages: &errors_messages
+      inclusion: "is not included in the list"
+      exclusion: "is reserved"
+      invalid: "is invalid"
+      confirmation: "doesn't match confirmation"
+      accepted: "must be accepted"
+      empty: "can't be empty"
+      blank: "can't be blank"
+      exists_already: 'exists already'
+      too_long: "is too long (maximum is %{count} characters)"
+      too_short: "is too short (minimum is %{count} characters)"
+      wrong_length: "is the wrong length (should be %{count} characters)"
+      not_a_number: "is not a number"
+      not_an_integer: "must be an integer"
+      greater_than: "must be greater than %{count}"
+      greater_than_or_equal_to: "must be greater than or equal to %{count}"
+      equal_to: "must be equal to %{count}"
+      less_than: "must be less than %{count}"
+      less_than_or_equal_to: "must be less than or equal to %{count}"
+      odd: "must be odd"
+      even: "must be even"
+      invalid_characters: 'cannot contain any of these characters: < > : " / \ | ? *'
+
+  activerecord:
+    errors:
+      template:
+        header:
+          one: "1 error prohibited this %{model} from being saved"
+          other: "%{count} errors prohibited this %{model} from being saved"
+        body: "There were problems with the following fields:"
+
+      messages:
+        taken: "has already been taken"
+        record_invalid: "Validation failed: %{errors}"
+        <<: *errors_messages
+
+      full_messages:
+        format: "%{attribute} %{message}"
+
+    models:
+      clipboard: Clipboard
+      folder: Folder
+      group: Group
+      permission: Permission
+      share_link: Share link
+      user: User
+      document: File
+
+    attributes:
+      folder:
+        name: Name
+      group:
+        name: Name
+      share_link:
+        emails: Email addresses
+        expires_at: Expires
+      user:
+        email: Email
+        name: Name
+        password: Password
+      document:
+        name: Name
+        attachment_file_name: File
+
+  # APPLICATION SPECIFIC
+
+  # general
+  back: Back
+  save: Save
+  name: Name
+  email: Email
+  submit: Submit
+
+  your_changes_were_saved: Your changes were saved successfully.
+  already_deleted: "Someone else deleted %{type}. Your action was cancelled."
+  no_text_only_convertor_for: "Antikobpae doesn't ingerate a text-only convertor for \"%{type}\" yet."
+
+  # admins/new
+  create_admin: Create admin
+  no_administrator_yet: Antikobpae does not have an administrator yet. Create one here.
+  create_admin_account: Create admin account
+  admin_user_created_successfully: The admin user was created successfully. You can now sign in.
+
+  # clipboard/_show
+  folder: folder
+  file: file
+  this_folder: this folder
+  this_file: this file
+  copy: Copy
+  copy_folder: Copy folder
+  copy_file: Copy file
+  move: Move
+  move_folder: Move folder
+  move_file: Move file
+  are_you_sure: Are you sure?
+  delete_item: Delete
+  remove_from_clipboard: Remove from clipboard
+  clear_clipboard: Clear clipboard
+
+  # files/edit
+  rename_file: Rename file
+  edit_document: Edit Document
+
+  # files/new
+  select_file: Select file
+  upload_file: Upload file
+  upload: Upload
+  new_document: New Document
+  from: From
+  text_only: Text Only
+  
+  # files/show
+  download_original: Download Original
+  download_plain_text: Download Plain Text
+  download_html: Download HTML
+  embed_document: Embed Document
+  download_pdf: Download PDF
+  show_images: Show Images
+  runtime: Runtime
+  
+  #folders/edit
+  rename_folder: Rename folder
+
+  #folders/new
+  new_folder: New folder
+
+  #folders/show
+  create_a_new_folder: Create a new Folder
+  create_a_new_document: Create a new Document
+  upload_documents: Upload Documents
+  import_a_webpage: Import a Webpage
+  private_folders: Private Folders
+  my_space: My Space
+  shared_public: Shared/Public
+  users_private_folders: Users private folders
+  upload_a_file: Upload a file
+  permissions: Permissions
+  clipboard: Clipboard
+  size: Size
+  date_modified: Date modified
+  up: up
+  edit: Edit
+  add_to_clipboard: Add to clipboard
+  download: Download
+  share: Share
+  by: By
+    # File Status
+  converting: Converting
+  indexing: Indexing
+  ready: Ready
+
+  #groups/edit
+  rename_group: Rename group
+
+  #groups/index
+  groups: Groups
+  create_a_new_group: Create a new group
+
+  #groups/new
+  new_group: New group
+
+  #metadata
+  metadata: Metadata
+  thai_name: Thai Name
+  english_name: English Name
+  author: Author
+  year: Year
+
+  #permissions/form
+  create_permission: Create
+  read_permission: Read
+  update_permission: Update
+  delete_permission: Delete
+  apply_changes_to_subfolders: Apply changes to subfolders
+
+  create: create
+  read: read
+  update: update
+  delete: delete
+
+  #reset_password/edit
+  password: Password
+  reset_password: Reset password
+  send_email: Send
+  
+  #scans/index
+  scans: Scans
+  scan_status: Scans status
+  score: Score
+  not_started: Not Started
+    ## scan status 
+  in_queue: In Queue
+  doc_search: Doc Search
+  web_search: Web Search
+  web_cache: Web Cache
+  hightlight: Highlight
+  completed: Completed
+  scanning: Scanning
+  error: Error
+  
+  #scans/new
+  new_scan: New Scan
+  collect_documents: Collect Documents
+  
+  #scans/edit
+  edit_scan: Edit Scan
+  update_scan: Update Scan
+  start_scan: Start Scan
+  add_documents: Add Documents
+  import_from_upload: Upload Documents
+  import_from_a_webpage: Import from Webpage
+  import_from_web_corpus: Import from WebFolder
+  import_from_web_clipboard: Paste from WebClipboard
+  browse_targets: Browse Targets
+
+  #sessions
+  username: Username
+  remember_me: Remember me
+  sign_in: Sign in
+
+  #share_links/index
+  unshare: Unshare
+
+  #share_links/show
+  share_link_expired: This download link expired already.
+
+  #share_links/new
+  this_share_link: this share link
+  share_file: Share file
+  you_are_about_to_share_the_following_file: You are about to share the following file
+  emails_to_share_with: Email addresses of the people you wish to share this file with
+  comma_seperated: Comma seperated
+  number_of_charachters: Number of characters
+  link_expires: Expires
+  tomorrow: Tomorrow
+  three_days_from_now: Three days from now
+  one_week_from_now: A week from now
+  ten_days_from_now: Ten days from now
+  two_weeks_from_now: Two weeks from now
+  three_weeks_from_now: Three weeks from now
+  one_month_from_now: A month from now
+  two_months_from_now: Two months from now
+  three_months_from_now: Three months from now
+  half_year_from_now: A half year from now
+  share_link_could_not_be_sent: The download link could not be sent
+  are_invalid_due_to: "is invalid due to %{email}"
+  share_link_email_subject: '[Antikobpae] Someone shared a file with you'
+  shared_successfully: The file was shared successfully.
+
+  #shared/_header
+  hello: Hello
+  settings: Settings
+  sign_out: Sign out
+
+  #shared/_menu
+  folders: Folders
+  users: Users
+  shared_files: Shared files
+
+  #similarities/index
+  new_similarity: New Similarity
+  plagiarized_content: Plagiarized Content
+  source: Source
+  characters: Characters
+  words: Words
+  document_overview: Document Overview
+  similarity_overview: Similarity Overview
+  print: Print
+  show_all: Show All
+  hide_all: Hide All
+  similarity_marker: Similarity Marker
+  exception_marker: Exception Marker
+  permanent: Permanent
+  exceptions_manager: Exceptions Manager 
+ 
+  #users/_form
+  member_of_these_groups: Member of these groups
+  confirm_password: Confirm password
+
+  #users/index
+  create_a_new_user: Create a new user
+
+  #users/new
+  new_user: New user
+
+  #admins/controller
+  admin_user_created_sucessfully: The admin user was created successfully. You can now sign in.
+
+  #application_controller
+  no_permissions_for_this_type: "You don't have %{method} permissions for %{type}."
+
+  # clipboard_controller
+  added_to_clipboard: Successfully added to clipboard.
+  could_not_copy: "Couldn't copy. A %{type} with the same name exists already."
+  could_not_move: "Couldn't move. A %{type} with the same name exists already."
+  cannot_move_to_own_subfolder: You cannot move a folder to its own sub-folder.
+
+  # folders_controller
+  cannot_delete_root_folder: The root folder cannot be deleted or renamed.
+  no_delete_permissions_for_subfolder: You don't have delete permissions for one of the subfolders.
+
+  # groups_controller
+  group_already_deleted: Someone else deleted this group. Your action was cancelled.
+  admins_group_cannot_be_deleted: The admins group cannot be deleted or renamed.
+
+  # reset_password_controller
+  instruction_email_sent: Email with instructions sent successfully. Please check your email.
+  no_user_with_this_email: "There is no user with email address '%{email}'. Please try again."
+  password_reset_successfully: Your password was reset successfully. You can now sign in.
+  reset_url_expired: The URL for resetting your password expired. Please try again.
+
+  # sessions_controller
+  credentials_incorrect: Username and/or password were incorrect. Try again.
+
+  # users_controller
+  user_already_deleted: Someone else deleted the user. Your action was cancelled.
+  admin_user_cannot_be_deleted: The admin user cannot be deleted.
+  edit_user: Edit user
+  account_settings: Account settings
+
+  # mailers/user_mailer
+  reset_password_email_subject: "[AntiKobpae] Password reset instructions"
+  
+  similarities: Similarities

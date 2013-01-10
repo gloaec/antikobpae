@@ -1,0 +1,14 @@
+#!/bin/bash
+echo -e "\033[38;5;111m=> Installing apt-get dependencies\033[39m"
+
+APT_PKG=(build-essential curl wget openssl xorg pkg-config libssl-dev libdatrie1-bin libdatrie-dev zlib1g-dev libreadline-dev libssl-dev libxml2-dev libtool libxslt-ruby libxml-ruby libxslt-dev libxml2-dev automake autoconf)
+APT_DEP=(libqt4-gui libqt4-network libqt4-webkit)
+
+SAVE_IFS=$IFS
+IFS=" "
+APT_PKG_JOIN="${APT_PKG[*]}"
+APT_DEP_JOIN="${APT_DEP[*]}"
+IFS=$SAVE_IFS
+
+sudo apt-get build-dep $APT_DEP_JOIN	
+sudo apt-get install $APT_PKG_JOIN --fix-missing

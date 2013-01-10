@@ -1,0 +1,60 @@
+<% content_for :title, t(:sign_in) -%>
+
+<div id="home">
+	<div class="container">	
+		<div class="span-12">
+		<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+		  
+		  <div class="span-3 align-r">
+		  	<%= f.label :name %>
+		  </div>
+		  <div class="span-8 append-2 last">
+		     <%= f.text_field :name, :class => 'title' %>
+		  </div>
+		  <div class="span-3 align-r">
+		    <%= f.label :password %>
+		  </div>
+		  <div class="span-8 append-2 last">
+		    <%= f.password_field :password, :class => 'title' %>
+		  </div>
+		  <% if devise_mapping.rememberable? -%>
+			  <div class="span-3 align-r remember">
+				<%= label_tag :remember_me, t(:remember_me) %>
+			  </div>
+			  <div class="span-2 spacing">
+			  	  <%= check_box_tag :remember_me, 'true' %>
+			  </div>
+		  <% end %>
+		  <div class="span-5 last remember">
+			<%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
+			  <%= link_to t(:reset_password), new_password_path(resource_name) %><br />
+			<% end -%>
+		  </div>
+		  
+		  <div class="prepend-3 span-19 last">
+			  <button type="submit" class="button blue">
+			  	<img/> <%= t(:sign_in) %>
+			  </button> 
+		  </div>
+		  
+		  <div class="span-12 last">
+		  </div>
+		  
+		<% end %>
+		</div>
+	</div>
+</div>
+
+<% content_for :head do %>
+	<script type="text/javascript">
+		(function($){
+			$(document).ready(function() {
+				$('input[type=checkbox]').iToggle({
+					easing: 'easeOutExpo',
+					keepLabel: true,
+					speed: 300
+				});
+			});
+		})(jQuery);
+	</script>
+<% end %>

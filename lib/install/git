@@ -1,0 +1,12 @@
+#!/bin/bash
+echo -e "\033[38;5;111m=> Installing Git\033[39m"
+
+APT_PKG=(git git-core git-doc)
+
+APT_PKG_JOIN="${APT_PKG[*]}"
+sudo apt-get install $APT_PKG_JOIN
+
+if which git &> /dev/null;
+  then echo -e "\033[38;5;148m=> 'git' installed successfully\033[39m";
+  else echo -e "\033[38;5;1m=> 'git' not installed\033[39m" && exit 1
+fi

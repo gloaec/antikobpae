@@ -1,0 +1,8 @@
+<% content_for :title, t(:edit_document) -%>
+
+<div class="breadcrumbs">
+	<%= breadcrumbs(@document.folder, "<span class=\"breadcrumb nowrap\">#{link_to(@document.name, document_path(@document))}</span>") %>
+</div>
+<%= form_for [@target_folder, @document], :url => { :action => 'update' }, :html => { :multipart => true } do |f| %>
+	<%= render 'form', :f => f %>
+<% end %>

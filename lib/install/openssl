@@ -1,0 +1,9 @@
+#!/bin/bash
+echo -e "\033[38;5;111m=> Installing OpenSSL\033[39m"
+
+rvm --skip-autoreconf pkg install openssl
+
+if which iconv &> /dev/null;
+  then echo -e "\033[38;5;148m=> 'openssl' installed successfully\033[39m";
+  else echo -e "\033[38;5;1m=> 'openssl' not installed\033[39m" && exit 1
+fi

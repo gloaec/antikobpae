@@ -1,0 +1,16 @@
+#!/bin/bash
+echo -e "\033[38;5;111m=> Installing Swath\033[39m"
+
+curl -O http://linux.thai.net/pub/ThaiLinux/software/swath/swath-0.4.2.tar.gz
+tar -zxvf swath-0.4.2.tar.gz -C swath
+cd swath/swath-0.4.2
+./autogen.sh
+./configure
+make
+sudo make install
+cd ../..
+
+if which swath &> /dev/null;
+  then echo -e "\033[38;5;148m=> 'swath' installed successfully\033[39m";
+  else echo -e "\033[38;5;1m=> 'swath' not installed\033[39m" && exit 1
+fi

@@ -1,0 +1,437 @@
+th:
+  date:
+    abbr_day_names:
+    - อา
+    - จ
+    - อ
+    - พ
+    - พฤ
+    - ศ
+    - ส
+    abbr_month_names:
+    - 
+    - ม.ค.
+    - ก.พ.
+    - มี.ค.
+    - เม.ย.
+    - พ.ค.
+    - มิ.ย.
+    - ก.ค.
+    - ส.ค.
+    - ก.ย.
+    - ต.ค.
+    - พ.ย.
+    - ธ.ค.
+    day_names:
+    - อาทิตย์
+    - จันทร์
+    - อังคาร
+    - พุธ
+    - พฤหัสบดี
+    - ศุกร์
+    - เสาร์
+    formats:
+      default: ! '%d-%m-%Y'
+      long: ! '%d %B %Y'
+      short: ! '%d %b'
+    month_names:
+    - 
+    - มกราคม
+    - กุมภาพันธ์
+    - มีนาคม
+    - เมษายน
+    - พฤษภาคม
+    - มิถุนายน
+    - กรกฎาคม
+    - สิงหาคม
+    - กันยายน
+    - ตุลาคม
+    - พฤศจิกายน
+    - ธันวาคม
+    order:
+    - :day
+    - :month
+    - :year
+  datetime:
+    distance_in_words:
+      about_x_hours: ประมาณ %{count} ชั่วโมง
+      about_x_months: ประมาณ %{count} เดือน
+      about_x_years: ประมาณ %{count} ปี
+      almost_x_years: เกือบ %{count} ปี
+      half_a_minute: ครึ่งนาที
+      less_than_x_minutes: น้อยกว่า %{count} นาที
+      less_than_x_seconds: น้อยกว่า %{count} วินาที
+      over_x_years: มากกว่า %{count} ปี
+      x_days: ! '%{count} วัน'
+      x_minutes: ! '%{count} นาที'
+      x_months: ! '%{count} เดือน'
+      x_seconds: ! '%{count} วินาที'
+    prompts:
+      day: วัน
+      hour: ชั่วโมง
+      minute: นาที
+      month: เดือน
+      second: วินาที
+      year: ปี
+  errors: &errors
+    format: ! '%{attribute} %{message}'
+    messages:
+      accepted: ต้องถูกยอมรับ
+      blank: ต้องไม่เว้นว่างเอาไว้
+      confirmation: ไม่ตรงกับการยืนยัน
+      empty: ต้องไม่เว้นว่างเอาไว้
+      equal_to: ต้องมีค่าเท่ากับ %{count}
+      even: ต้องเป็นจำนวนคู่
+      exclusion: ไม่ได้รับอนุญาตให้ใช้
+      greater_than: ต้องมากกว่า %{count}
+      greater_than_or_equal_to: ต้องมากกว่าหรือเท่ากับ %{count}
+      inclusion: ไม่ได้อยู่ในรายการ
+      invalid: ไม่ถูกต้อง
+      less_than: ต้องมีค่าน้อยกว่า %{count}
+      less_than_or_equal_to: ต้องมีค่าน้อยกว่าหรือเท่ากับ %{count}
+      not_a_number: ไม่ใช่ตัวเลข
+      not_an_integer: ไม่ใช่จำนวนเต็ม
+      odd: ต้องเป็นจำนวนคี่
+      record_invalid: ! 'ไม่ผ่านการตรวจสอบ: %{errors}'
+      taken: ถูกใช้ไปแล้ว
+      too_long: ยาวเกินไป (ต้องไม่เกิน %{count} ตัวอักษร)
+      too_short: สั้นเกินไป (ต้องยาวกว่า %{count} ตัวอักษร)
+      wrong_length: มีความยาวไม่ถูกต้อง (ต้องมีความยาว %{count} ตัวอักษร)
+    template:
+      body: ! 'โปรดตรวจสอบข้อมูลในช่องต่อไปนี้:'
+      header: พบข้อผิดพลาด %{count} ประการ ทำให้ไม่สามารถบันทึก%{model}ได้
+  helpers:
+    select:
+      prompt: โปรดเลือก
+    submit:
+      create: สร้าง%{model}
+      submit: บันทึก%{model}
+      update: ปรับปรุง%{model}
+  number:
+    currency:
+      format:
+        delimiter: ! ','
+        format: ! '%n %u'
+        precision: 2
+        separator: .
+        significant: false
+        strip_insignificant_zeros: false
+        unit: บาท
+    format:
+      delimiter: ! ','
+      precision: 3
+      separator: .
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: ! '%n %u'
+        units:
+          billion: พันล้าน
+          million: ล้าน
+          quadrillion: พันล้านล้าน
+          thousand: พัน
+          trillion: ล้านล้าน
+          unit: ''
+      format:
+        delimiter: ''
+        precision: 3
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: ! '%n %u'
+        units:
+          byte: ไบต์
+          gb: จิกะไบต์
+          kb: กิโลไบต์
+          mb: เมกะไบต์
+          tb: เทระไบต์
+    percentage:
+      format:
+        delimiter: ''
+    precision:
+      format:
+        delimiter: ''
+  support:
+    array:
+      last_word_connector: ! ', และ '
+      two_words_connector: ! ' และ '
+      words_connector: ! ', '
+  time:
+    am: ก่อนเที่ยง
+    formats:
+      default: ! '%a %d %b %Y %H:%M:%S %z'
+      long: ! '%d %B %Y %H:%M น.'
+      short: ! '%d %b %H:%M น.'
+    pm: หลังเที่ยง
+  # remove these aliases after 'activemodel' and 'activerecord' namespaces are removed from Rails repository
+  activemodel:
+    errors:
+      <<: *errors
+  activerecord:
+    errors:
+      <<: *errors
+
+  # APPLICATION SPECIFIC
+  
+  # Application'error message
+  file_format_not_supported: "รูปแบบไฟล์ที่ไม่รองรับ"
+
+  # general
+  back: กลับไป
+  save: บันทึก
+  name: ชื่อ
+  email: อีเมล์
+  submit: ส่งตรวจ
+
+  your_changes_were_saved: การเปลี่ยนแปลงของคุณถูกบันทึกเรียบร้อยแล้ว.
+  already_deleted: "Someone else deleted %{type}. การทำงานของคุณถูกยกเลิก."
+  no_text_only_convertor_for: "Antikobpae ยังไม่สามารถแปลง \"%{type}\" ได้"
+
+  # admins/new
+  create_admin: สร้างผู้ดูแลระบบ
+  no_administrator_yet: ยังไม่มีผู้ดูแลระบบ Antikobpae. กรุณาสร้างผู้ดูแลระบบ.
+  create_admin_account: สร้างบัญชีผู้ดูแลระบบ
+  admin_user_created_successfully: ผู้ดูแลระบบถูกสร้างเรียบร้อยแล้ว คุณสามารถลงชื่อเข้าใช้งานระบบได้.
+
+  # clipboard/_show
+  folder: แฟ้ม
+  file: ไฟล์
+  this_folder: แฟ้มนี้
+  this_file: ไฟล์นี้
+  copy: คัดลอก
+  copy_folder: คัดลอกแฟ้ม
+  copy_file: คัดลอกไฟล์
+  move: ย้าย
+  move_folder: ย้ายแฟ้ม
+  move_file: ย้ายไฟล์
+  are_you_sure: คุณแน่ใจหรือไม่
+  delete_item: ลบ
+  remove_from_clipboard: เอาออกจากคลิปบอร์ด
+  clear_clipboard: ล้างคลิปบอร์ด
+
+  # files/edit
+  rename_file: เปลี่ยนชื่อไฟล์
+  edit_document: แก้ไขเอกสาร
+
+  # files/new
+  select_file: เลือกไฟล์
+  upload_file: อัพโหลดไฟล์
+  upload: อัพโหลด
+  new_document: เอกสารใหม่
+  from: จาก
+  text_only: ข้อความเท่านั้น
+  
+  # files/show
+  download_original: ดาวน์โหลดต้นฉบับ
+  download_plain_text: ดาวน์โหลดข้อความล้วน
+  download_html: ดาวน์โหลด HTML
+  embed_document: ซ่อนเอกสาร
+  download_pdf: ดาวน์โหลด PDF
+  show_images: แสดงรูปภาพ
+  runtime: ใช้งานอยู่
+  
+  #folders/edit
+  rename_folder: เปลี่ยนชื่อโฟลเดอร์
+
+  #folders/new
+  new_folder: โฟลเดอร์ใหม่
+
+  #folders/show
+  create_a_new_folder: สร้างโฟลเดอร์ใหม่
+  create_a_new_document: สร้างเอกสารใหม่
+  upload_documents: อัพโหลดเอกสาร
+  import_a_webpage: นำเข้าเว็บเพจ
+  private_folders: โฟลเดอร์ส่วนตัว
+  my_space: พื้นที่ของฉัน
+  shared_public: แบ่งปัน/เปิดเผย
+  users_private_folders: โฟลเดอร์ส่วนตัว
+  upload_a_file: อัพโหลดไฟล์
+  permissions: การอนุญาต
+  clipboard: กระดานข้อความ
+  size: ขนาด
+  date_modified: วันที่ปรับเปลี่ยน
+  up: ขึ้นข้างบน
+  edit: แก้ไข
+  add_to_clipboard: เพิ่มไปยังกระดานข้อความ
+  download: ดาวน์โหลด
+  share: แบ่งปัน
+  # File Status
+  converting: กำลังแปลง
+  indexing: กำลังทำดัชนี
+  ready: เรียบร้อยแล้ว
+  by: By
+
+  #groups/edit
+  rename_group: เปลี่ยนชื่อกลุ่ม
+
+  #groups/index
+  groups: กลุ่ม
+  create_a_new_group: สร้างกลุ่มใหม่
+
+  #groups/new
+  new_group: กลุ่มใหม่
+
+  #metadata
+  metadata: เมตาดาต้า
+  thai_name: ชื่อภาษาไทย
+  english_name: ชื่อภาษาอังกฤษ
+  author: ผู้เขียน
+  year: ปี
+
+  #permissions/form
+  create_permission: สร้าง
+  read_permission: อ่าน
+  update_permission: ปรับปรุงใหม่
+  delete_permission: ลบ
+  apply_changes_to_subfolders: ได้เปลี่ยนแปลงในโฟลเดอร์ย่อยแล้ว
+
+  create: สร้าง
+  read: อ่าน
+  update: ปรับปรุงใหม่
+  delete: ลบ
+
+  #reset_password/edit
+  password: รหัสผ่าน
+  reset_password: ตั้งรหัสผ่านใหม่
+  send_email: ส่งเข้าอีเมลล์
+  
+  #scans/index
+  scans: ตรวจ
+  scan_status: สถานะการตรวจ
+  score: คะแนน
+  not_started: ยังไม่เริ่ม
+    ## scan status 
+  in_queue: รอตรวจ
+  doc_search: ค้นหาจากฐานข้อมูล
+  web_search: ค้นหาจากเว็บไซต์
+  web_cache: ตรวจบนเว็บ
+  hightlight: เน้นข้อความ
+  completed: สิ้นสุดการทำงาน
+  scanning: Scanning
+  error: ผิดพลาด
+  
+  #scans/new
+  new_scan: ตรวจใหม่
+  collect_documents: รวบรวมเอกสาร
+  
+  #scans/edit
+  edit_scan: แก้ไขการตรวจ
+  update_scan: ปรับปรุงการตรวจ
+  start_scan: เริ่มการตรวจ
+  add_documents: เพิ่มเอกสาร
+  import_from_upload: อัพโหลดเอกสาร
+  import_from_a_webpage: นำเข้าจากเว็บเพจ
+  import_from_web_corpus: นำเข้าจากเว็บโฟล์เดอร์
+  import_from_web_clipboard: นำเข้าจากกระดานข้อความ
+  browse_targets: เรียกดูเป้าหมาย
+
+  #sessions
+  username: ชื่อผู้ใช้ี
+  remember_me: จำฉันไว้
+  sign_in: ลงชื่อเข้าใช้
+
+  #share_links/index
+  unshare: ไม่แบ่งปัน
+
+  #share_links/show
+  share_link_expired: ดาวน์โหลดลิงค์นี้หมดอายุแล้ว
+
+  #share_links/new
+  this_share_link: ลิงค์แบ่งปันนี้
+  share_file: ไฟล์แบ่งปัน
+  you_are_about_to_share_the_following_file: คุณกำลังแบ่งปันไฟล์ต่อไปนี้
+  emails_to_share_with: อีเมล์ของบุคคลที่คุณต้องการแบ่งปันไฟล์
+  comma_seperated: ใช้เครื่องหมายจุลภาค(,)ในการแบ่ง
+  number_of_charachters: จำนวนของอักขระ
+  link_expires: หมดอายุ
+  tomorrow: พรุ่งนี้
+  three_days_from_now: อีกสามวัน
+  one_week_from_now: อีกหนึ่งสัปดาห์
+  ten_days_from_now: อีกสิบวัน
+  two_weeks_from_now: อีกสองสัปดาห์
+  three_weeks_from_now: อีกสามสัปดาห์
+  one_month_from_now: อีกหนึ่งเดือน
+  two_months_from_now: อีกสองเดือน
+  three_months_from_now: อีกสามเดือนนับ
+  half_year_from_now: อีกครึ่งปี
+  share_link_could_not_be_sent: ดาวน์โหลดลิงค์ไม่สามารถส่งได้
+  are_invalid_due_to: "%{email}ไม่ถูกต้อง"
+  share_link_email_subject: '[Antikobpae] มีคนใช้ไฟล์ร่วมกับคุณอยู่'
+  shared_successfully: ไฟล์ถูกแบ่งปันเรียบร้อยแล้ว
+
+  #shared/_header
+  hello: สวัสดี
+  settings: การตั้งค่า
+  sign_out: ลงชื่อออก
+
+  #shared/_menu
+  folders: โฟลเดอร์
+  users: ผู้ใช้
+  shared_files: ไฟล์ที่แบ่งปัน
+
+  #similarities/index
+  new_similarity: ความเหมือนใหม่
+  plagiarized_content: เนื้อหาที่คัดลอก
+  source: แหล่งข้อมูล
+  characters: อักขระ
+  words: คำ
+  document_overview: เอกสารคร่าวๆ
+  similarity_overview: ความเหมือนคร่าวๆ
+  print: พิมพ์
+  show_all: แสดงทั้งหมด
+  hide_all: ซ่อนทั้งหมด
+  similarity_marker: ทำสัญลักษณ์ว่าเหมือน
+  exception_marker: ทำสัญลักษณ์ว่าไม่เหมือน
+  permanent: ถาวร
+  exceptions_manager: การจัดการข้อยกเว้น 
+ 
+  #users/_form
+  member_of_these_groups: สมาชิกของกลุ่ม
+  confirm_password: ยืนยันรหัสผ่าน
+
+  #users/index
+  create_a_new_user: สร้างผู้ใช้ใหม่
+
+  #users/new
+  new_user: ผู้ใช้ใหม่
+
+  #admins/controller
+  admin_user_created_sucessfully: ผู้ดูแลระบบถูกสร้างเรียบร้อยแล้ว คุณสามารถลงชื่อเข้าใช้งานระบบได้.
+
+  #application_controller
+  no_permissions_for_this_type: "คุณไม่มี %{method}นี้ให้ใช้  %{type} ได้"
+
+  # clipboard_controller
+  added_to_clipboard: เพิ่มลองในกระดานข้อความเรียบร้อยแล้ว.
+  could_not_copy: "ไม่สามารถทำสำเนาได้  มีชื่อ%{type} นี้อยู่แล้ว"
+  could_not_move: "ย้ายไม่ได้  มีชื่อ%{type} นี้อยู่แล้ว"
+  cannot_move_to_own_subfolder: คุณไม่สามารถย้ายโฟลเดอร์ไปยังโฟลเดอร์ย่อยของมันได้.
+  
+  # folders_controller
+  cannot_delete_root_folder: โฟลเดอร์รากไม่สามารถลบหรือเปลี่ยนชื่อได้.
+  no_delete_permissions_for_subfolder: คุณไม่ได้รับอนุญาตให้ลบโฟลเดอร์ย่อยได้.
+
+  # groups_controller
+  group_already_deleted: กลุ่มนี้ถูกลบไปแล้ว การทำงานของคุณถูกยกเลิก.
+  admins_group_cannot_be_deleted: ไม่สามารถลบ หรือเปลี่ยนชื่อกลุ่มผู้ดูแลระบบได้.
+
+  # reset_password_controller
+  instruction_email_sent: อีเมล์พร้อมคำแนะนำการใช้งานถูกส่งเรียบร้อยแล้ว กรุณาตรวจสอบในกล่องอีเมล์ของคุณ.
+  no_user_with_this_email: "ไม่มีผู้ใช้ที่อยู่อีเมล์ '%{email}' กรุณาลองใหม่อีกครั้ง"
+  password_reset_successfully: รหัสผ่านของคุณถูกตั้งค่าใหม่เรียบร้อยแล้ว คุณสามารถลงชื่อเข้าใช้งานระบบได้.
+  reset_url_expired: TURL ที่ใช้ในการตั้งค่ารหัสผ่านของคุณหมดอายุ กรุณาลองอีกครั้ง.
+
+  # sessions_controller
+  credentials_incorrect: ชื่อผู้ใช้ และ/หรือรหัสผ่านไม่ถูกต้อง ลองอีกครั้ง.
+
+  # users_controller
+  user_already_deleted: ผู้ใช้ถูกลบไปแล้ว การทำงานของคุณถูกยกเลิก.
+  admin_user_cannot_be_deleted: ไม่สามารถลบผู้ดูแลระบบได้.
+  edit_user: แก้ไขผู้ใช้
+  account_settings: ตั้งค่าที่อยู่
+
+  # mailers/user_mailer
+  reset_password_email_subject: "รหัสผ่าน [AntiKobpae] ตั้งค่าคำแนะนำใหม่"
+  
+  similarities: ความคล้าย

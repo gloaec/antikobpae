@@ -1,0 +1,14 @@
+	<%= f.error_messages %>
+	<p>
+		<%= f.label t(:name) %>:<br />
+		<%= f.text_field :attachment_file_name %>
+	</p>
+	<p>
+		<%= f.label :content %><br />
+		<%= f.cktext_area :content %>
+	</p>
+	<p>
+		<button type="submit" class="button blue">
+			<%= t(:save) %>
+		</button>
+	</p>

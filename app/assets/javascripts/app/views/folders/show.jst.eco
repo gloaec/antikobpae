@@ -1,0 +1,63 @@
+<%= breadcrumbs(@folder, 'leaf') %>
+
+
+<a data-type="edit">Edit</a> <a data-type="back">Back</a>
+
+<p>Name: <%= @folder.name %></p>
+<p>Private: <%= @folder.private %></p>
+<p>Parent: <%= @folder.parent_id %></p>
+<p>Created At: <%= @folder.created_at %></p>
+<p>Updated At: <%= @folder.updated_at %></p>
+
+<table id="documents_table">
+  <thead>
+	<tr>
+		<th class="icon"></th>
+		<th colspan="2">Name</th>
+		<th>Size</th>
+		<th>Date Modified</th>
+		<th></th>
+	</tr>
+  </thead>
+  <tr class="">
+    <td><%= image_tag 'folder.png' %></td>
+	  <td class="file_name" colspan="2"><a href="/folders/<%= @folder.parent_id %>"> &uarr; up </a></td>
+	  <td class="file_size">--</td>
+	  <td class="file_modified">--</td>
+	<td></td>
+  </tr>
+  <tbody id="documents">
+<% for folder in @folder.children(): %>
+	<tr class="">
+		<td class="icon"><%= image_tag 'folder.png' %></td>
+		<td class="file_name" colspan="2"><a href="/folders/<%= folder.id %>"><%= folder.name %></a></td>
+		<td class="file_size">--</td>
+		<td class="file_modified"><%= folder.updated_at %></td>
+		<td class="options"></td>
+	</tr>
+<% end %>
+<% for document in @folder.documents(): %>
+	<tr id="document_<%= document.id %>" class="item" data-id="<%= document.id %>">
+		<td class="icon"><%= image_tag "fileicons/#{document.attachment_file_type}.png" %></td>
+		<td class="document_name"><a data-type="show"><%= document.name %></a> | <a href="/documents/<%= document.id %>"><%= document.name %></a></td>
+		<td class="document_status"></td>
+		<td class="document_size"><%= document.attachment_file_size %></td>
+		<td class="document_modified"><%= document.updated_at %></td>
+		<td class="options"></td>
+	</tr>
+<% end %>
+  </tbody>
+  <tfoot>
+	<tr>
+		<td colspan="6" class="transparent">
+			<div id="drop">
+				<div style="text-align: center;">Drag & Drop your documents here</div>
+			</div>
+		</td>
+	</tr>
+  	<tr>
+  	  <td colspan="6">		
+  	  </td>
+  	</tr>
+  </tfoot>
+</table>

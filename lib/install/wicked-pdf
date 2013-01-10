@@ -1,0 +1,21 @@
+#!/bin/bash
+echo -e "\033[38;5;111m=> Installing Wicked PDF\033[39m"
+
+git clone git://gitorious.org/+wkhtml2pdf/qt/wkhtmltopdf-qt.git wkhtmltopdf-qt
+cd wkhtmltopdf-qt
+./configure -nomake tools,examples,demos,docs,translations -opensource -prefix ../wkqt
+make -j3
+make install
+cd ../
+
+git clone git://github.com/antialize/wkhtmltopdf.git wkhtmltopdf
+cd wkhtmltopdf
+../wkqt/bin/qmake
+make -j3
+make install
+cd ../
+
+if which wkhtmltopdf &> /dev/null;
+  then echo -e "\033[38;5;148m=> 'wkhtmltopdf' installed successfully\033[39m";
+  else echo -e "\033[38;5;1m=> 'wkhtmltopdf' not installed\033[39m" && exit 1
+fi

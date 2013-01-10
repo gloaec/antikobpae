@@ -1,17 +1,130 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Antikobpae</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
+	<title><%= yield(:title).present? ? ['AntiKobpae','|',yield(:title)].join(' '): 'AntiKobpae 2.0' %></title>
+	<%= favicon_link_tag %>
+	
+	<%= stylesheet_link_tag    'application' %>	
+	<%= javascript_include_tag 'application' %>
+	<%= csrf_meta_tags %>
+	
+	<%= javascript_include_tag "ckeditor/ckeditor.js" %>
+	<%= javascript_include_tag "easing.js" %>
+	<%= javascript_include_tag "engage.itoggle.js" %>
+	
+	<%= stylesheet_link_tag    'engage.itoggle.css' %>
+
+	<script type="text/javascript" charset="utf-8">
+		(function($){
+			$(document).ready(function() {
+				$("a.fancybox").fancybox();
+				var $sidebar   = $("#sidebar"),
+       				$window    = $(window),
+        			offset     = $sidebar.offset(),
+        			topPadding = 15;
+				
+				function adjustSidebar(){
+					$sidebar.css('max-height',$window.height());
+				}
+				adjustSidebar();
+				$window.resize(adjustSidebar);
+
+				$window.scroll(function() {
+        				if ($window.scrollTop() > offset.top) {
+            					$sidebar.stop().animate({
+                					marginTop: $window.scrollTop() - offset.top + topPadding
+            					});
+        				} else {
+            					$sidebar.stop().animate({
+                					marginTop: 0
+            					});
+        				}
+    				});
+			});
+		})(jQuery);
+	</script>
+	
+	<%= yield :head %>
+	
 </head>
 <body>
+	<%- flash.each do |name, msg| -%>
+			<%= content_tag :div, msg, :class => "flash #{name}" if msg.is_a?(String) %>
+	<%- end -%>
 
-<p style="color:#F00"><%= flash[:alert] %></p>
-<p style="color:#0FF"><%= flash[:notice] %></p>
+<%# DEVELOPMENT CONSOLE --- Reformat for release --- %>
 
-<%= yield %>
+	<style>
+	#console {
+		position: fixed;
+		background: rgba(0, 0, 0, .5);
+		top: 10px;
+		right: 10px;
+		width: auto;
+		height: auto;
+		z-index: 1;
+		padding: 10px;
+		color: white;
+		-webkit-border-radius: 10px;
+		-moz-border-radius: 10px;
+		border-radius: 10px;
+	}
+	#console hr { margin:0; padding:0;}
+	</style>
+	
+	<div id="console">
+		<% jobs = Delayed::Job.all %>
+		Scan Queue : <span id="jobs"><%= jobs.select { |j| j.queue == 'scans' }.count %></span><br />
+		Document Queue : <span id="jobs"><%= jobs.select { |j| j.queue == 'documents' }.count  %></span><br />
+		Delta Queue : <span id="jobs"><%= jobs.select { |j| j.queue == 'delta' }.count  %></span><hr />
+		Documents : <span id="document_count"><%= Document.count %></span>
+	</div>
+
+<%# END DEVELOPMENT CONSOLE --------------------- %>
+	
+	<%= render 'shared/header' %>
+	
+	<div id="wrapper">
+	
+	<div id="navigation" class="<%= "home" if current_page?(new_user_session_path) %>">
+		<ul class="container">
+			<%= render 'shared/menu' %>
+		</ul>
+	</div>
+	
+	<% if current_page?(new_user_session_path) %>
+		<%= yield %>
+	<% else %>
+		<div id="header">
+			<div class="container">
+				<h1 class="container"><%= yield :title %></h1>
+				<% if yield(:subtitle).present? %>
+					<h2 class="container"><%= yield :subtitle %></h2>
+				<% end %>
+			</div>
+		</div>  
+		
+		<div id="body">
+			<div class="container">
+				<div class="span-6">
+				<div id="sidebar">
+					<%= yield(:sidebar) %>
+					<ul>
+						<li><%= link_to image_tag('icons/back32.png')+t(:back), :back %></li>
+					</ul>
+				</div>
+				</div>
+				<div class="span-18 last">
+					<%= yield %>	
+				</div>
+			</div>
+		</div>
+	<% end %>
+	
+	</div>
+	
+	<%= render 'shared/footer' %>
 
 </body>
 </html>
+

@@ -1,0 +1,20 @@
+<% content_for :title, t(:shared_files) -%>
+
+<table>
+	<tr>
+		<th class="icon"></th>
+		<th><%= t('activerecord.models.document') %></th>
+		<th><%= t('activerecord.attributes.share_link.emails') %></th>
+		<th><%= t('activerecord.attributes.share_link.expires_at') %></th>
+		<th></th>
+	</tr>
+<% @share_links.each do |share_link| -%>
+	<tr class="<%= cycle('even','odd') %>">
+		<td class="icon"><%= image_tag file_icon(share_link.document.extension) %></td>
+		<td class="file_name"><%= link_to share_link.document.attachment_file_name, folder_path(share_link.document.folder), :title => "#{share_link.document.attachment_file_name} (#{share_link.document.folder.name})" %></td>
+		<td><span class="share_link_emails" title="<%= share_link.emails %>"><%= truncate(share_link.emails, :length => 48) %></td>
+		<td><%= l share_link.link_expires_at, :format => :very_short %></td>
+		<td class="options"><%= link_to image_tag('icons/delete.png', :alt => t(:delete_item)), share_link_path(share_link), :method => :delete, :confirm => t(:are_you_sure), :title => t(:unshare) %></td>
+	</tr>
+<% end -%>
+</table>

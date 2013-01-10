@@ -1,0 +1,79 @@
+<% content_for :title, t(:new_document) -%>
+
+<div class="breadcrumbs">
+	<% bread = link_to(t(:new_document), :action => :new, :target_scan => @targer_scan) %>
+	<%= breadcrumbs(@scan_file.file, "<span class=\"breadcrumb nowrap\">#{bread}</span>") %>
+</div>
+<% if params[:from] == "upload" %>
+	<%= form_for [@target_scan, @scan_file], :url => { :action => 'create', :from => "upload" }, :html => { :multipart => true } do |f| %>
+		<%= f.error_messages %>
+		<p>
+			<%= f.label t(:name) %>:<br>
+			<%= f.text_field :attachment_file_name %>
+		</p>
+		<p>
+			<%= f.label t(:select_file) %>:<br>
+			<%= f.file_field :attachment %>
+		</p>
+		<p>
+			<%= f.submit t(:upload) %>
+		</p>
+	<% end %>			
+<% end %>
+<% if params[:from] == "scratch" %>
+	<%= form_for [@target_scan, @scan_file], :url => { :action => 'create', :from => "scratch" }, :html => { :multipart => true } do |f| %>
+		<%= render 'form', :f => f %>
+	<% end %>
+<% end %>
+<% if params[:from] == "webpage" %>
+	<%= form_for [@target_scan, @scan_file], :url => { :action => 'create' }, :html => { :multipart => true } do |f| %>
+		<%= f.error_messages %>
+		<p>
+			<%= f.label :web_page_url %>:<br />
+			<%= f.text_field :attachment_file_name, :value => "http://th.wikipedia.org/wiki/โจรกรรมทางวรรณกรรม", :id => 'frame_input', :size => 90 %>
+		</p>
+		<p>
+			<%= f.label :preview %><br />
+			<iframe id="frame_preview" src="http://th.wikipedia.org/wiki/โจรกรรมทางวรรณกรรม"></iframe>
+		</p>
+		<p>
+			<%= f.submit t(:import) %>
+			<div id="time_div"></div>
+		</p>
+		<script type="text/javascript">
+		
+		$(function(){
+		  $('#frame_input').change(function(){
+		    var src = $(this).val()
+		    
+		    try {
+		      console.log("Loading iframe content");
+		      $('#frame_preview').attr('src', src);
+		    } catch (e) {
+		       console.log("Caught", e);
+		    }
+		    console.log("Done loading");
+		     /* 
+		    $.ajax({
+		    	url: 
+		    	success: function(data){ alert(data); }
+		    });
+		
+		  
+		    ;
+		    $('#frame_preview').load(function(){
+		      console.log($('#frame_preview').contents());
+		      $('#frame_input').val($('#frame_preview').contents().find('title').html())
+		    });
+		  	*/
+	      });	
+		});
+		
+		/*	$ ->
+			  alert 'coffeescript'
+			  $('#frame_input').change ->
+			    $('#frame_preview').val @val()
+		*/
+		</script>
+	<% end %>
+<% end %>

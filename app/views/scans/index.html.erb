@@ -1,0 +1,176 @@
+<% content_for :title, t(:scans) -%>
+
+<% content_for :sidebar do -%>
+	<ul>
+		<li><%= link_to image_tag('icons/new_scan32.png')+'New Scan', new_scan_path %></li>
+	</ul>
+<% end %>
+
+
+<% content_for :head do %>
+	<script type="text/javascript">
+		(function($){
+			$(document).ready(function() {
+				$('input[type=checkbox]').iToggle({
+					easing: 'easeOutExpo',
+					keepLabel: true,
+					speed: 300,
+				});
+			});
+		})(jQuery);
+	</script>
+<% end %>
+
+<div class="breadcrumbs">
+	<%= breadcrumbs(@folder) %>
+</div>		
+<div id="files_and_folders">
+	<table>
+	  <thead>
+		<tr>
+			<th class="icon"></th>
+			<th><%= t :name %></th>
+			<th><%= t :size %></th>
+			<th><%= t :scan_status %></th>
+			<th><%= t :score %></th>
+			<th class="icon"><%= image_tag 'icons/corpus32.png', :width => 16, :height => 16 %></th>
+			<th class="icon"><%= image_tag 'icons/web32.png', :width => 16, :height => 16 %></th>
+			<th class="icon"><%= image_tag 'icons/recursive32.png', :width => 16, :height => 16 %></th>
+			<th></th>
+		</tr>
+	  </thead>
+	  <tbody>
+	<% @scans.each do |scan| -%>
+		<% if current_user.can_read(scan.folder) %>
+			<tr class="<%= cycle('even','odd') %>">
+				<th class="icon"><%= image_tag('icons/scan16.png') %></th>
+				<th class="file_name">
+					<% if scan.scan_files.empty? %>
+						<%= link_to scan.folder.name, edit_scan_path(scan) %>
+					<% else %>
+						<%= link_to scan.folder.name, scan_path(scan) %>
+					<% end %>
+				</th>	
+				<th class="file_size"><%= scan.folder.documents.count %></th>
+				<th class="scan_status" id="scan_status_<%= scan.id %>"><%= scan.scan_files.empty? ? t(:not_started) : "--" %></th>
+				<th class="scan_score"><%= "" %></th>
+				<th class="icon"><%= image_tag('icons/yes.png') %></th>
+				<th class="icon"><%= image_tag('icons/'+ (scan.web ? 'yes' : 'no')+'.png') %></th>
+				<th class="icon"><%= image_tag('icons/'+ (scan.recursive ? 'yes' : 'no')+'.png') %></th>
+				<th class="options"><%= link_to image_tag('clipboard_add.png', :alt => t(:add_to_clipboard)),
+					{ :controller => :clipboard, :action => :create, :id => scan.folder.id, :type => 'folder', :folder_id => scan.folder, :authenticity_token => form_authenticity_token },
+					:method => :post, :title => t(:add_to_clipboard)
+				%><% 
+				if current_user.can_update(scan.folder) 
+				%><%= link_to image_tag('edit.png', :alt => t(:edit)), edit_scan_path(scan), :title => t(:edit) %><% 
+				end 
+				if current_user.can_delete(scan.folder) 
+				%><%= link_to image_tag('icons/delete.png', :alt => t(:delete_item)), scan_path(scan), :method => :delete, :confirm => t(:are_you_sure), :title => t(:delete_item) %><% 
+				end 
+				%></th>
+			</tr>
+			<% if scan.scan_files.empty? %>
+				<% scan.folder.documents.each do |file| -%>
+					<tr class="<%= cycle('even','odd') %>">
+						<td><%= image_tag(document_icon(file.attachment_file_type)) %></td>
+						<td class="file_name"><%= link_to file.name, document_path(file), :title => "#{t(:download)} #{file.name}" %></td>
+						<td class="file_size"><%= number_to_human_size(file.attachment_file_size, :locale=>I18n.locale) %></td>
+						<td class="scan_status"><%= "--" %></td>
+						<td class="scan_score" colspan="4"><%= "--" %></td>
+						<td class="options"><%= link_to image_tag('clipboard_add.png', :alt => t(:add_to_clipboard)),
+							{ :controller => :clipboard, :action => :create, :id => file.id, :type => 'file', :folder_id => @folder, :authenticity_token => form_authenticity_token },
+							:method => :post, :title => t(:add_to_clipboard)
+						%><%= link_to image_tag('share.png', :alt => t(:share)), new_document_share_link_path(file), :title => t(:share) %><% 
+						if current_user.can_update(file.folder) 
+						%><%= link_to image_tag('edit.png', :alt => t(:edit)), edit_document_path(file), :title => t(:edit) %><% 
+						end 
+						if current_user.can_delete(file.folder) 
+						%><%= link_to image_tag('icons/delete.png', :alt => t(:delete_item)), document_path(file), :method => :delete, :confirm => t(:are_you_sure), :title => t(:delete_item) %><% 
+						end 
+						%></td>
+					</tr>
+				<% end -%>
+			<% else %>
+				<% scan.scan_files.each do |scan_file| -%>
+					<tr class="<%= cycle('even','odd') %>">
+						<td><%= image_tag(document_icon(scan_file.document.attachment_file_type)) %></td>
+						<td class="file_name"><%= link_to scan_file.document.name, document_path(scan_file.document), :title => "#{t(:download)} #{scan_file.document.name}" %></td>
+						<td class="file_size"><%= number_to_human_size(scan_file.document.attachment_file_size, :locale=>I18n.locale) %></td>
+						<td id="scan_file_status_<%= scan_file.id %>" class="scan_status"><%= scan_file.progress %>% - <%= scan_status(scan_file.status)%></td>
+						<td class="scan_score"><%= link_to "<span class=\"scan_file_status\" id=\"scan_file_score_#{scan_file.id}\">#{scan_file.score}</span> / <span id=\"scan_file_sources_#{scan_file.id}\">#{scan_file.count_sources}</span> sources".html_safe, scan_file_similarities_path(scan_file) %></td>
+						<td class="icon" id="scan_file_file_sources_<%= scan_file.id %>"><%= scan_file.count_file_sources %></td>
+						<td class="icon" id="scan_file_web_sources_<%= scan_file.id %>"><%= scan_file.count_web_sources %></td>
+						<td class="icon" id="scan_file_recursive_sources_<%= scan_file.id %>"><%= scan_file.count_recursive_sources %></td>
+						<td class="options"><%= link_to image_tag('clipboard_add.png', :alt => t(:add_to_clipboard)),
+							{ :controller => :clipboard, :action => :create, :id => scan_file.document.id, :type => 'file', :folder_id => scan.folder, :authenticity_token => form_authenticity_token },
+							:method => :post, :title => t(:add_to_clipboard)
+						%><%= link_to image_tag('share.png', :alt => t(:share)), new_document_share_link_path(scan_file), :title => t(:share) %><% 
+						if current_user.can_update(scan_file.document.folder) 
+						%><%= link_to image_tag('edit.png', :alt => t(:edit)), edit_document_path(scan_file.document), :title => t(:edit) %><% 
+						end 
+						if current_user.can_delete(scan_file.document.folder) 
+						%><%= link_to image_tag('icons/delete.png', :alt => t(:delete_item)), document_path(scan_file.document), :method => :delete, :confirm => t(:are_you_sure), :title => t(:delete_item) %><% 
+						end 
+						%></td>
+					  </tr>
+				<% end %>
+			<% end %>
+		<% end %>
+	<% end -%>
+	</tbody>
+	<tfoot>
+	  <tr class="tfoot">
+	    <td colspan="9">
+	  </tr>
+	</table>
+	<% content_for :head do %>
+		<script type="text/javascript" charset="utf-8">
+		  $(document).ready(function(){
+
+			function update_status(){
+				$.getJSON('<%= statements_scan_path(1) %>', function(data) {
+			      $.each(data, function(i, n) {
+					var scan = n["scan"], progress = 0;
+					var web = scan.web;
+					var sphinx = scan.sphinx;
+					$.each(scan.scan_files, function(i, scan_file) {
+						var status = scan_status(scan_file.status);
+						var sf_progress = (scan_file.sphinx_progress + scan_file.web_progress) / 2
+						$('#scan_file_file_sources_'+scan_file.id).text(scan_file.count_file_sources);
+						$('#scan_file_web_sources_'+scan_file.id).text(scan_file.count_web_sources);
+						$('#scan_file_recursive_sources_'+scan_file.id).text(scan_file.count_recursive_sources);
+						$('#scan_file_sources_'+scan_file.id).text(scan_file.count_sources);
+						//$('#scan_file_score_'+scan_file.id).text(scan_file.score);
+						$('#scan_file_score_'+scan_file.id).progressBar(scan_file.score);
+						$('#scan_file_status_'+scan_file.id).html(status.icon+' '+status.text+' - '+(Math.round(sf_progress*100)/100)+'%');						
+						progress += sf_progress;
+					});
+					progress = Math.round((progress / scan.scan_files.length)*100)/100;
+					$('#scan_status_'+scan.id).html(progress<100?'Running - '+(Math.round(progress*100)/100)+'%':'Completed - 100%');
+					if(progress<100) setTimeout(update_status, 4000);
+				  });
+				}).error(function() { 
+					if(tries++ <=3) setTimeout(update_status, 4000);
+					else $('.scan_status').addClass('option error').text('Lost Connection');
+				});	
+			}	
+			
+			var tries = 0;
+			update_status();
+
+		  });
+		</script>
+	<% end %>
+</div>
+<% if current_user.member_of_admins? -%>
+<div id="permissions" style="display:none;">
+	<% # render 'permissions/form', :folder => @folder 
+	%>
+</div>
+<% end -%>
+<div id="clipboard" style="display:none;">
+	<% # render 'clipboard/show', :folder => @folder 
+	%>
+</div>
+
+

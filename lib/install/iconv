@@ -1,0 +1,9 @@
+#!/bin/bash
+echo -e "\033[38;5;111m=> Installing IConv\033[39m"
+
+rvm --skip-autoreconf pkg install iconv
+
+if which iconv &> /dev/null;
+  then echo -e "\033[38;5;148m=> 'iconv' installed successfully\033[39m";
+  else echo -e "\033[38;5;1m=> 'iconv' not installed\033[39m" && exit 1
+fi

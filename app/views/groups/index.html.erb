@@ -1,0 +1,39 @@
+<% content_for :title, t(:groups) -%>
+
+<% content_for :sidebar do -%>
+	<ul>
+		<li><%= link_to image_tag('group_add.png', :alt => t(:create_a_new_group)) + t(:create_a_new_group), new_group_path %></li>
+	</ul>
+<% end -%>
+
+<table>
+  <thead>
+	<tr>
+		<th class="icon"></th>
+		<th><%t :name %></th>
+		<th width="100"></th>
+	</tr>
+  </thead>
+  <tbody>
+<% @groups.each do |group| -%>
+	<tr class="<%= cycle('even','odd') %>">
+	<% if group.admins_group? -%>
+		<td class="icon"><%= image_tag('group_grey.png') %></td>
+		<td class="group_name disabled"><%= group.name %></td>
+		<td></td>
+	<% else -%>
+		<td><%= image_tag('group.png') %></td>
+		<td class="group_name"><%= group.name %></td>
+		<td class="options"><%= 
+			  link_to image_tag('edit.png', :alt => t(:edit)), edit_group_path(group), :title => t(:edit) 
+		%><%= link_to image_tag('icons/delete.png', :alt => t(:delete_item)), group_path(group), :method => :delete, :confirm => t(:are_you_sure), :title => t(:delete_item) 
+		%></td>
+	<% end -%>
+	</tr>
+<% end -%>
+</tbody>
+<tfoot>
+  <tr class="tfoot">
+  	<td colspan="3"></td>
+  </tr>
+</table>

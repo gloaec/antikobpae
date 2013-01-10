@@ -1,0 +1,2 @@
+module GroupFolderPermissionsHelper
+end

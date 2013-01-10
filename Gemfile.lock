@@ -1,3 +1,19 @@
+GIT
+  remote: git://github.com/onland/ts-delayed-delta.git
+  revision: 440b0918b09bad99d3a3a8e135b3647a475b9994
+  specs:
+    ts-delayed-delta (1.1.3)
+      delayed_job (>= 2.0.4)
+      thinking-sphinx (>= 1.3.6)
+
+GIT
+  remote: https://github.com/galetahub/ckeditor
+  revision: 34d2384a417dda2aa8070736b4cc464498fcf276
+  specs:
+    ckeditor (3.7.1)
+      mime-types
+      orm_adapter
+
 PATH
   remote: lib/devise_ldap_authenticatable
   specs:
@@ -6,89 +22,216 @@ PATH
       net-ldap (~> 0.2.2)
 
 GEM
-  remote: https://rubygems.org/
+  remote: http://rubygems.org/
   specs:
-    actionmailer (3.2.3)
-      actionpack (= 3.2.3)
-      mail (~> 2.4.4)
-    actionpack (3.2.3)
-      activemodel (= 3.2.3)
-      activesupport (= 3.2.3)
+    Ascii85 (1.0.1)
+    actionmailer (3.1.0)
+      actionpack (= 3.1.0)
+      mail (~> 2.3.0)
+    actionpack (3.1.0)
+      activemodel (= 3.1.0)
+      activesupport (= 3.1.0)
       builder (~> 3.0.0)
       erubis (~> 2.7.0)
-      journey (~> 1.0.1)
-      rack (~> 1.4.0)
-      rack-cache (~> 1.2)
-      rack-test (~> 0.6.1)
-      sprockets (~> 2.1.2)
-    activemodel (3.2.3)
-      activesupport (= 3.2.3)
-      builder (~> 3.0.0)
-    activerecord (3.2.3)
-      activemodel (= 3.2.3)
-      activesupport (= 3.2.3)
-      arel (~> 3.0.2)
-      tzinfo (~> 0.3.29)
-    activeresource (3.2.3)
-      activemodel (= 3.2.3)
-      activesupport (= 3.2.3)
-    activesupport (3.2.3)
       i18n (~> 0.6)
+      rack (~> 1.3.2)
+      rack-cache (~> 1.0.3)
+      rack-mount (~> 0.8.2)
+      rack-test (~> 0.6.1)
+      sprockets (~> 2.0.0)
+    activemodel (3.1.0)
+      activesupport (= 3.1.0)
+      bcrypt-ruby (~> 3.0.0)
+      builder (~> 3.0.0)
+      i18n (~> 0.6)
+    activerecord (3.1.0)
+      activemodel (= 3.1.0)
+      activesupport (= 3.1.0)
+      arel (~> 2.2.1)
+      tzinfo (~> 0.3.29)
+    activeresource (3.1.0)
+      activemodel (= 3.1.0)
+      activesupport (= 3.1.0)
+    activesupport (3.1.0)
       multi_json (~> 1.0)
     acts_as_tree (1.1.0)
       activerecord (>= 3.0.0)
-    arel (3.0.2)
+    addressable (2.2.8)
+    ansi (1.4.2)
+    arel (2.2.3)
     bcrypt-ruby (3.0.1)
+    blueprint-rails (0.1.2)
+      railties (~> 3.0)
+      thor (~> 0.14)
     builder (3.0.0)
-    coffee-rails (3.2.2)
+    capistrano (2.8.0)
+      highline
+      net-scp (>= 1.0.0)
+      net-sftp (>= 2.0.0)
+      net-ssh (>= 2.0.14)
+      net-ssh-gateway (>= 1.1.0)
+    capistrano_colors (0.5.5)
+    capybara (1.1.2)
+      mime-types (>= 1.16)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      selenium-webdriver (~> 2.0)
+      xpath (~> 0.1.4)
+    chardet (0.9.0)
+    childprocess (0.3.2)
+      ffi (~> 1.0.6)
+    cocaine (0.2.1)
+    coffee-rails (3.1.1)
       coffee-script (>= 2.2.0)
-      railties (~> 3.2.0)
+      railties (~> 3.1.0)
     coffee-script (2.2.0)
       coffee-script-source
       execjs
     coffee-script-source (1.3.3)
+    color (1.4.1)
+    cucumber (1.2.0)
+      builder (>= 2.1.2)
+      diff-lcs (>= 1.1.3)
+      gherkin (~> 2.10.0)
+      json (>= 1.4.6)
+    cucumber-rails (1.3.0)
+      capybara (>= 1.1.2)
+      cucumber (>= 1.1.8)
+      nokogiri (>= 1.5.0)
+    daemon_controller (1.0.0)
+    daemons (1.1.8)
+    database_cleaner (0.7.2)
+    delayed_job (3.0.2)
+      activesupport (~> 3.0)
+    delayed_job_active_record (0.3.2)
+      activerecord (> 2.1.0)
+      delayed_job (~> 3.0.0)
     devise (2.1.2)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
       railties (~> 3.1)
       warden (~> 1.2.1)
+    diff-lcs (1.1.3)
+    difflcs (0.6.6)
+      positionrange (>= 0.6.0)
+    domain_name (0.5.3)
+      unf (~> 0.0.3)
+    dynamic_form (1.1.4)
+    eco (1.0.0)
+      coffee-script
+      eco-source
+      execjs
+    eco-source (1.1.0.rc.1)
+    ensure-encoding (0.1)
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    factory_girl (3.3.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (3.3.0)
+      factory_girl (~> 3.3.0)
+      railties (>= 3.0.0)
+    fancybox-rails (0.1.4)
+      railties (>= 3.1.0)
+    fastthread (1.0.7)
+    ffi (1.0.11)
+    fileutils (0.7)
+      rmagick (>= 2.13.1)
+    gherkin (2.10.0)
+      json (>= 1.4.6)
+    highline (1.5.1)
     hike (1.2.1)
     i18n (0.6.0)
-    journey (1.0.4)
-    jquery-rails (2.0.2)
-      railties (>= 3.2.0, < 5.0)
+    i18n-js (2.1.2)
+      i18n
+    i18n_generators (1.2.0)
+      mechanize
+      rails (>= 3.0.0)
+    jquery-rails (1.0.19)
+      railties (~> 3.0)
       thor (~> 0.14)
+    jquery-tmpl-rails (1.1.0)
+      rails (>= 3.1.0)
+    jquery-ui-rails (0.4.0)
+      jquery-rails
+      railties (>= 3.1.0)
     json (1.7.3)
-    mail (2.4.4)
+    libv8 (3.3.10.4)
+    libwebsocket (0.1.3)
+      addressable
+    loofah (1.2.1)
+      nokogiri (>= 1.4.4)
+    mail (2.3.3)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    mime-types (1.19)
-    multi_json (1.3.6)
+    mechanize (2.5.1)
+      domain_name (~> 0.5, >= 0.5.1)
+      mime-types (~> 1.17, >= 1.17.2)
+      net-http-digest_auth (~> 1.1, >= 1.1.1)
+      net-http-persistent (~> 2.5, >= 2.5.2)
+      nokogiri (~> 1.4)
+      ntlm-http (~> 0.1, >= 0.1.1)
+      webrobots (~> 0.0, >= 0.0.9)
+    mime-types (1.18)
+    minitest (3.0.1)
+    multi_json (1.3.5)
+    mysql2 (0.3.11)
+    net-http-digest_auth (1.2.1)
+    net-http-persistent (2.6)
     net-ldap (0.2.2)
+    net-scp (1.0.4)
+      net-ssh (>= 1.99.1)
+    net-sftp (2.0.5)
+      net-ssh (>= 2.0.9)
+    net-ssh (2.1.4)
+    net-ssh-gateway (1.1.0)
+      net-ssh (>= 1.99.1)
+    nokogiri (1.5.2)
+    ntlm-http (0.1.1)
     orm_adapter (0.3.0)
+    paperclip (3.0.4)
+      activemodel (>= 3.0.0)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
+      cocaine (>= 0.0.2)
+      mime-types
+    parallel (0.5.16)
+    passenger (3.0.12)
+      daemon_controller (>= 0.2.5)
+      fastthread (>= 1.0.1)
+      rack
+      rake (>= 0.8.1)
+    pdf-reader (1.1.1)
+      Ascii85 (~> 1.0.0)
+      ruby-rc4
+    plupload-rails (1.0.6)
+      rails (~> 3.1)
     polyglot (0.3.3)
-    rack (1.4.1)
-    rack-cache (1.2)
+    positionrange (0.7.0)
+    rack (1.3.6)
+    rack-cache (1.0.3)
       rack (>= 0.4)
+    rack-mount (0.8.3)
+      rack (>= 1.0.0)
+    rack-protection (1.2.0)
+      rack
     rack-ssl (1.3.2)
       rack
     rack-test (0.6.1)
       rack (>= 1.0)
-    rails (3.2.3)
-      actionmailer (= 3.2.3)
-      actionpack (= 3.2.3)
-      activerecord (= 3.2.3)
-      activeresource (= 3.2.3)
-      activesupport (= 3.2.3)
+    rails (3.1.0)
+      actionmailer (= 3.1.0)
+      actionpack (= 3.1.0)
+      activerecord (= 3.1.0)
+      activeresource (= 3.1.0)
+      activesupport (= 3.1.0)
       bundler (~> 1.0)
-      railties (= 3.2.3)
-    railties (3.2.3)
-      actionpack (= 3.2.3)
-      activesupport (= 3.2.3)
+      railties (= 3.1.0)
+    railties (3.1.0)
+      actionpack (= 3.1.0)
+      activesupport (= 3.1.0)
       rack-ssl (~> 1.3.2)
       rake (>= 0.8.7)
       rdoc (~> 3.4)
@@ -96,38 +239,136 @@ GEM
     rake (0.9.2.2)
     rdoc (3.12)
       json (~> 1.4)
-    sass (3.1.20)
-    sass-rails (3.2.5)
-      railties (~> 3.2.0)
-      sass (>= 3.1.10)
-      tilt (~> 1.3)
-    sprockets (2.1.3)
+    redis (2.2.2)
+    redis-namespace (1.0.3)
+      redis (< 3.0.0)
+    resque (1.20.0)
+      multi_json (~> 1.0)
+      redis-namespace (~> 1.0.2)
+      sinatra (>= 0.9.2)
+      vegas (~> 0.1.2)
+    riddle (1.5.2)
+    rmagick (2.13.1)
+    rspec (2.10.0)
+      rspec-core (~> 2.10.0)
+      rspec-expectations (~> 2.10.0)
+      rspec-mocks (~> 2.10.0)
+    rspec-core (2.10.1)
+    rspec-expectations (2.10.0)
+      diff-lcs (~> 1.1.3)
+    rspec-mocks (2.10.1)
+    rspec-rails (2.10.1)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
+      rspec (~> 2.10.0)
+    ruby-rc4 (0.1.5)
+    ruby-rtf (0.0.1)
+    rubyzip (0.9.8)
+    sass (3.1.18)
+    sass-rails (3.1.4)
+      actionpack (~> 3.1.0)
+      railties (~> 3.1.0)
+      sass (>= 3.1.4)
+      sprockets (~> 2.0.0)
+      tilt (~> 1.3.2)
+    selenium-webdriver (2.21.2)
+      childprocess (>= 0.2.5)
+      ffi (~> 1.0)
+      libwebsocket (~> 0.1.3)
+      multi_json (~> 1.0)
+      rubyzip
+    sinatra (1.3.2)
+      rack (~> 1.3, >= 1.3.6)
+      rack-protection (~> 1.2)
+      tilt (~> 1.3, >= 1.3.3)
+    spine-rails (0.1.0)
+      rails (>= 3.1.0)
+    sprockets (2.0.4)
       hike (~> 1.2)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    sqlite3 (1.3.6)
+    therubyracer (0.10.1)
+      libv8 (~> 3.3.10)
+    thinking-sphinx (2.0.12)
+      activerecord (>= 3.0.3)
+      builder (>= 2.1.2)
+      riddle (>= 1.5.2)
     thor (0.14.6)
     tilt (1.3.3)
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
+    turn (0.9.5)
+      ansi
     tzinfo (0.3.33)
-    uglifier (1.2.6)
+    uglifier (1.2.4)
       execjs (>= 0.3.0)
-      multi_json (~> 1.3)
+      multi_json (>= 1.0.2)
+    unf (0.0.5)
+      unf_ext
+    unf_ext (0.0.4)
+    vegas (0.1.11)
+      rack (>= 1.0.0)
     warden (1.2.1)
       rack (>= 1.0)
+    webrobots (0.0.13)
+    wicked_pdf (0.7.9)
+    xpath (0.1.4)
+      nokogiri (~> 1.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  activesupport
   acts_as_tree
-  coffee-rails (~> 3.2.1)
+  blueprint-rails (~> 0.1.2)
+  capistrano
+  capistrano_colors
+  capybara
+  chardet (~> 0.9.0)
+  ckeditor!
+  coffee-rails (~> 3.1.0)
+  color
+  cucumber-rails
+  daemons
+  database_cleaner
+  delayed_job
+  delayed_job_active_record
   devise
   devise_ldap_authenticatable!
+  difflcs
+  dynamic_form
+  eco
+  ensure-encoding
+  factory_girl_rails
+  fancybox-rails
+  fileutils
+  i18n-js
+  i18n_generators
   jquery-rails
-  rails (= 3.2.3)
-  sass-rails (~> 3.2.3)
-  sqlite3
-  uglifier (>= 1.0.3)
+  jquery-tmpl-rails
+  jquery-ui-rails
+  loofah
+  minitest
+  mysql2
+  nokogiri
+  paperclip
+  parallel
+  passenger
+  pdf-reader
+  plupload-rails
+  rails (= 3.1.0)
+  rake
+  resque (~> 1.20.0)
+  rspec-rails
+  ruby-rtf
+  sass-rails (= 3.1.4)
+  spine-rails
+  therubyracer
+  thinking-sphinx
+  ts-delayed-delta!
+  turn
+  uglifier
+  wicked_pdf

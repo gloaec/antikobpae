@@ -1,0 +1,153 @@
+<h1>Edit Document</h1>
+
+<a data-type="back">Back</a>
+
+<form>
+  
+  <label>
+    <span>Name</span>
+    <input 
+      type="text" name="name" 
+      value="<%= @name %>" required
+ autofocus>
+    <br />
+  </label>
+  
+  <label>
+    <span>Status</span>
+    <input 
+      type="text" name="status" 
+      value="<%= @status %>" required
+>
+    <br />
+  </label>
+  
+  <label>
+    <span>Content</span>
+    <input 
+      type="text" name="content" 
+      value="<%= @content %>" required
+>
+    <br />
+  </label>
+  
+  <label>
+    <span>Words Length</span>
+    <input 
+      type="text" name="words_length" 
+      value="<%= @words_length %>" required
+>
+    <br />
+  </label>
+  
+  <label>
+    <span>Chars Length</span>
+    <input 
+      type="text" name="chars_length" 
+      value="<%= @chars_length %>" required
+>
+    <br />
+  </label>
+  
+  <label>
+    <span>Attachment File Type</span>
+    <input 
+      type="text" name="attachment_file_type" 
+      value="<%= @attachment_file_type %>" required
+>
+    <br />
+  </label>
+  
+  <label>
+    <span>Attachment File Name</span>
+    <input 
+      type="text" name="attachment_file_name" 
+      value="<%= @attachment_file_name %>" required
+>
+    <br />
+  </label>
+  
+  <label>
+    <span>Attachment Content Type</span>
+    <input 
+      type="text" name="attachment_content_type" 
+      value="<%= @attachment_content_type %>" required
+>
+    <br />
+  </label>
+  
+  <label>
+    <span>Attachment File Size</span>
+    <input 
+      type="text" name="attachment_file_size" 
+      value="<%= @attachment_file_size %>" required
+>
+    <br />
+  </label>
+  
+  <label>
+    <span>Attachment Updated At</span>
+    <input 
+      type="text" name="attachment_updated_at" 
+      value="<%= @attachment_updated_at %>" required
+>
+    <br />
+  </label>
+  
+  <label>
+    <span>From</span>
+    <input 
+      type="text" name="from" 
+      value="<%= @from %>" required
+>
+    <br />
+  </label>
+  
+  <label>
+    <span>Delta</span>
+    <input 
+      type="text" name="delta" 
+      value="<%= @delta %>" required
+>
+    <br />
+  </label>
+  
+  <label>
+    <span>Text Only</span>
+    <input 
+      type="text" name="text_only" 
+      value="<%= @text_only %>" required
+>
+    <br />
+  </label>
+  
+  <label>
+    <span>Folder</span>
+    <input 
+      type="text" name="folder_id" 
+      value="<%= @folder_id %>" required
+>
+    <br />
+  </label>
+  
+  <label>
+    <span>Created At</span>
+    <input 
+      type="text" name="created_at" 
+      value="<%= @created_at %>" required
+>
+    <br />
+  </label>
+  
+  <label>
+    <span>Updated At</span>
+    <input 
+      type="text" name="updated_at" 
+      value="<%= @updated_at %>" required
+>
+    <br />
+  </label>
+  
+  <button>Edit</button>
+
+</form>

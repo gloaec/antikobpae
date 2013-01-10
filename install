@@ -1,0 +1,32 @@
+#!/bin/bash 
+
+echo -e "\033[38;5;213mAttempting to install antikobpae's dependencies ($#)...\033[39m"
+mkdir $(pwd)/src
+cd $(pwd)/src
+
+args=("$@")
+deps=(essentials git python chardet mysql rvm openssl iconv ruby sphinx swath wicked-pdf imagemagick libreoffice)
+#deps=("$(ls lib/install)")
+
+NB=$#
+Z=0
+
+if [ $NB -gt $Z ];
+  then 
+    echo -e "\033[38;5;213mPackages : $@\033[39m"
+    for (( i=0;i<${#args[@]};i++)); do
+      if [ -e ../lib/install/${args[${i}]} ];
+        then bash ../lib/install/${args[${i}]} ;
+        else echo -e "\033[38;5;1m=> '$arg' doesn't exist\033[39m"
+      fi 
+    done
+else
+  echo -e "\033[38;5;213mPackages : ${deps[@]}\033[39m"
+   for (( i=0;i<${#deps[@]};i++)); do
+    bash ../lib/install/${deps[${i}]};
+  done
+fi 
+
+echo -e "\033[38;5;213mCleaning...\033[39m"
+cd $(pwd)
+rm -rf src/

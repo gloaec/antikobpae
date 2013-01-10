@@ -1,0 +1,29 @@
+development: &non_production_settings
+  default_tolerence: 20
+  storage_path: '/Users/ghis182/antikobpae-2.0/uploads' 
+  bing_api_key: "4800F95CAE10179DCED5EF241E3B16B077592394"
+
+  soffice_bin: '/Applications/LibreOffice.app/Contents/MacOS/soffice'
+  abiword_bin: '/usr/bin/abiword'
+  swath_bin: '/usr/local/bin/swath'
+  wkhtmltopdf_bin : '/usr/local/bin/wkhtmltopdf'
+  chardet_bin: '/usr/bin/chardet'
+  
+  #-- Not Required Yet/Anymore ---    
+  google_api_key: ""
+  iconv_bin: '/usr/local/bin/iconv'
+  #-------------------------------
+
+test:
+  <<: *non_production_settings
+
+production:
+  default_tolerence: 20
+  storage_path: '/Users/ghis182/antikobpae-2.0/uploads'
+  bing_api_key: "4800F95CAE10179DCED5EF241E3B16B077592394"
+
+  soffice_bin: '/Applications/LibreOffice.app/Contents/MacOS/soffice'
+  abiword_bin: '/usr/bin/abiword'
+  swath_bin: '/usr/local/bin/swath'
+  wkhtmltopdf_bin : '/usr/local/bin/wkhtmltopdf'
+  chardet_bin: '/usr/bin/chardet'

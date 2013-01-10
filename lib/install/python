@@ -1,0 +1,22 @@
+#!/bin/bash
+echo -e "\033[38;5;111m=> Installing Python\033[39m"
+
+APT_PKG=(python)
+
+APT_PKG_JOIN="${APT_PKG[*]}"
+sudo apt-get install $APT_PKG_JOIN
+
+if which python &> /dev/null;
+  then echo -e "\033[38;5;148m=> 'python' installed successfully\033[39m";
+  else echo -e "\033[38;5;1m=> 'python' not installed\033[39m" && exit 1
+fi
+
+echo -e "\033[38;5;111m=> Installing Python Eggs\033[39m"
+
+curl -O http://peak.telecommunity.com/dist/ez_setup.py
+sudo python ez_setup.py	
+
+if which easy_install &> /dev/null;
+  then echo -e "\033[38;5;148m=> 'easy_install' installed successfully\033[39m";
+  else echo -e "\033[38;5;1m=> 'easy_install' not installed\033[39m" && exit 1
+fi

@@ -1,0 +1,14 @@
+<% content_for :title, @document.attachment_file_name -%>
+
+<% content_for :sidebar do -%>
+	<ul>
+		<li><%= link_to t(:back), folder_url(@folder) %></li>
+		<li><%= link_to image_tag('icons/document32.png')+t(:download), download_file_path(@document) %></li>
+		<li><%= link_to image_tag('icons/pdf32.png')+t(:download_PDF), download_file_path(@document, :format => :pdf) %></li>
+	</ul>
+<% end -%>
+
+<div class="breadcrumbs">
+	<%= breadcrumbs(@document.folder, "<span class=\"breadcrumb nowrap\">#{link_to(@document.attachment_file_name, file_path(@document))}</span>") %>
+</div>
+<%= @document.content.html_safe %>

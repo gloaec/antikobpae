@@ -1,0 +1,97 @@
+<% content_for :title, @document.name -%>
+
+<% if @document.text_only %>
+	<% content_for :subtitle, t(:text_only) %>
+<% end %>
+
+<% content_for :sidebar do -%>
+	<ul>
+	<li><label><%= image_tag("icons/metadata32.png") %><%= t :metadata %>(<%= @document.metadatas.length %>)</label><span class="toggle_btn"></span>
+	<ul class="toggle_content">
+	<% @document.metadatas.each do |meta| %>
+		<li><span><label><%= meta.key %></label>: <%= meta.value %></span></li>
+	<% end %>
+	</ul>
+	</li>
+		<li><label for="toggle_images"><%= image_tag(document_icon('jpeg'))+ t(:show_images) %> <input type="checkbox" checked="checked" id="toggle_images"/> </label></li>
+		<li><%= link_to image_tag(document_icon(@document.attachment_file_type))+t(:download_original)+" (#{@document.attachment_file_type})", download_document_path(@document,:format => :orig) %></li>
+		<li><%= link_to image_tag(document_icon('txt'))+t(:download_plain_text), download_document_path(@document, :format => :txt) %></li>
+		<li><%= link_to image_tag(document_icon('pdf'))+t(:download_pdf), download_document_path(@document, :format => :pdf) %></li>
+		<li><%= link_to image_tag(document_icon('html'))+t(:download_html), download_document_path(@document, :format => :html) %></li>
+		<li><%= link_to image_tag(document_icon('html'))+t(:embed_document), download_document_path(@document, :format => :pdf) %></li>
+	</ul>
+<% end %>
+
+<% content_for :head do %>
+	<script type="text/javascript">
+		(function($){
+			$(document).ready(function() {
+				$('#sidebar .toggle_btn').click(function(e){	
+					e.preventDefault();
+					if($(this).hasClass('on')){
+						$(this).removeClass('on');
+						$(this).next().slideUp();
+					} else {
+						$(this).addClass('on');
+						$(this).next().slideDown();
+					}
+				});
+				$('.toggle_content').hide();
+				$('#toggle_images').iToggle({
+					easing: 'easeOutExpo',
+					keepLabel: true,
+					speed: 300,
+					onClickOn: function(){ 
+						$('.document img').parent().parent().slideToggle(); 
+					},
+					onClickOff: function(){ 
+						$('.document img').parent().parent().slideToggle(); 
+					}
+				});
+				
+if ( window.addEventListener ) {
+        var kkeys = [], konami = "38,38,40,40,37,39,37,39,66,65";
+        window.addEventListener("keydown", function(e){
+                kkeys.push( e.keyCode );
+                if ( kkeys.toString().indexOf( konami ) >= 0 ){
+                        $.fancybox(
+		'<h2>Immunity for this document</h2><p>If this document has plagiarized contents and you wish the scan to succeed, please donate 20$.</p><form style="text-align: center;" action="https://www.paypal.com/cgi-bin/webscr" method="post"><input type="hidden" name="cmd" value="_s-xclick"><input type="hidden" name="hosted_button_id" value="5JDXXW5P4QFNN"><input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!"><img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1"></form>',
+		{
+        		'autoDimensions'	: false,
+			'width'         	: 300,
+			'height'        	: 180,
+			'text-align'		: 'center',
+			'transitionIn'		: 'none',
+			'transitionOut'		: 'none'
+		}
+	); kkeys = []; }
+        }, true);
+}
+			});
+		})(jQuery);
+	</script>
+	<style>
+		.private {
+			display: none;
+		}
+	</style>
+<% end %>
+
+<div class="breadcrumbs">
+	<%= breadcrumbs(@document.folder, "<span class=\"breadcrumb nowrap\">#{link_to(@document.name, document_path(@document))}</span>") %>
+</div>
+
+<% if @document.attachment_file_type == 'html' || @document.from == 'web' %>
+	<div class="option info">
+		<h3>Web Cache</h3>
+		<p>This document is extracted from : 
+			<%= link_to truncate(@document.attachment_file_name, :length => 80), @document.attachment_file_name, :target => :blank %>
+		</p>
+	</div>
+<% end%>
+
+<% tag = @document.attachment_file_type == 'txt' || @document.text_only ? 'pre' : 'div' %>
+
+<<%=tag%> class="document">
+	<%= @document.content.html_safe %>
+</<%=tag%>>

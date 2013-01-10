@@ -1,0 +1,11 @@
+#!/bin/bash
+echo -e "\033[38;5;111m=> Installing RVM\033[39m"
+
+bash -s stable < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer)	
+echo "[[ -s \"$HOME/.rvm/scripts/rvm\" ]] && . \"$HOME/.rvm/scripts/rvm\"  # This loads RVM" >> ~/.bashrc
+source $HOME/.bashrc
+
+if which rvm &> /dev/null;
+  then echo -e "\033[38;5;148m=> 'rvm' installed successfully\033[39m";
+  else echo -e "\033[38;5;1m=> 'rvm' not installed\033[39m" && exit 1
+fi

@@ -1,9 +1,11 @@
+
 tmp/*
 db/*.sqlite3
 db/schema.rb
 db/sphinx/*
 config/database.yml
 config/antikobpae.yml
+config/ldap.yml
 config/*.sphinx.conf
 log/*
 uploads/*
@@ -11,3 +13,4 @@ import/*
 vendor/bundle/*
 public/assets/*
 public/system/*
+config/deploy/templates/*

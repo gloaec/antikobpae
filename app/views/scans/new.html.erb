@@ -1,0 +1,17 @@
+<% content_for :title, t(:new_scan) -%>
+
+<div id="files_and_folders">
+	<h3><%= t(:new_scan) %></h3>
+	<%= form_for @scan do |f| %>
+		<%= f.error_messages %>
+			<%= fields_for @scan.folder do |g| %>
+				<%= g.error_messages %>
+				<p>
+					<%= g.label :name %>:<br>
+					<%= g.text_field :name, { :class => 'text_input' } %>
+				</p>
+				<p>
+			<% end %>
+		<%= f.submit t(:collect_documents) %>
+	<% end %>
+</div>
