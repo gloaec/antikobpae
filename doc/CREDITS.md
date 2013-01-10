@@ -3,6 +3,7 @@ CREDITS
 
 Contributors:
 
+ * [Ghislain Loaec](https://github.com/gloaec)
  * [Jessica Marcon](https://github.com/marcontwm)
  * [Marcus Ilgner](https://github.com/milgner)
  * [Rob Halff](https://github.com/rhalff)
@@ -12,14 +13,6 @@ Contributors:
  * Stian Haklev
  * Craig Box
  * Stephan Toggweiler
-
-
-Donations:
-
- * [IT Partners (2x)](http://www.itpartners.co.nz/)
- * Matt Meshulam
- * April Colo
-
 
 Other credits:
 

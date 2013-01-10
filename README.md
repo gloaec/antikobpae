@@ -2,16 +2,16 @@
 
 Antikobpae is a Rails 3.1 application that aims to be a simple interface for text 
 plagiarism detection via a web browser. It includes file management & sharing 
-possibilities based on [BoxRoom](http://boxroom.rubyforge.org/). The application lets users create
-folders and upload and download files. For admins it is possible to create users,
+possibilities inspired from [BoxRoom](http://boxroom.rubyforge.org/). The application lets 
+users create folders and upload and download files. For admins it is possible to create users,
 groups and the CRU/D rights these groups have on folders. It makes the application
 flexible depending on the organization's network (Intranet Application / Cloud Application)
 
 Wiki:
-[https://bitbucket.org/ghis182/kobpae-rails/wiki](https://bitbucket.org/ghis182/kobpae-rails/wiki)  
+[https://github.com/gloaec/antikobpae/wiki](https://github.com/gloaec/antikobpae/wiki)  
 
 Bug reports and feature requests:  
-[https://bitbucket.org/ghis182/kobpae-rails/issues/new](https://bitbucket.org/ghis182/kobpae-rails/issues/new)
+[https://github.com/gloaec/antikobpae/issues](https://github.com/gloaec/antikobpae/issues)
 
 # Requirements
 
@@ -22,19 +22,19 @@ The requirements for running Antikobpae are:
  * MySQL apt
  * Sphinx 2.0.4
  * OpenOffice or LibreOffice
- * -> add here server requirements ( built-in 'iconv' , 'swath' for ex.)
+ * Swath (Thai segmentation tool)
 	
 # Installation
 
 Follow the these steps:
 
- 1. `$ git clone https://ghis182@bitbucket.org/ghis182/kobpae-rails.git` Clone the project
+ 1. `$ git clone git://github.com/gloaec/antikobpae.git` Clone the project
     
 or 
 
- 1. Download and extract `kobpae-rails.zip`
+ 1. Download and extract [`antikobpae-master.zip`](https://github.com/gloaec/antikobpae/archive/master.zip)
  
- 2. `$ cd kobpae-rails` Go to the project root directory
+ 2. `$ cd antikobpae` Go to the project root directory
  3.	`$ bash install` Attempts to install all AntiKobpae's dependencies
  4. `$ bundle install` Install the bundle
 
@@ -50,12 +50,10 @@ perform in document processing. Edit these entries for each environements :
 `config/sphinx.yml` Sphinx configuration
 
 	bin_path: <sphinx_bin_path> 	# ='/usr/[local/]bin'
- 	searchd_binary_name: searchd 	# default
-  	indexer_binary_name: indexer 	# default
 
 `config/antikobpae.yml` Antikobpae configuration
 	
-	bing_api_key: "[Enter Google ID]"
+	bing_api_key: "[Enter Bing API key]"
 	soffice_bin: <soffice_bin>
 	swath_bin: <swath_bin>
 
