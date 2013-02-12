@@ -1,0 +1,85 @@
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a data-target=".navbar-inverse-collapse" data-toggle="collapse" class="btn btn-navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <%= link_to '', root_path, :class => 'brand' %>
+      <div class="nav-collapse collapse navbar-inverse-collapse">
+
+        <% if signed_in? -%>
+
+        <ul class="nav">
+
+          <li class="active"><%= link_to icon('home')+t(:home) %></li>
+          <li><%= link_to icon('tasks')+t(:scans), scans_path %></li>
+          <li><%= link_to icon('folder-open')+t(:documents), folder_path(current_user.private_folder) %></li>
+          <li><%= link_to icon('globe')+t(:index), domains_path %></li>
+
+          <% if current_user.member_of_admins? -%>
+              <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                <%= icon('wrench')+t(:admin) %><b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to icon('user')+t(:users), users_path %></li> 
+                  <li><%= link_to icon('group')+t(:groups), groups_path %></li>
+                  <li class="divider"></li>
+                  <% jobs = Delayed::Job.all %>
+                  <li><div class="span2">Scan Queue : <%= jobs.select { |j| j.queue == 'scans' }.count %></div><li>
+                  <li><div class="span2">Document Queue : <%= jobs.select { |j| j.queue == 'documents' }.count %></div></li>
+                  <li><div class="span2">Delta Queue : <%= jobs.select { |j| j.queue == 'delta' }.count  %></div></li>
+                  <li><div class="span2">Documents : <%= Document.count %></div></li>
+                </ul>
+              </li>
+          <% end %>
+
+        </ul>
+
+        <form class="navbar-search" action="/search">
+            <div class="input-prepend">
+                <span class="add-on"><i class="icon-search"></i></span><input name="query" type="text" class="span2 typeahead" placeholder="Search&hellip;" data-provide="typeahead" autocomplete="off">
+            </div>
+        </form>
+
+        <ul class="nav pull-right">
+
+          <li class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+            <%= icon('locale-'+I18n.locale.to_s)+t(I18n.locale) %> <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <% [:en,:fr].each do |locale| %>
+                <li><%= link_to icon('locale-'+locale.to_s)+t(locale), :locale => locale %></li>
+              <% end %>
+            </ul>
+          </li>
+
+        <% if user_signed_in? %>
+          <li class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+            <%= icon('user')+current_user.name %> <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><%= link_to icon('user')+t(:my_profile), edit_user_path(current_user) %></li> 
+              <li class="divider"></li>
+              <li><%= link_to icon('signout')+t(:sign_out), destroy_user_session_path, :method => :delete %></li>
+            </ul>
+          </li>
+        <% else %>
+          <li><%= link_to icon('pencil')+t(:sign_up), new_registration_path(resource_name) %></li>
+          <li class="divider"></li>
+          <li class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#"><%= icon('signin')+t(:sign_in) %><b class="caret"></b></a>
+            <div class="dropdown-menu">
+              <%#= render "users/shared/new_session_form" %>
+            </div>
+          </li>
+        <% end %> 
+
+        </ul>
+
+        <% end %>
+      </div><!-- /.nav-collapse -->
+    </div>
+  </div><!-- /navbar-inner -->
+</div>

@@ -1,0 +1,60 @@
+
+<div class="breadcrumb">
+    <%= breadcrumbs(@domain) %>
+</div>
+<%= form_for(@domain, :html => { :class => "form-horizontal" }) do %>
+    <div class="control-group">
+        <div class="input-prepend span12">
+            <span class="add-on"><%= icon('globe') %></span>
+            <input class="span11" name="seed_uri" id="seed_uri" type="text" placeholder="Spider seed URI">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <div class="input-append input-prepend">
+            <span class="add-on"><%= icon('globe') %></span>
+            <span id="protocol" name="protocol" class="add-on">http://</span>
+            <input class="span5" name="host" id="host" type="text" placeholder="BaseURI">
+            <span class="add-on">/</span>
+            <input class="span6" name="path" id="path" type="text" placeholder="Route">
+            <span class="add-on">/</span>
+            <button class="btn btn-primary" type="submit"><%= icon('file')+t(:get_documents) %></button>
+        </div>
+    </div>
+<% end %>
+
+<% content_for :head do %>
+    <script type="text/javascript">
+        $(function(){
+            function parseUri() {
+
+              var result = {};
+              var anchor = document.createElement('a');
+              anchor.href = $(this).val();
+
+              var keys = 'protocol hostname host pathname port search hash href'.split(' ');
+              for (keyIndex in keys) {
+                var currentKey = keys[keyIndex]; 
+                result[currentKey] = anchor[currentKey];
+              }
+
+              result.toString = function() { return anchor.href; };
+              result.requestUri = result.pathname + result.search;  
+              result.path = "";
+              var match = result.pathname.match(/\/(.*)\/.*$/);
+              if(match) result.path = match[1];
+
+                $("#protocol").text(result.protocol+"//");
+                $("#host").val(result.host);
+                $("#path").val(result.path);
+              return result;
+
+            };
+
+          $("#seed_uri").change(parseUri);
+          $("#seed_uri").keyup(parseUri);
+          
+
+        });
+    </script>
+<% end %> 

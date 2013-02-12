@@ -10,8 +10,9 @@ class Folder < ActiveRecord::Base
   has_one :scans_folder 
   has_one :scan
   has_many :scans
+  has_one :domain
   
-  accepts_nested_attributes_for :documents
+  accepts_nested_attributes_for :documents, :parent, :children
   
   attr_accessor :is_copied_folder
   attr_accessible :name, :user_id, :private, :documents
@@ -81,18 +82,26 @@ class Folder < ActiveRecord::Base
     parent.nil? && !new_record?
   end
 
-  def has_children?
-    children.count > 0
+  def is_index?
+    parent_id == 1 && !new_record?
   end
 
   def self.root
     find_by_name_and_parent_id('Root folder', nil)
   end
 
+  def self.index
+    find_by_name_and_parent_id('Web Index', 1)
+  end
+
+  def has_children?
+    children.count > 0
+  end
+
   private
 
   def check_for_parent  	
-      raise 'Folders must have a parent.' if parent.nil? && name != 'Root folder'
+    raise 'Folders must have a parent.' if parent.nil? && name != 'Root Folder'
   end
 
   def create_permissions

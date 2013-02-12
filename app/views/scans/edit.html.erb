@@ -2,381 +2,302 @@
 
 <%= form_for @scan do |f| %>
 
-	<% content_for :head do %>
-		<script type="text/javascript">
-			(function($){
-				$(document).ready(function() {
-					
-					$( "#scan_tolerence_slider" ).slider({
-						range: "min",
-						value: 20,
-						min: 5,
-						max: 50,
-						slide: function( event, ui ) {
-							$( "#scan_tolerence" ).val(ui.value);
-						}
-					});
-					
-					$( "#scan_tolerence" ).val($( "#scan_tolerence_slider" ).slider("value"));
-					
-					$('#sidebar input[type=checkbox]').iToggle({
-						easing: 'easeOutExpo',
-						keepLabel: true,
-						speed: 300,
-						onClickOn: function(){
-							console.log($(this));	
-						},
-						onClickOff: function(){
-							
-						}
-					});
-				});
-			})(jQuery);
-		</script>
+<% content_for :sidebar do -%>
+	<li><%= link_to icon('file')+t(:create_a_new_document), new_folder_document_path(@scan.folder, :from => :scratch) %></li>
+	<li id="upload_li">
+		<%= link_to_function icon('upload')+t(:upload_documents), nil , :id => 'upload_btn' %> 
+	</li>
+	<li><%= link_to icon('globe')+t(:import_from_a_webpage), new_folder_document_path(@scan.folder, :from => :webpage) %></li>
+	<li id="show_clipboard_link"><%= link_to_function icon('inbox')+t(:import_from_web_clipboard), "show_element('clipboard')" %></li>
+	<% if current_user.member_of_admins? -%>
+		<li id="show_permissions_link"><%= link_to_function icon('lock')+t(:permissions), "show_element('permissions')" %></li>
 	<% end %>
-
-	<% content_for :sidebar do -%>
-		<h3><%= t(:add_documents) %></h3>
-		<ul>
-			<li><%= link_to image_tag('icons/add_text32.png') + t(:create_a_new_document), new_folder_document_path(@scan.folder, :from => :scratch) %></li>
-			<li id="upload_li">
-				<%= link_to_function image_tag('icons/add_upload32.png') + t(:upload_documents), nil , :id => 'upload_btn' %> 
-				<span class="toggle_btn"></span>
-				<ul class="toggle_content" id="upload_form">
-					<li>
-						<span>
-							<%= image_tag('runtime16.png') %>
-							<%= t(:runtime) %>: <span class="label" id="upload_runtime"></span>
-						</span>
-					</li>
-					<li>
-						<label for="document_text_only">
-							<%= image_tag('txt16.png') %>
-							<%=t (:text_only) %><input type="checkbox" id="document_text_only" checked="checked"/>
-						</label>
-					</li>
-				</ul>
-			</li>
-			<li><%= link_to image_tag('icons/add_web32.png') + t(:import_from_a_webpage), new_folder_document_path(@scan.folder, :from => :webpage) %></li>
-			<li><%= link_to image_tag('icons/add_corpus32.png') + t(:import_from_web_corpus), new_scan_document_path(@scan.folder, :from => :folder) %></li>
-			<li id="show_clipboard_link"><%= link_to_function image_tag('clipboard.png', :alt => 'import_from_web_clipboard') + t(:import_from_web_clipboard), "show_element('clipboard')" %></li>
-			<% if current_user.member_of_admins? -%>
-				<li id="show_permissions_link"><%= link_to_function image_tag('permissions.png', :alt => t(:permissions)) + t(:permissions), "show_element('permissions')" %></li>
-			<% end %>
-		</ul>
-		
-		<h3><%= t(:browse_targets) %></h3>
-		<ul>
-			<li><label for="scan_sphinx"><%= image_tag 'icons/corpus32.png' %>Web Corpus <%= f.check_box :sphinx %></label></li>
-			<li style="position: relative;"><label for="scan_web"><%= image_tag 'icons/web32.png' %>Web Browsing <%= f.check_box :web %></label><div style="position: absolute;
-			top: 26px;
-			left: 46px;
-			color: #CCC;
-			font-size: 0.8em;">(experimental)</div> </li>
-			<li><label for="scan_recursive"><%= image_tag 'icons/recursive32.png' %>Recursive Scan <%= f.check_box :recursive %></label></li>
-			<li>
-				<div>
-				<label for="scan_tolerence">Tolerence : <%= f.text_field :tolerence, :size => 2, :class => 'title' %>words</label>
-				<div id="scan_tolerence_slider"></div>		
-				</div>		
-			</li>
-		</ul>
-	<% end -%>
-		
-	<% unless @scan.folder.is_root? -%>
-		<div class="breadcrumbs">
-			<%= breadcrumbs(@scan.folder) %>
-		</div>
-	<% end -%>
-
-	<div id="files_and_folders">		
-		<div class="span-18 last">
-			<div class="span-10">
-			
-				<%= f.error_messages %>
-				
-				<%= fields_for @scan.folder do |g| %>
-					<%= g.error_messages %>
-					<%= g.label :name %>: <%= g.text_field :name, { :class => 'text_input' } %>
-				<% end %>
-				<p>
-					Import documents you want to submit for plagrasim scan. Then select targets to include in the search index and click "Start Scan" !
-				</p>	
-			</div>
-			<div class="span-4">
-				<button type="submit" name="start" value="0" class="button blue span-4 last">
-					<%= t(:update_scan) %>
-				</button>
-			</div>
-			<div class="span-4 last">
-				<button type="submit" name="start" value="1" class="button green span-4 last">
-					<%= t(:start_scan) %>
-				</a>
-			</div>
-		</div>
-		<div class="span-18 last">
-			<div id="errors">
-
-			</div>
-			<div id="container">
-			</div>
-			<table>
-			  <thead>
-				<tr>
-					<th width="16"></th>
-					<th colspan="2"><%= t :name %></th>
-					<th><%= t :size %></th>
-					<th><%= t :date_modified %></th>
-					<th></th>
-				</tr>
-			  </thead>
-			
-			<% unless @scan.folder.is_root? -%>
-				<tr class="<%= cycle('even','odd') %>">
-					<td class="icon"><%= image_tag('folder.png') %></td>
-					<td class="file_name" colspan="2">&uarr; <%= link_to t(:up), folder_path(@scan.folder.parent), :title => @scan.folder.parent.name %></td>
-					<td class="file_size">--</td>
-					<td class="file_modified">--</td>
-					<td></td>
-				</tr>
-			<% end -%>
-			  <tbody id="documents">
-			<% @scan.folder.documents.each do |file| -%>
-				<% if current_user.can_read(@scan.folder) -%>
-				<tr id="document_<%= file.id %>" class="<%= cycle('even','odd') %>">
-					<td class="icon"><%= image_tag(document_icon(file.attachment_file_type)) %></td>
-					<td class="file_name"><%= link_to file.name, document_path(file), :title => "#{t(:download)} #{file.name}" %></td>
-					<td class="document_status"><%= document_status(file.status) %></td>
-					<td class="file_size"><%= number_to_human_size(file.attachment_file_size, :locale=>I18n.locale) %></td>
-					<td class="file_modified"><%= l file.updated_at, :format => :long %></td>
-					<td class="options"><%= link_to image_tag('clipboard_add.png', :alt => t(:add_to_clipboard)),
-							{ :controller => :clipboard, :action => :create, :id => file.id, :type => 'file', :folder_id => @scan.folder, :authenticity_token => form_authenticity_token },
-							:method => :post, :title => t(:add_to_clipboard)
-						%><%= link_to image_tag('share.png', :alt => t(:share)), new_document_share_link_path(file), :title => t(:share) %><% 
-						if current_user.can_update(file.folder)
-						%><%= link_to image_tag('edit.png', :alt => t(:edit)), edit_document_path(file), :title => t(:edit) %><% 
-						end 
-						if current_user.can_delete(file.folder) 
-						%><%= link_to image_tag('icons/delete.png', :alt => t(:delete_item)), document_path(file), :method => :delete, :confirm => t(:are_you_sure), :title => t(:delete_item) %><% 
-						end -%>
-					</td>
-				</tr>
-				<% end -%>
-			<% end -%>
-			</tbody>
-			  <tfoot>
-				<% if current_user.can_create(@scan.folder) -%>
-				<tr>
-					<td colspan="6" class="transparent">
-						<div id="drop">
-							<div style="text-align: center;">Drag & Drop your documents here</div>
-						</div>
-					</td>
-				</tr>
-				<% end %>
-			  	<tr>
-			  	  <td colspan="6">		
-			  	  </td>
-			  	</tr>
-			  </tfoot>
-			</table>
-			
-			<% content_for :head do %>
-				<script type="text/javascript" charset="utf-8">
-				  $(document).ready(function(){
-					
-					var uploader;
-					var count = 0
-					update_status();
-					initUploader();
-					
-					$('input[type=checkbox]#document_text_only').iToggle({
-						easing: 'easeOutExpo',
-						keepLabel: true,
-						speed: 300,
-						onClickOn: function(){ 
-							uploader.destroy();
-							initUploader({
-								multipart_params: {
-									'document_text_only': true,
-							      '<%= request_forgery_protection_token %>': '<%= form_authenticity_token %>',
-							      '<%= request.session_options[:key] %>': '<%= request.session_options[:id] %>'
-							    }
-							});
-						},
-						onClickOff: function(){ 
-							uploader.destroy();
-							initUploader({
-								multipart_params: {
-									'document_text_only': false,
-							      '<%= request_forgery_protection_token %>': '<%= form_authenticity_token %>',
-							      '<%= request.session_options[:key] %>': '<%= request.session_options[:id] %>'
-							    }
-							});
-						}
-					});
-					
-					function update_status(){
-						$.getJSON('<%= statement_folder_path(@scan.folder) %>', function(data) {
-							var folder = data["folder"]
-							var running = false;
-							//console.log(data);		
-							$.each(folder.documents, function(i, doc) {
-								$.extend(doc, {
-									folder_id: <%= @folder.id %>,
-									updated_at: I18n.strftime(new Date(doc.updated_at), "%B %d,%Y %H:%M"),
-									form_authenticity_token: '<%= form_authenticity_token %>',
-									name: truncate(doc.name, 40),
-									tr_class: i%2?'even':'odd',
-									state: document_status(doc.status), //status.icon + status.text,
-									attachment_file_size: plupload.formatSize(doc.attachment_file_size)
-								});
-
-								html_row = $($.tmpl("document_row", doc));
-
-								if ($('#document_'+doc.id).length>0){
-									//if($('#document_status_'+doc.id).html() != $(html_row).find('#document_status_'+doc.id).html())
-										$('#document_'+doc.id).find('.document_status').html($(html_row).find('.document_status').html());
-								}
-								else {
-									tr_class = $('#documents tr').last().hasClass('even') ? 'odd' : 'even';
-									$('#documents').append(html_row);
-								}
-								if (doc.status < 3) { running = true; }						
-							});
-							if(running) setTimeout(update_status, 2000);
-						});	
-					}
-					
-					
-					$('input[type=checkbox]#document_text_only').iToggle({
-						easing: 'easeOutExpo',
-						keepLabel: true,
-						speed: 300,
-						onClickOn: function(){ 
-							uploader.destroy();
-							initUploader({
-								multipart_params: {
-									'document_text_only': true,
-							      '<%= request_forgery_protection_token %>': '<%= form_authenticity_token %>',
-							      '<%= request.session_options[:key] %>': '<%= request.session_options[:id] %>'
-							    }
-							});
-						},
-						onClickOff: function(){ 
-							uploader.destroy();
-							initUploader({
-								multipart_params: {
-									'document_text_only': false,
-							      '<%= request_forgery_protection_token %>': '<%= form_authenticity_token %>',
-							      '<%= request.session_options[:key] %>': '<%= request.session_options[:id] %>'
-							    }
-							});
-						}
-					});
-					
-					function initUploader(params){		
-
-					    settings = {
-					    	url: '<%= url_for([@scan.folder, Document.new]) %>',
-					    	multipart_params: {
-						  		'document_text_only': true,
-					      		'<%= request_forgery_protection_token %>': '<%= form_authenticity_token %>',
-					      		'<%= request.session_options[:key] %>': '<%= request.session_options[:id] %>'
-					    	},
-							runtimes: 'html5,gears,flash,silverlight,browserplus',
-					        drop_element : "documents_table",
-							browse_button : 'upload_btn',
-							container : 'container',
-							max_file_size : '100mb',
-							//rename: true,
-							filters : [
-								{title : "AntiKobpae Supported Documents", extensions : "doc,docx,pdf,rtf,txt,html"}
-							],
-					        //autostart : true
-						};
-
-						$.extend(settings, params);
-
-						//console.log(settings);
-
-						uploader = new plupload.Uploader(settings);
-
-						uploader.bind('Init', function(up, params) {
-							$('#upload_runtime').html(params.runtime);
-						});
-
-						uploader.init();
-
-						uploader.bind('FilesAdded', function(up, files) {
-							$.each(files, function(i, file) {
-								//console.log('doc',file);
-								$.extend(file, {
-									name: truncate(file.name, 40),
-									updated_at: I18n.strftime(new Date(), "%B %d,%Y %H:%M"),									
-									tr_class: i%2?'even':'odd',
-									state: document_status(0),
-									attachment_file_size: plupload.formatSize(file.size),
-									attachment_file_type: file.name.split('.').pop()
-								});
-								tr_class = $('#documents tr').last().hasClass('even') ? 'odd' : 'even';
-								html_row = $.tmpl("document_row", file);
-								$("#documents").append(html_row);
-								$('#document_status_'+file.id).progressBar(file.percent, {barImage: "<%= asset_path 'progressbg_blue.gif' %>"});
-							/*	$('#uploads').prepend(
-									$('<div id="document_'+file.id+'">').addClass((i%2?'even':'odd')+' span-22')
-									.append($('<div>').addClass('span-1 icon').text(''))
-									.append($('<div>').addClass('span-10 file_name')
-										.append($('<a href="/documents/'+(file.id)+'">').text(file.name))
-									)
-									.append($('<div id="document_status_'+file.id+'">').addClass('span-3'))
-									.append($('<div>').addClass('span-3 document_size').text(plupload.formatSize(file.size)))
-									.append($('<div>').addClass('span-4 last options'))
-								);*/
-							});
-							up.refresh(); // Reposition Flash/Silverlight
-							up.start();
-						});
-
-						uploader.bind('UploadProgress', function(up, file) {
-							$('#document_status_'+file.id).progressBar(file.percent, {barImage: "<%= asset_path 'progressbg_blue.gif' %>"});
-						});
-
-						uploader.bind('Error', function(up, err) {
-							console.log('ERROR', up, err);
-							msg = "Error: "+err.code+", Message: "+err.message+(err.file?", File: "+err.file.name:"");
-							div = $('<div class="option error" style="margin-bottom: 2px;">').text(msg)
-							$('#errors').append(div); div.fadeOut(10000);
-							if(err.file){
-								$('#document_'+err.file.id).addClass('error');
-								$('#document_status_'+err.file.id).html(msg)
-							} else {
-								alert(msg)
-							}
-							up.refresh(); // Reposition Flash/Silverlight
-						});
-
-						uploader.bind('FileUploaded', function(up, file) {
-							$('#document_status_'+file.id).progressBar(file.percent, {barImage: "<%= asset_path 'progressbg_green.gif' %>"});
-							$('#document_'+file.id).fadeOut("fast");
-							update_status();
-						});	
-					}
-				  });
-				</script>
-			<% end %>
-		
-		</div>
-	</div>
-
-	<div id="clipboard" style="display:none;">
-		<%= render 'clipboard/show', :folder => @scan.folder %>
-	</div>
+	<li>
+		<div>
+		<label for="scan_tolerence">Tolerence : <%= f.text_field :tolerence, :size => 2, :class => 'title' %>words</label>
+		<div id="scan_tolerence_slider"></div>		
+		</div>		
+	</li>
+<% end -%>
 	
-	<div id="hidden" style="display:none;">
-		<%= f.check_box :sphinx %>
-		<%= f.check_box :recursive %>
-		<%= f.check_box :web %>
+<% unless @scan.folder.is_root? -%>
+	<div class="breadcrumb">
+		<%= breadcrumbs(@scan) %>
 	</div>
+<% end -%>
 
+<%= f.error_messages %>
+
+<%= fields_for @scan.folder do |g| %>
+	<%= g.error_messages %>
+	<%= g.label :name %>: <%= g.text_field :name, { :class => 'text_input' } %>
+<% end %>
+<p>
+	Import documents you want to submit for plagrasim scan. Then select targets to include in the search index and click "Start Scan" !
+</p>	
+
+<button type="submit" name="start" value="0" class="btn">
+	<%= t(:update_scan) %>
+</button>
+
+<button type="submit" name="start" value="1" class="btn btn-primary">
+	<%= t(:start_scan) %>
+</button>
+
+<div id="errors">
+
+</div>
+
+<table id="documents_table" class="table table-condensed table-striped table-hover">
+  <thead>
+	<tr>
+		<th colspan="2"><%= t :name %></th>
+		<th><%= t :size %></th>
+		<th><%= t :date_modified %></th>
+		<th><%= t :by %></th>
+		<th></th>
+	</tr>
+  </thead>
+<% unless @folder.is_root? -%>
+	<tr class="<%= cycle('even','odd') %>">
+		<td class="file_name" colspan="2"><%= link_to icon('folder-open')+icon('arrow-up')+@folder.parent.name, folder_path(@folder.parent), :title => @folder.parent.name %></td>
+		<td class="file_size">--</td>
+		<td class="file_modified">--</td>
+		<td class="by"></td>
+		<td></td>
+	</tr>
+<% end -%>
+
+<tbody id="documents">
+<% @folder.children.each do |folder| -%>
+	<% if current_user.can_groups_read(folder) && !(folder.private && @folder.is_root?) -%>
+	<tr class="<%= cycle('even','odd') %>">
+		<td class="file_name" colspan="2"><%= link_to icon('folder-close')+folder.name, folder_path(folder) %></td>
+		<td class="file_size">--</td>
+		<td class="file_modified"><%= l folder.updated_at, :format => :long %></td>
+		<td class="by"><%= folder.user.name unless folder.user.nil? %></td>
+		<td class="options"><span class="pull-right">
+			<%= link_to icon('share'), '#', :title => t(:share), :rel => 'tooltip' %>
+			<%= link_to icon('inbox'),{ :controller => :clipboard, :action => :create, :id => folder.id, :type => 'folder', :folder_id => @folder, :authenticity_token => form_authenticity_token },:method => :post, :title => t(:add_to_clipboard), :rel => 'tooltip' %>
+			<% if current_user.can_update(folder) %>
+				<%= link_to icon('edit'), edit_folder_path(folder), :title => t(:edit), :rel => 'tooltip' %>
+			<% end %>
+			<% if current_user.can_delete(folder) %>
+				<%= link_to icon('remove'), folder_path(folder), :method => :delete, :confirm => t(:are_you_sure), :title => t(:delete_item), :rel => 'tooltip' %>
+			<% end %>
+		</span></td>
+	</tr>
+	<% end -%>
+<% end -%>
+<% @folder.documents.each do |document| -%>
+	<% if current_user.can_groups_read(@folder) -%>
+	<tr id="document_<%= document.id %>" class="<%= cycle('even','odd') %>">
+		<td class="document_name">
+			<%= link_to document_icon(document.attachment_file_type)+document.name.truncate(40), document_path(document), :class => 'trigger alt', :title => "#{t(:download)} #{document.name}" %>
+			<!--div id="popup_<%= document.id %>" class="popup alt">
+				<% if document.metadatas.empty? %>
+					<span class="no"><%= t :no_metadata %></span>
+				<% else %>
+					<table><tbody>
+					<% document.metadatas.each do |meta| %>
+						<tr class="<%= cycle('odd','even') %>">
+						<th valign="top" class="header" style="text-align: right;"><label><%= meta.key %></label>:</th>
+						<td valign="top" class=""><%= meta.value %></td>
+						</tr>
+					<% end %>
+					</tbody></table>		
+				<% end %>		 
+			</div-->
+		</td>
+		<td class="document_status"></td>
+		<td class="document_size"><%= number_to_human_size(document.attachment_file_size, :locale=>I18n.locale) %></td>
+		<td class="document_modified"><%= l document.updated_at, :format => :long %></td>
+		<td class="by"><%= document.user.name unless document.user.nil? %></td>
+		<td class="options"><span class="pull-right">
+			<%= link_to icon('share'), new_document_share_link_path(document), :title => t(:share), :rel => 'tooltip' %>
+			<%= link_to icon('inbox'),{ :controller => :clipboard, :action => :create, :id => document.id, :type => 'document', :folder_id => @folder, :authenticity_token => form_authenticity_token },:method => :post, :title => t(:add_to_clipboard), :rel => 'tooltip' %>
+			<% if current_user.can_update(document.folder) %>
+				<%= link_to icon('edit'), edit_document_path(document), :title => t(:edit), :rel => 'tooltip' %>
+			<% end %>
+			<% if current_user.can_delete(document.folder) %>
+				<%= link_to icon('remove'), document_path(document), :method => :delete, :confirm => t(:are_you_sure), :title => t(:delete_item), :rel => 'tooltip' %>
+			<% end %>
+		</span></td>
+	</tr>
+	<% end -%>
+<% end -%>
+</tbody>
+  <tfoot>
+	<% if current_user.can_create(@folder) -%>
+	<tr>
+		<td colspan="7" class="transparent">
+			<div id="drop">
+				<div style="text-align: center;">Drag & Drop your documents here</div>
+			</div>
+		</td>
+	</tr>
+	<% end %>
+  	<tr>
+  	  <td colspan="7">		
+  	  </td>
+  	</tr>
+  </tfoot>
+</table>
+		
+<div id="clipboard" style="display:none;">
+	<%= render 'clipboard/show', :folder => @scan.folder %>
+</div>
+
+<div id="hidden" style="display:none;">
+	<%= f.check_box :sphinx %>
+	<%= f.check_box :recursive %>
+	<%= f.check_box :web %>
+</div>
+
+<% end %>
+
+<% content_for :head do %>
+	<script type="text/javascript" charset="utf-8">
+	
+	  $(document).ready(function(){
+
+		var count = 0;
+		var uploader;
+		update_status();
+		initUploader();
+		
+		function update_status(){
+			$.getJSON('<%= statement_folder_path(@folder) %>', function(data) {
+				var folder = data["folder"]
+				var running = false;
+				//console.log(data);		
+				$.each(folder.documents, function(i, doc) {
+					$.extend(doc, {
+						folder_id: <%= @folder.id %>,
+						updated_at: I18n.strftime(new Date(doc.updated_at), "%B %d,%Y %H:%M"),
+						form_authenticity_token: '<%= form_authenticity_token %>',
+						name: truncate(doc.name, 40),
+						tr_class: i%2?'even':'odd',
+						state: document_status_html(doc.status), //status.icon + status.text,
+						attachment_file_size: plupload.formatSize(doc.attachment_file_size),
+						icon: document_icon(doc.attachment_file_type),
+						user: doc.user.name
+					});
+					
+					html_row = $($.tmpl("document_row", doc));
+										
+					if ($('#document_'+doc.id).length>0){
+						if($('#document_status_'+doc.id).html() != $(html_row).find('#document_status_'+doc.id).html())
+							$('#document_'+doc.id).find('.document_status').html($(html_row).find('.document_status').html());
+					}
+					else {
+						tr_class = $('#documents tr').last().hasClass('even') ? 'odd' : 'even';
+						$('#documents').append(html_row);		
+					    $("[rel='tooltip']").tooltip();
+					    $("[rel='tooltip nofollow']").tooltip();
+					    $("[rel='nofollow']").tooltip();
+					}
+
+					if (doc.status < 3) { running = true; }						
+				});
+				if(running) setTimeout(update_status, 2000);
+			});	
+		}
+		
+		
+		function initUploader(params){		
+
+		    settings = {
+		    	url: '<%= url_for([@folder, Document.new]) %>',
+		    	multipart_params: {
+			  		'document_text_only': true,
+		      		'<%= request_forgery_protection_token %>': '<%= form_authenticity_token %>',
+		      		'<%= request.session_options[:key] %>': '<%= request.session_options[:id] %>'
+		    	},
+				runtimes: 'html5,gears,flash,silverlight,browserplus',
+		        drop_element : "documents_table",
+				browse_button : 'upload_btn',
+				//container : 'container',
+				max_file_size : '100mb',
+				//rename: true,
+				filters : [
+					{title : "AntiKobpae Supported Documents", extensions : "doc,docx,pdf,rtf,txt,html"}
+				],
+		        //autostart : true
+			};
+
+			$.extend(settings, params);
+
+			//console.log(settings);
+
+			uploader = new plupload.Uploader(settings);
+
+			uploader.bind('Init', function(up, params) {
+				$('#upload_runtime').html(params.runtime);
+			});
+
+			uploader.init();
+
+			uploader.bind('FilesAdded', function(up, files) {
+				$.each(files, function(i, file) {
+					//console.log('doc',file);
+					$.extend(file, {
+						name: truncate(file.name, 40),
+						updated_at: I18n.strftime(new Date(), "%B %d,%Y %H:%M"),
+						tr_class: i%2?'even':'odd',
+						state: document_status_html(0),
+						attachment_file_size: plupload.formatSize(file.size),
+						attachment_file_type: file.name.split('.').pop(),
+						icon: document_icon(file.name.split('.').pop()),
+						user: "<%= current_user.name %>"
+					});
+					var tr_class = $('#documents tr').last().hasClass('even') ? 'odd' : 'even';
+					var html_row = $.tmpl("document_row", file);
+					$("#documents").append(html_row);
+
+				    $("[rel='tooltip']").tooltip();
+				    $("[rel='tooltip nofollow']").tooltip();
+				    $("[rel='nofollow']").tooltip();
+					$('#document_status_'+file.id+' .bar').css('width', file.percent+'%');
+				/*	$('#uploads').prepend(
+						$('<div id="document_'+file.id+'">').addClass((i%2?'even':'odd')+' span-22')
+						.append($('<div>').addClass('span-1 icon').text(''))
+						.append($('<div>').addClass('span-10 file_name')
+							.append($('<a href="/documents/'+(file.id)+'">').text(file.name))
+						)
+						.append($('<div id="document_status_'+file.id+'">').addClass('span-3'))
+						.append($('<div>').addClass('span-3 document_size').text(plupload.formatSize(file.size)))
+						.append($('<div>').addClass('span-4 last options'))
+					);*/
+				});
+				up.refresh(); // Reposition Flash/Silverlight
+				up.start();
+			});
+
+			uploader.bind('UploadProgress', function(up, file) {
+				$('#document_status_'+file.id+' .bar').css('width', file.percent+'%');
+			});
+
+			uploader.bind('Error', function(up, err) {
+				console.log('ERROR', up, err);
+				msg = "Error: "+err.code+", Message: "+err.message+(err.file?", File: "+err.file.name:"");
+				div = $('<div class="option error" style="margin-bottom: 2px;">').text(msg)
+				$('#errors').append(div); div.fadeOut(10000);
+				if(err.file){
+					$('#document_'+err.file.id).addClass('error');
+					$('#document_status_'+err.file.id).html(msg)
+				} else {
+					alert(msg)
+				}
+				up.refresh(); // Reposition Flash/Silverlight
+			});
+
+			uploader.bind('FileUploaded', function(up, file) {
+				$('#document_status_'+file.id+' .bar').css('width', file.percent+'%');
+				$('#document_'+file.id).fadeOut("fast");
+				update_status();
+			});	
+		}
+	  });
+	</script>
 <% end %>

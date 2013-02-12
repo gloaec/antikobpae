@@ -1,21 +1,10 @@
 # encoding: utf-8
-
-#require 'pdftohtmlr'
-#require 'doctohtmlr'
 require 'ruby-rtf'
-#require 'iconv'
 require 'nokogiri'
 require 'tempfile'
 require 'fileutils'
 require 'thinking_sphinx'
-#require 'tokyocabinet'
-#require 'pdf-reader'
 
-#include PDF
-#include PDFToHTMLR
-#include DOCToHTMLR
-#include RubyRTF
-#include TokyoCabinet
 include ActionView::Helpers::TextHelper
 
 class EncodeError < RuntimeError; end
@@ -27,6 +16,7 @@ class Document < ActiveRecord::Base
   belongs_to :folder
   belongs_to :user
   has_one :scan_file, :dependent => :destroy
+  has_one :content, :dependent => :destroy
   has_many :share_links, :dependent => :destroy
   has_many :duplicate_ranges, :through => :similarities, :foreign_key => "document_duplicate_range"
   has_many :similarities, :dependent => :destroy
@@ -35,7 +25,7 @@ class Document < ActiveRecord::Base
   
   accepts_nested_attributes_for :images
   accepts_nested_attributes_for :metadatas
-  #attr_accessible :user
+  accepts_nested_attributes_for :content
  
   validate :check_file
   validates_attachment_presence :attachment, :message => I18n.t(:blank, :scope => [:activerecord, :errors, :messages])
@@ -44,18 +34,7 @@ class Document < ActiveRecord::Base
   validates_format_of :attachment_file_type, :with => %r{^(file|docx|doc|pdf|odt|txt|html|rtf)$}i, :message => I18n.t(:file_format_not_supported)
   validates_uniqueness_of :name, :scope => 'folder_id', :message => I18n.t(:exists_already, :scope => [:activerecord, :errors, :messages])
 
-  after_save :check_for_existing_file
-  
-  #handle_asynchronously :process_document
-  #after_commit :set_file_delta_flag
-  #after_update :check_for_indexing 
-  
-  define_index do
-    indexes attachment_file_name, :sortable => true
-    indexes content
-    set_property :delta => :delayed
-    #has created_at, updated_at
-  end
+  after_save :prepare_processing
   
   def copy(target_folder)
     new_file = self.dup
@@ -71,21 +50,11 @@ class Document < ActiveRecord::Base
   end
  
   def move(target_folder)
-    self.folder = target_folder
-    save!
+    self.update_attribute(:folder, target_folder)
   end
   
   def extension
     self.attachment_file_type
-  end
-
-  def process_document
-    puts "<Document ##{id}> Processing Document..."
-    generate_html
-    generate_txt
-    generate_cut
-    generate_db
-    generate_index
   end
   
   def destroy
@@ -95,57 +64,42 @@ class Document < ActiveRecord::Base
     super
     scan_files.each {|sf| sf.calculate_score }
   end
+  
+  def process_document
+    puts "==========================================================================="
+    puts "<Document ##{id}> Processing Document..."
+    generate_html
+    generate_txt
+    generate_cut
+    generate_db
+    generate_index
+    puts "==========================================================================="
+  end
 
   private 
   
   def check_file
-    #self.attachment_file_name = self.name unless self.name.nil?
-    self.attachment_file_type = self.attachment_file_type || File.extname(attachment_file_name)[1..-1] unless self.attachment_file_name.nil? 
+    self.attachment_file_type = self.attachment_file_type \
+    || File.extname(attachment_file_name)[1..-1] unless self.attachment_file_name.nil? 
   end
   
-  def check_for_existing_file
-  	if status < 1
+  def prepare_processing
+  	if status < 2
   	  unless File.exists?(attachment.path)
 	      FileUtils.mkdir_p File.dirname(attachment.path)
 	      FileUtils.touch attachment.path
       end
-      File.open([attachment.path,'html'].join('.'), 'w:UTF-8') do |f|
-        unless content.nil?
-          f.puts content
-        else
-  	      f.puts "<div class='option info'><h3>Converting...</h3><p>Please wait, your document is being converted.</p></div>"
-  	    end
-  	  end
-  	  self.attachment_file_size = File.size([attachment.path,'html'].join('.')) if attachment_file_type == 'file'
-	    self.status = content.nil? ? 1 : 2
-	    self.content = nil
-	    save!
-	    if self.from == 'web'
-        process_document
-      elsif self.from == 'scan'
-        self.delay(:queue => 'scans').process_document
-      else
-        self.delay(:queue => 'documents').process_document
+
+      case self.from
+	    when 'web'  then self.delay(:queue => 'indexer').process_document
+      when 'scan' then self.delay(:queue => 'scans').process_document
+      else             self.delay(:queue => 'documents').process_document
       end
     end
   end
-  
+
   def generate_utf8(encoding=nil)  
        
-    #FileUtils.mv attachment.path, [attachment.path,attachment_file_type].join('.')
-
-=begin
-    cmd = [
-      [Rails.root,'bin','thaiconv'].join('/'),
-      '-r', [attachment.path].join('.'),
-      '-out',1,'>',[attachment.path, attachment_file_type].join('.')
-    ].join(' ')
-    
-    puts "<Document ##{id}> Converting to UTF-8 : #{cmd}"
-    output = `#{cmd} 2>&1`
-   puts "=> #{output}"
-=end
-        
     if encoding.nil?
       cmd = [AppConfig.chardet_bin, attachment.path].join(' ')
       
@@ -165,66 +119,34 @@ class Document < ActiveRecord::Base
     end
     
     unless encoding == "UTF-8"
-      #temp_file = Tempfile.new('ak', :encoding => 'UTF-8')	
       
       cmd = [
-      [Rails.root,'bin','thaiconv'].join('/'),
-      '-r', attachment.path,
-      '-out',1,'>',[attachment.path, attachment_file_type].join('.')
-    ].join(' ')
+        [Rails.root,'bin','thaiconv'].join('/'),
+        '-r', attachment.path,
+        '-out',1,'>',[attachment.path, attachment_file_type].join('.')
+      ].join(' ')
 
-    puts "<Document ##{id}> Converting #{encoding} to UTF-8 : #{cmd}"
-    output = `#{cmd} 2>&1`
-    #puts "=> #{output}"
-=begin
-      begin       
-        cmd = [
-          AppConfig.iconv_bin,
-          '-f', encoding,
-          '-t', 'UTF-8',
-          '-o', temp_file.path,
-          [attachment.path, attachment_file_type].join('.')
-        ].join(' ')
+      puts "<Document ##{id}> Converting #{encoding} to UTF-8 : #{cmd}"
+      output = `#{cmd} 2>&1`
 
-        puts "<Document ##{id}> Converting #{encoding} to UTF-8 : #{cmd}"
-
-        output = `#{cmd} 2>&1`
-
-        if output.include?('illegal input sequence')
-          puts "<Document ##{id}> EncodeError: #{output}"
-          raise EncodeError
-        elsif output.include?('No such file or directory')
-          raise EncodeError, [output,'=> `iconv` binaries not found'].join("\n")
-        end
-
-      rescue EncodeError
-        encoding = encoding == 'TIS-620' ? "ISO-8859-11" : "UTF-8"
-        puts "<Document ##{id}> Attempting to convert from #{encoding} encoding"
-        retry
-      end
-
-      FileUtils.mv temp_file.path, [attachment.path, attachment_file_type].join('.')
-      temp_file.close
-=end
     else
       FileUtils.mv attachment.path, [attachment.path,attachment_file_type].join('.')
     end
   end
 	
   def generate_html
-	  
+
+    self.update_attribute(:status, 2)
+
 	  case attachment_file_type
     when 'txt'
       generate_utf8
 	    FileUtils.cp [attachment.path,attachment_file_type].join('.'), [attachment.path,'html'].join('.')
 	  when 'file'
-	    return
+      FileUtils.cp attachment.path, [attachment.path,'html'].join('.')
 	  when 'html'  
 	    
-	    unless self.from == 'web'
-	    
-	      self.status = 2
-  	    save!
+	    unless self.from == 'web' or File.exists?([attachment.path,'html'].join('.'))
 	    
   	    require 'open-uri'
         require 'net/http'
@@ -243,37 +165,14 @@ class Document < ActiveRecord::Base
   	    retries = 3
   	    response = nil
   	    encoding = nil
-	    
-  	    # NOTE : Convert if PDF || DOC
+
   	    puts "<Document ##{id}> Retrieving contents from: #{self.attachment_file_name}"
 	    
   	    begin
-  	      #Timeout::timeout(60){
   	        file = open(uri)
   	        File.open(attachment.path, "wb") do |f|
   	          f.write file.read
             end
-  	        #FileUtils.mv file.path, attachment.path
-  	      #}
-  	      
-=begin
-          Timeout::timeout(20){
-            http = Net::HTTP.new(uri.host, uri.port)
-            http.use_ssl = true if uri.scheme == 'https'
-            response = http.start { |session| session.get uri.request_uri }
-          }
-          response.type_params.each_pair do |k,v|
-            encoding = v.upcase if k =~ /charset/i
-          end
-
-          unless encoding
-            encoding = response.body =~ /<meta[^>]*HTTP-EQUIV=["']Content-Type["'][^>]*content=["'](.*)["']/i && $1 =~ /charset=(.+)/i && $1.upcase
-          end
-
-          File.open(attachment.path, "wb") do |f|
-            f.write response.body
-          end
-=end
         rescue *retry_exceptions => e
           retries -= 1
           puts "=> ERROR: #{e.message} - #{retries} retries left"
@@ -311,22 +210,6 @@ class Document < ActiveRecord::Base
       else
         generate_utf8
       end
-=begin     
-      doc = if encoding 
-        begin
-          puts "DOC ##{id} => #{encoding}"
-          #utf8_body = response.body.ensure_encoding('UTF-8', :external_encoding => 'ISO-8859-1', :invalid_characters => :transcode)
-          #puts utf8_body
-          Nokogiri::HTML(open(uri)) #response.body.force_encoding(encoding).encode('utf-8')
-        rescue Encoding::UndefinedConversionError 
-          encoding = encoding == 'TIS-620' ? "ISO-8859-11" : encoding == 'UTF-8' ? "TIS-620" : 'UTF-8'
-          retry unless encoding == "ISO-8859-11"
-          Nokogiri::HTML(response.body)
-        end
-      else
-        Nokogiri::HTML(File.open([attachment.path,'html'].join('.'), "w:UTF-8"))
-      end
-=end      
       
       doc = Nokogiri::HTML(File.open([attachment.path,'html'].join('.'),'r:UTF-8').read, nil, 'UTF-8')
       
@@ -338,21 +221,22 @@ class Document < ActiveRecord::Base
         count += 1
       end
       
+      doc.xpath("//meta").each do |tag|
+        unless tag.attributes['name'].nil? or tag.attributes['content'].nil?
+          metadatas.create(:key => tag.attributes['name'].to_s, :value => tag.attributes['content'].to_s)
+        end
+      end
       doc.search('head','script','style','link').remove
       doc.xpath('//@style').each(&:remove)
       doc.xpath('//@class').each(&:remove)
       doc.xpath('//@id').each(&:remove)
-      doc.xpath("//meta").each do |tag|
-        document.metadatas.create(:key => tag.attributes['name'], :value => tag.attributes['content'])
-      end
-      
+
 	    File.open([attachment.path,'html'].join('.'), 'wb') do |f|
 	      f.puts doc.css('body').inner_html
       end
 	  else
+
 	    return if File.exists?([attachment.path,attachment_file_type].join('.')) #self.status > 1
-	    self.status = 2
-	    save!
 	    
 	    FileUtils.mv attachment.path, [attachment.path,attachment_file_type].join('.') #unless File.exists?([attachment.path,attachment_file_type].join('.'))
 	    
@@ -413,9 +297,9 @@ class Document < ActiveRecord::Base
   	    end 
   	  end 	  
 	  end
-	  
-    self.attachment_file_size = File.size([attachment.path,'html'].join('.'))
-    save!
+
+    self.update_attribute(:status, 2)
+    self.update_attribute(:attachment_file_size, File.size([attachment.path,'html'].join('.')))
   end
   
   def generate_html_from(format)
@@ -448,14 +332,8 @@ class Document < ActiveRecord::Base
           end
         end
       rescue *[PDF::Reader::MalformedPDFError, PDF::Reader::UnsupportedFeatureError]
-        self.status = -1
-        save!
+        self.update_attribute(:status, -1)
       end
-      #doc = PdfFilePath.new([attachment.path,attachment_file_type].join('.')).convert_to_document()
-      #doc = file.convert_to_document()
-      #File.open([attachment.path,'html'].join('.'), 'w') do |f|
-      #  f.puts doc.to_s
-      #end
     when 'rtf'
       html = RubyRTF::Html.new.convert([attachment.path,attachment_file_type].join('.'))
     	File.open([attachment.path,'html'].join('.'), 'w:UTF-8') do |f|
@@ -470,10 +348,11 @@ class Document < ActiveRecord::Base
   end
 
   def generate_txt
-  	doc = Loofah.fragment(File.open([attachment.path,'html'].join('.'), 'r:UTF-8').read)
+  	doc = Nokogiri::HTML(File.open([attachment.path,'html'].join('.'),'r:UTF-8').read, nil, 'UTF-8')
+    #Loofah.fragment(File.open([attachment.path,'html'].join('.'), 'r:UTF-8').read)
   	doc.css('style').remove
   	File.open([attachment.path,'txt'].join('.'), 'w:UTF-8') do |f|
-  	  f.puts doc.to_text(:encode_special_chars => false)
+  	  f.puts Nokogiri::HTML(CGI.unescapeHTML(doc.inner_text)).content #.to_text(:encode_special_chars => false)
   	end 
   end
   
@@ -500,7 +379,7 @@ class Document < ActiveRecord::Base
     temp_file = Tempfile.new('ak')
     File.open([attachment.path,'cut','txt'].join('.'), 'r:UTF-8') do |f|
       f.each_line do |line|
-	      line.delete!("\u{00A0}+\u{00C2}")
+	      #line.delete!("\u{00A0}+\u{00C2}")
         s = line.split
         temp_file.puts s.join(' ') unless s.empty?
       end
@@ -530,8 +409,8 @@ class Document < ActiveRecord::Base
           word.downcase!
           #word = word.force_encoding('utf-8')
           word.gsub!(/\p{Punct}+/,'')
-          #word.sub('', '')
-          if word.length > 1
+          word.gsub!(/(\s|\u00A0)+/, '')
+          if word.length >= 1
             words << word
             ranges << { :start=> r_start, :end => r_end }
             words_file.puts word
@@ -546,19 +425,26 @@ class Document < ActiveRecord::Base
     File.open([attachment.path,'ranges','obj'].join('.'), 'wb') { |f| f.puts Marshal.dump(ranges) }
     
     self.words_length = words.length
-    self.content = words.join(' ')
-    self.chars_length = content.length
-  end
-  
-  def generate_index
-    return if self.from == 'web'
-    puts "<Document ##{id}> Generate Index"
-    Document.define_indexes
-    Document.update_all ['delta = ?', true]#, ['file_id = ?', id]
-    Document.index_delta
-    #set_file_delta_flag
+    content_text = words.join(' ')
+
+    unless content_text.nil?
+      if self.content.nil? 
+        self.content = Content.create(:text => content_text)
+      else
+        self.content.update_attributes(:text => content_text, :delta => true)
+      end
+    end
+
+    self.chars_length = content_text.length
     self.status = 3
     save! 
   end
   
+  def generate_index
+  #   puts "<Document ##{id}> Generate Index"
+  #   self.status = 3
+  #   unless(self.content.nil?)
+  #     self.delta = true
+  #   end
+  end
 end

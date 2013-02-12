@@ -2,155 +2,115 @@
 <% content_for :subtitle, '<span id="scan_status"></span>'.html_safe %>
 
 <% content_for :sidebar do -%>
-	<ul>
-		<li id="show_clipboard_link"><%= link_to_function image_tag('clipboard.png', :alt => t(:clipboard)) + t(:clipboard), "show_element('clipboard')" %></li>
-		<% if current_user.member_of_admins? -%>
-			<li id="show_permissions_link"><%= link_to_function image_tag('permissions.png', :alt => t(:permissions)) + t(:permissions), "show_element('permissions')" %></li>
-		<% end %>
-		<li><%= link_to raw(image_tag('clipboard_add.png', :alt => t(:add_to_clipboard))+t(:add_to_clipboard)),
-			{ :controller => :clipboard, :action => :create, :id => @scan.folder.id, :type => 'folder', :folder_id => @scan.folder, :authenticity_token => form_authenticity_token },
-			:method => :post, :title => t(:add_to_clipboard)
-		%></li>
-		<% 
-		if current_user.can_update(@scan.folder) 
-		%><li><%= link_to raw(image_tag('edit.png', :alt => t(:edit))+t(:edit)), edit_scan_path(@scan), :title => t(:edit) %></li><% 
-		end 
-		if current_user.can_delete(@scan.folder) 
-		%><li><%= link_to raw(image_tag('icons/delete.png', :alt => t(:delete_item))+t(:delete_item)), scan_path(@scan), :method => :delete, :confirm => t(:are_you_sure), :title => t(:delete_item) %></li><% 
-		end 
-		%>
-	</ul>
+	<li id="show_clipboard_link"><%= link_to_function icon('inbox')+t(:clipboard), "show_element('clipboard')" %></li>
+	<% if current_user.member_of_admins? -%>
+		<li id="show_permissions_link"><%= link_to_function icon('lock')+t(:permissions), "show_element('permissions')" %></li>
+	<% end %>
+	<li><%= link_to icon('inbox')+t(:add_to_clipboard),
+		{ :controller => :clipboard, :action => :create, :id => @scan.folder.id, :type => 'folder', :folder_id => @scan.folder, :authenticity_token => form_authenticity_token },
+		:method => :post, :title => t(:add_to_clipboard)
+	%></li>
+	<% 
+	if current_user.can_update(@scan.folder) 
+	%><li><%= link_to icon('edit')+t(:edit), edit_scan_path(@scan), :title => t(:edit) %></li><% 
+	end 
+	if current_user.can_delete(@scan.folder) 
+	%><li><%= link_to icon('remove')+t(:delete_item), scan_path(@scan), :method => :delete, :confirm => t(:are_you_sure), :title => t(:delete_item) %></li><% 
+	end 
+	%>
 <% end -%>
 		
 <% unless @scan.folder.is_root? -%>
-	<div class="breadcrumbs">
-		<%= breadcrumbs(@scan.folder) %>
+	<div class="breadcrumb">
+		<%= breadcrumbs(@scan) %>
 	</div>
 <% end -%>
 
-<div id="files_and_folders">
-	<div class="span-6">
-		<%= image_tag 'icons/corpus32.png' %> 
-		Corpus Selection 
-		<% if @scan.sphinx %>
-			<span class="success option"><%= image_tag('icons/yes.png') %>  <%= Document.count %></span>
-		<% else %>
-			<span class="error option"><%= image_tag('icons/no.png') %> disabled</span>
-		<% end %>
-	</div>
-	<div class="span-6" style="position: relative;">
-		<%= image_tag 'icons/web32.png' %>
-		Web Browsing 
-		<% if @scan.web %>
-			<span class="success option"><%= image_tag('icons/yes.png') %> enabled</span>
-		<% else %>
-			<span class="error option"><%= image_tag('icons/no.png') %> disabled</span>
-		<% end %>
-		<div style="position: absolute;
-		top: 20px;
-		left: 40px;
-		color: #999;
-		font-size: 0.8em;">(experimental)</div>
-	</div>
-	<div class="span-6 last">
-		<%= image_tag 'icons/recursive32.png' %>
-		Recursive 
-		<% if @scan.recursive %>
-			<span class="success option"><%= image_tag('icons/yes.png') %> <%= @scan.folder.documents.count %> docs</span>
-		<% else %>
-			<span class="error option"><%= image_tag('icons/no.png') %> disabled</span>
-		<% end %>
-	</div>
-	<div class="span-18 last">
-		<p></p>
-		<table>
-		  <thead>
-			<tr>
-				<th class="icon"></th>
-				<th><%= t :name %></th>
-				<th><%= t :size %></th>
-				<th><%= t :scan_status %></th>
-				<th><%= t :score %></th>
-				<th class="icon"><%= image_tag 'icons/corpus32.png', :width => 16, :height => 16 %></th>
-				<th class="icon"><%= image_tag 'icons/web32.png', :width => 16, :height => 16 %></th>
-				<th class="icon"><%= image_tag 'icons/recursive32.png', :width => 16, :height => 16 %></th>
-				<th></th>
-			</tr>
-		  </thead>
-		  <tbody>
-			<% if current_user.can_read(@scan.folder) %>					
-				<% @scan.scan_files.each do |scan_file| -%>
-				  <tr class="<%= cycle('even','odd') %>">
-					<td><%= image_tag(document_icon(scan_file.document.attachment_file_type)) %></td>
-					<td class="file_name"><%= link_to scan_file.document.name, document_path(scan_file.document), :title => "#{t(:download)} #{scan_file.document.name}" %></td>
-					<td class="file_size"><%= number_to_human_size(scan_file.document.attachment_file_size, :locale=>I18n.locale) %></td>
-					<td id="scan_file_status_<%= scan_file.id %>" class="scan_status"><%= scan_file.progress %> - <%= scan_status(scan_file.status)%></td>
-					<td class="scan_score"><%= link_to "<span class=\"scan_file_status\" id=\"scan_file_score_#{scan_file.id}\"> #{scan_file.score}%</span> / <span id=\"scan_file_sources_#{scan_file.id}\">#{scan_file.count_sources}</span> sources".html_safe, scan_file_similarities_path(scan_file) %></td>
-					<td class="icon" id="scan_file_file_sources_<%= scan_file.id %>"><%= scan_file.count_file_sources %></td>
-					<td class="icon" id="scan_file_web_sources_<%= scan_file.id %>"><%= scan_file.count_web_sources %></td>
-					<td class="icon" id="scan_file_recursive_sources_<%= scan_file.id %>"><%= scan_file.count_recursive_sources %></td>
-					<td class="options"><%= link_to image_tag('clipboard_add.png', :alt => t(:add_to_clipboard)),
-						{ :controller => :clipboard, :action => :create, :id => scan_file.document.id, :type => 'file', :folder_id => @scan.folder, :authenticity_token => form_authenticity_token },
-						:method => :post, :title => t(:add_to_clipboard)
-					%><%= link_to image_tag('share.png', :alt => t(:share)), new_document_share_link_path(scan_file), :title => t(:share) %><% 
-					if current_user.can_update(scan_file.document.folder) 
-					%><%= link_to image_tag('edit.png', :alt => t(:edit)), edit_document_path(scan_file.document), :title => t(:edit) %><% 
-					end 
-					if current_user.can_delete(scan_file.document.folder) 
-					%><%= link_to image_tag('icons/delete.png', :alt => t(:delete_item)), document_path(scan_file.document), :method => :delete, :confirm => t(:are_you_sure), :title => t(:delete_item) %><% 
-					end 
-					%></td>
-				  </tr>
-				<% end -%>
-			  <% end -%>
-			</tbody>
-		  <tfoot>
-		    <tr class="tfoot">
-		      <td colspan="9">
-		    </tr>
-		  </tfoot>
-		</table>
-		<% content_for :head do %>
-			<script type="text/javascript" charset="utf-8">
-			  $(document).ready(function(){
 
-				function update_status(){
-					$.getJSON('<%= statement_scan_path(@scan) %>', function(data) {
-						var progress = 0; tries = 0;						
-						$.each(data, function(i, n) {
-							var scan_file = n["scan_file"];
-							var status = scan_status(scan_file.status);
-							var sf_progress = (scan_file.sphinx_progress + scan_file.web_progress) / 2
-							console.log(scan_file);
-							$('#scan_file_file_sources_'+scan_file.id).text(scan_file.count_file_sources);
-							$('#scan_file_web_sources_'+scan_file.id).text(scan_file.count_web_sources);
-							$('#scan_file_recursive_sources_'+scan_file.id).text(scan_file.count_recursive_sources);
-							$('#scan_file_sources_'+scan_file.id).text(scan_file.count_sources);
-							//$('#scan_file_score_'+scan_file.id).text(scan_file.score);
-							$('#scan_file_score_'+scan_file.id).progressBar(scan_file.score);
-							$('#scan_file_status_'+scan_file.id).html(status.icon+' '+status.text+' - '+(Math.round(sf_progress*100)/100)+'%');
-							progress += sf_progress;	
-						});
-						console.log(data.length, progress);
-						progress = progress / data.length
-						$('#header h2').text(progress<100?'Running - '+parseFloat(progress).toFixed(2)+'%':'Completed - 100%');
-						if(progress<100) setTimeout(update_status, 4000);
-					}).error(function() { 
-						if(tries++ <=3) setTimeout(update_status, 4000);
-						else $('.scan_status').addClass('option error').text('Lost Connection');
-					});	
-				}
-				var tries = 0;
-				var web = <%= @scan.web ? "true" : "false" %>;
-				var sphinx = <%= @scan.sphinx ? "true" : "false" %>;
-				update_status();
-			  });
-			</script>
-		<% end %>
-	</div>
-</div>
+<table class="table table-condensed table-striped table-hover">
+  <thead>
+	<tr>
+		<th><%= t :name %></th>
+		<th></th>
+		<th><%= t :size %></th>
+		<th><%= t :score %></th>
+		<th></th>
+	</tr>
+  </thead>
+	<body>
+	<% if current_user.can_read(@scan.folder) %>					
+		<% @scan.scan_files.each do |scan_file| -%>
+		  <tr id="scan_file_<%= scan_file.id %>" class="<%= cycle('even','odd') %>">
+			<td class="file_name">
+				<%= document_icon(scan_file.document.attachment_file_type) %>
+				<%= link_to scan_file.document.name, document_path(scan_file.document), :title => "#{t(:download)} #{scan_file.document.name}" %></td>
+			<td class="scan_status">
+				<div id="scan_file_status_<%= scan_file.id %>"><%= scan_file.progress %>% - <%= scan_status(scan_file.status)%></div></td>
+			<td class="file_size"><%= number_to_human_size(scan_file.document.attachment_file_size, :locale=>I18n.locale) %></td>
+			<td class="scan_score"><%= link_to "<span class=\"scan_file_status\" id=\"scan_file_score_#{scan_file.id}\">#{scan_file.score}</span>% / <span id=\"scan_file_sources_#{scan_file.id}\">#{scan_file.count_sources}</span> sources".html_safe, scan_file_similarities_path(scan_file), :class => 'label', :id => "scan_file_result_#{scan_file.id}" %></td>
+			<td class="options"><span class="pull-right">
+				<%= link_to icon('share'), new_document_share_link_path(scan_file.document), :title => t(:share), :rel => 'tooltip' %>
+				<%= link_to icon('inbox'),{ :controller => :clipboard, :action => :create, :id => scan_file.document.id, :type => 'document', :folder_id => @scan.folder, :authenticity_token => form_authenticity_token },:method => :post, :title => t(:add_to_clipboard), :rel => 'tooltip' %>
+				<% if current_user.can_update(scan_file.document.folder) %>
+					<%= link_to icon('edit'), edit_document_path(scan_file.document), :title => t(:edit), :rel => 'tooltip' %>
+				<% end %>
+				<% if current_user.can_delete(scan_file.document.folder) %>
+					<%= link_to icon('remove'), document_path(scan_file.document), :method => :delete, :confirm => t(:are_you_sure), :title => t(:delete_item), :rel => 'tooltip' %>
+				<% end %>
+			</span></td>
+		  </tr>
+		<% end -%>
+	  <% end -%>
+	</tbody>
+</table>
 
 <div id="clipboard" style="display:none;">
 	<%= #render 'clipboard/show' 
 	%>
 </div>
+
+<% content_for :head do %>
+	<script type="text/javascript" charset="utf-8">
+	  $(document).ready(function(){
+
+		function update_status(){
+			$.getJSON('<%= statement_scan_path(@scan) %>', function(data) {
+				var scan = data['scan'];
+				var sf_progress = 0, tries = 0;
+				$.each(scan.scan_files, function(i, scan_file) {
+					var status = scan_status(scan_file.status);
+					$('#scan_file_sources_'+scan_file.id).text(scan_file.count_sources);
+					$('#scan_file_score_'+scan_file.id).text(scan_file.score);
+					if(scan_file.progress==100 || scan_file.score>0)
+					if(scan_file.score==0) {
+						//$('#scan_file_'+scan_file.id).addClass("success");
+						$('#scan_file_result_'+scan_file.id).addClass("label-success");
+					} else 
+					if(scan_file.score<50) {
+						//$('#scan_file_'+scan_file.id).addClass("warning");
+						$('#scan_file_result_'+scan_file.id).addClass("label-warning");
+					} else {
+						//$('#scan_file_'+scan_file.id).addClass("error");
+						$('#scan_file_result_'+scan_file.id).addClass("label-important");
+					}
+					$('#scan_file_status_'+scan_file.id).html(scan_status_html(scan_file.status));
+					if(scan_file.status == 1)
+						$('#scan_file_status_'+scan_file.id+' .bar').css('width', Math.round(scan_file.progress*100)/100+'%');	
+					sf_progress += scan_file.progress;
+				});
+				var progress = Math.round((sf_progress / scan.scan_files.length)*100)/100;
+
+				$('#header h2').text(progress<100?'Running - '+parseFloat(progress).toFixed(2)+'%':'Completed - 100%');
+				if(progress<100) setTimeout(update_status, 4000);
+			}).error(function() { 
+				if(tries++ <=3) setTimeout(update_status, 4000);
+				else $('.scan_status').addClass('option error').text('Lost Connection');
+			});	
+		}
+		var tries = 0;
+		var web = <%= @scan.web ? "true" : "false" %>;
+		var sphinx = <%= @scan.sphinx ? "true" : "false" %>;
+		update_status();
+	  });
+	</script>
+<% end %>

@@ -1,14 +1,18 @@
 	<%= f.error_messages %>
-	<p>
-		<%= f.label t(:name) %>:<br />
-		<%= f.text_field :name %>
-	</p>
-	<p>
-		<%= f.label :content %><br />
-		<%= f.cktext_area :content, :class => 'ckeditor' %>
-	</p>
-	<p>
-		<button type="submit" class="button blue">
-			<%= t(:save) %>
-		</button>
-	</p>
+
+	<div class="control-group">
+		<%= f.text_field :name, {placeholder: @document.name, class: 'input-block-level', value: ''} %>
+	</div>
+
+	<div class="control-group">
+	<%= fields_for @document.content do |c| %>
+		<%= c.cktext_area :text, :class => 'ckeditor' %>
+	<% end %>
+	</div>
+
+	<div class="form-actions">
+		<div class="pull-right">
+		    <button type="submit" class="btn btn-primary"><%= t(:save) %></button>
+		    <button type="button" class="btn">Cancel</button>
+		</div>
+    </div>

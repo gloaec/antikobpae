@@ -5,21 +5,11 @@
 <% end %>
 
 <% content_for :sidebar do -%>
-	<ul>
-	<li><label><%= image_tag("icons/metadata32.png") %><%= t :metadata %>(<%= @document.metadatas.length %>)</label><span class="toggle_btn"></span>
-	<ul class="toggle_content">
-	<% @document.metadatas.each do |meta| %>
-		<li><span><label><%= meta.key %></label>: <%= meta.value %></span></li>
-	<% end %>
-	</ul>
-	</li>
-		<li><label for="toggle_images"><%= image_tag(document_icon('jpeg'))+ t(:show_images) %> <input type="checkbox" checked="checked" id="toggle_images"/> </label></li>
-		<li><%= link_to image_tag(document_icon(@document.attachment_file_type))+t(:download_original)+" (#{@document.attachment_file_type})", download_document_path(@document,:format => :orig) %></li>
-		<li><%= link_to image_tag(document_icon('txt'))+t(:download_plain_text), download_document_path(@document, :format => :txt) %></li>
-		<li><%= link_to image_tag(document_icon('pdf'))+t(:download_pdf), download_document_path(@document, :format => :pdf) %></li>
-		<li><%= link_to image_tag(document_icon('html'))+t(:download_html), download_document_path(@document, :format => :html) %></li>
-		<li><%= link_to image_tag(document_icon('html'))+t(:embed_document), download_document_path(@document, :format => :pdf) %></li>
-	</ul>
+	<li><%= link_to document_icon(@document.attachment_file_type)+t(:download_original)+" (#{@document.attachment_file_type})", download_document_path(@document,:format => :orig) %></li>
+	<li><%= link_to document_icon('txt')+t(:download_plain_text), download_document_path(@document, :format => :txt) %></li>
+	<li><%= link_to document_icon('pdf')+t(:download_pdf), download_document_path(@document, :format => :pdf) %></li>
+	<li><%= link_to document_icon('html')+t(:download_html), download_document_path(@document, :format => :html) %></li>
+	<li><%= link_to document_icon('html')+t(:embed_document), download_document_path(@document, :format => :pdf) %></li>
 <% end %>
 
 <% content_for :head do %>
@@ -77,21 +67,81 @@ if ( window.addEventListener ) {
 	</style>
 <% end %>
 
-<div class="breadcrumbs">
-	<%= breadcrumbs(@document.folder, "<span class=\"breadcrumb nowrap\">#{link_to(@document.name, document_path(@document))}</span>") %>
+
+<ul class="breadcrumb">
+	<% if @document.from == 'web' %>
+		<li>
+		<% uri = URI.unescape(@document.attachment_file_name) %>
+		<%= [
+		  icon('globe'),
+		  @document.name.truncate(50),
+		  "(<small>", link_to(truncate(@document.attachment_file_name, :length => 80), @document.attachment_file_name, :target => :blank), "</small>)"
+		].join(' ').html_safe
+		%>
+		</li>
+	<% else %>
+		<%= breadcrumbs(@document) %>
+	<% end %>
+</ul>
+
+<div class="accordion" id="accordion2">
+	<div class="accordion-group">
+		<div class="accordion-heading">
+			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+				<%= @document.name %>
+			</a>
+		</div>
+		<div id="collapseOne" class="accordion-body collapse">
+			<div class="accordion-inner">
+			<table class="table table-condensed table-striped table-hover">
+				<thead></thead>
+				<tbody>
+					<% if @document.attachment_file_type == 'html' %>
+						<tr>
+							<td><%= t(:extracted_from) %></td>
+							<td>
+								<%= link_to truncate(@document.attachment_file_name, :length => 80), @document.attachment_file_name, :target => :blank %>
+							</td>
+						</tr>
+					<% else %>
+						<tr>
+							<td><%= t(:file_name) %></td>
+							<td><%= @document.attachment_file_name %></td>
+						</tr>
+					<% end %>
+					<tr>
+						<td><%= t(:file_size) %></td>
+						<td><%= number_to_human_size(@document.attachment_file_size, :locale=>I18n.locale) %></td>
+					</tr>
+					<% @document.metadatas.each do |metadata| %>
+					<tr>
+						<td><%= metadata.key %></td>
+						<td><%= metadata.value %></td>
+					</tr>
+					<% end %>
+					<tr>
+						<td><%= t(:created_at) %></td>
+						<td><%= l @document.created_at, :format => :long %></td>
+					</tr>
+					<tr>
+						<td><%= t(:updated_at) %></td>
+						<td><%= l @document.updated_at, :format => :long %></td>						
+					</tr>
+					<% unless @document.user.nil? %>
+					<tr>
+						<td><%= t(:last_modification_by) %></td>
+						<td><%= @document.user.name %></td>						
+					</tr>
+					<% end %>
+				</tbody>
+			</table>
+			</div>
+		</div>
+	</div>
 </div>
 
-<% if @document.attachment_file_type == 'html' || @document.from == 'web' %>
-	<div class="option info">
-		<h3>Web Cache</h3>
-		<p>This document is extracted from : 
-			<%= link_to truncate(@document.attachment_file_name, :length => 80), @document.attachment_file_name, :target => :blank %>
-		</p>
-	</div>
-<% end%>
+<% tag = @document.attachment_file_type == 'txt' ? 'pre' : 'div' %>
 
-<% tag = @document.attachment_file_type == 'txt' || @document.text_only ? 'pre' : 'div' %>
-
-<<%=tag%> class="document">
-	<%= @document.content.html_safe %>
+<<%=tag%> class="">
+	<%= @document.content.text.html_safe %>
 </<%=tag%>>

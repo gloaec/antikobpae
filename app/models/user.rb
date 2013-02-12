@@ -80,7 +80,8 @@ class User < ActiveRecord::Base
   private
 
   def create_root_folder_and_admins_group
-    Folder.create(:name => 'Root folder')
+    Folder.create(:name => 'Root Folder')
+    Folder.root.children.create(:name => 'Web Index')
     groups << Group.create(:name => 'Admins')
   end
   

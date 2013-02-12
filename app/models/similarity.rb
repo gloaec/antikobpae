@@ -1,4 +1,5 @@
 # encoding: utf-8
+include ActionView::Helpers::TextHelper 
 
 class Similarity < ActiveRecord::Base
 
@@ -25,8 +26,8 @@ class Similarity < ActiveRecord::Base
     start = scan_file_duplicate_range.from_word-margin
     start = 0 if start < 0 
     for i in (start..scan_file_duplicate_range.to_word+margin)
-      s << "<span class='duplicated'>" if i == scan_file_duplicate_range.from_word
-      s << sfhdbw[i]
+      s << "<span class='label label-important duplicated'>" if i == scan_file_duplicate_range.from_word
+      s << truncate(sfhdbw[i], :length => 25, :omission => '...')
       s << "</span>" if i == scan_file_duplicate_range.to_word
     end
     #STDERR.printf("close error: %s\n", sfhdbw.errmsg(sfhdbw.ecode)) unless sfhdbw.close
@@ -41,8 +42,8 @@ class Similarity < ActiveRecord::Base
     start = document_duplicate_range.from_word-margin
     start = 0 if start < 0
     for i in (start..document_duplicate_range.to_word+margin)
-      s << "<span class='duplicated source_#{document.id}'>" if i == document_duplicate_range.from_word
-      s << ufhdbw[i]
+      s << "<span class='label label-success duplicated'>" if i == document_duplicate_range.from_word
+      s << truncate(ufhdbw[i], :length => 25, :omission => '...')
       s << "</span>" if i == document_duplicate_range.to_word
     end
     #STDERR.printf("close error: %s\n", ufhdbw.errmsg(ufhdbw.ecode)) unless ufhdbw.close

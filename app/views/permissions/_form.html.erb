@@ -84,16 +84,3 @@
 	</p>
 <% end -%>
 -->
-<% content_for :head do %>
-	<script type="text/javascript">
-		(function($){
-			$(document).ready(function() {
-				$('input[type=checkbox]:not(.iT_checkbox)').iToggle({
-					easing: 'easeOutExpo',
-					keepLabel: true,
-					speed: 300,
-				});
-			});
-		})(jQuery);
-	</script>
-<% end %>

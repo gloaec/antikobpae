@@ -1,0 +1,5 @@
+convkit.lo: convkit.cxx convkit.h unichar.h
+
+convkit.h:
+
+unichar.h:

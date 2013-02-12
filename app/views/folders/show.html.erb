@@ -1,414 +1,365 @@
 <% content_for :title, @folder.name -%>
 
 <% content_for :sidebar do -%>
-	<ul>
 	<% if current_user.can_create(@folder) -%>
-		<li><%= link_to image_tag('icons/add_folder32.png', :alt => t(:create_a_new_folder)) + t(:create_a_new_folder), new_folder_folder_path(@folder) %></li>
-		<li><%= link_to image_tag('icons/add_text32.png') + t(:create_a_new_document), new_folder_document_path(@folder, :from => :scratch) %></li>
+		<li><%= link_to icon('folder-close')+t(:create_a_new_folder), new_folder_folder_path(@folder) %></li>
+		<li><%= link_to icon('file')+t(:create_a_new_document), new_folder_document_path(@folder, :from => :scratch) %></li>
 		<li id="upload_li">
-			<%= link_to_function image_tag('icons/add_upload32.png') + t(:upload_documents), nil , :id => 'upload_btn' %> 
-			<span class="toggle_btn"></span>
-			<ul class="toggle_content" id="upload_form">
-				<li>
-					<span>
-						<%= image_tag('runtime16.png') %>
-						<%= t(:runtime) %>: <span class="label" id="upload_runtime"></span>
-					</span>
-				</li>
-				<li>
-					<label for="document_text_only">
-						<%= image_tag('txt16.png') %>
-						<%=t (:text_only) %><input type="checkbox" id="document_text_only" checked="checked"/>
-					</label>
-				</li>
-			</ul>
+			<%= link_to_function icon('upload')+t(:upload_documents), nil , :id => 'upload_btn' %> 
 		</li>
-		<li><%= link_to image_tag('icons/add_web32.png') + t(:import_a_webpage), new_folder_document_path(@folder, :from => :webpage) %></li>
-		<!--<li><%= link_to image_tag('icons/file.png') + t(:xml_pipe), xmlpipe_document_path %></li>-->
+		<li><%= link_to icon('globe')+t(:import_a_webpage), new_folder_document_path(@folder, :from => :webpage) %></li>
 	<% end %>
 	<% if current_user.member_of_admins? -%>
-		<li id="show_permissions_link"><%= link_to_function image_tag('permissions.png', :alt => t(:permissions)) + t(:permissions), "show_element('permissions')" %></li>
+		<li id="show_permissions_link"><%= link_to_function icon('lock')+t(:permissions), "show_element('permissions')" %></li>
 		<% if @folder.is_root? -%>
-			<li><label for="toggle_privates"><%= image_tag('icons/private_corpus32.png')+ t(:private_folders) %> <input type="checkbox" id="toggle_privates"/> </label></li>
+			<li><label for="toggle_privates"><%= t(:private_folders) %> <input type="checkbox" id="toggle_privates"/> </label></li>
 		<% end %>
 	<% end %>
-	<li id="show_clipboard_link"><%= link_to_function image_tag('clipboard.png', :alt => t(:clipboard)) + t(:clipboard), "show_element('clipboard')" %></li>
-	</ul>
+	<li id="show_clipboard_link"><%= link_to_function icon('inbox')+t(:clipboard), "show_element('clipboard')" %></li>
 <% end -%>
 	
 <% unless @folder.is_root? %>
-	<div class="breadcrumbs">
+	<ul class="breadcrumb">
 		<%= breadcrumbs(@folder) %>
-	</div>
+	</ul>
 <% end %>
 
-<div id="files_and_folders">
-	<% if @folder.is_root? %>
-		<h3><%= t(:my_space) %></h3>
-		<table>
-		  <thead>
-			<tr>
-				<th class="icon"></th>
-				<th><%= t :name %></th>
-				<th><%= t :size %></th>
-				<th><%= t :date_modified %></th>
-				<th></th>
-			</tr>
-		  </thead>
-		  <tbody>
-		  	<% @folder.children.each do |folder| -%>
-		  		<% if current_user.can_user_read(folder) -%>
-		  		<tr class="<%= cycle('odd','even') %> <%= 'private' if current_user.is_admin && folder != current_user.scans_folder && folder != current_user.private_folder %>">
-		  			<td class="icon"><%= image_tag('folder.png') %></td>
-		  			<td class="file_name"><%= link_to folder.name, folder_path(folder) %></td>
-		  			<td class="file_size">--</td>
-		  			<td class="file_modified"><%= l folder.updated_at, :format => :long %></td>
-		  			<td class="options"><%= link_to image_tag('clipboard_add.png', :alt => t(:add_to_clipboard)),
-		  					{ :controller => :clipboard, :action => :create, :id => folder.id, :type => 'folder', :folder_id => @folder, :authenticity_token => form_authenticity_token },
-		  					:method => :post, :title => t(:add_to_clipboard)
-		  			%><% 
-		  			if current_user.can_update(folder)
-		  			%><%= link_to image_tag('edit.png', :alt => t(:edit)), edit_folder_path(folder), :title => t(:edit) %><%
-		  			end 
-		  			if current_user.can_delete(folder) 
-		  			%><%= link_to image_tag('icons/delete.png', :alt => t(:delete_item)), folder_path(folder), :method => :delete, :confirm => t(:are_you_sure), :title => t(:delete_item) %><%
-		  			end 
-		  			%></td>
-		  			
-		  		</tr>
-		  		<% end -%>
-		  	<% end -%>
-		  <tfoot>
-		  	<tr class="tfoot">
-		  	  <td colspan="5"></td>
-		  	</tr>
-		  </tfoot>
-		</table>
-		<% if current_user.member_of_admins? -%>
-		<div class="private">
-		<table>
-		  	<tbody>
-		  		<tr class="<%= cycle('odd','even') %>">
-		  			<th colspan="5"><%= t(:users_private_folders) %></th>
-		  		</tr>
-			  	<% @folder.children.each do |folder| -%>
-				  	<% if folder.private && !current_user.can_user_read(folder) -%>
-				  		<tr class="<%= cycle('odd','even') %>">
-				  			<td class="icon"><%= image_tag('folder.png') %></td>
-				  			<td class="file_name"><%= link_to folder.name, folder_path(folder) %></td>
-				  			<td class="file_size">--</td>
-				  			<td class="file_modified"><%= l folder.updated_at, :format => :long %></td>
-				  			<td class="options"><%= link_to image_tag('clipboard_add.png', :alt => t(:add_to_clipboard)),
-				  					{ :controller => :clipboard, :action => :create, :id => folder.id, :type => 'folder', :folder_id => @folder, :authenticity_token => form_authenticity_token },
-				  					:method => :post, :title => t(:add_to_clipboard)
-				  			%><% 
-				  			if current_user.can_update(folder)
-				  			%><%= link_to image_tag('edit.png', :alt => t(:edit)), edit_folder_path(folder), :title => t(:edit) %><%
-				  			end 
-				  			if current_user.can_delete(folder) 
-				  			%><%= link_to image_tag('icons/delete.png', :alt => t(:delete_item)), folder_path(folder), :method => :delete, :confirm => t(:are_you_sure), :title => t(:delete_item) %><%
-				  			end 
-				  			%></td>
-				  		</tr>	
-				  	<% end -%>
-			  	<% end -%>
-		  </tbody>
-		  <tfoot>
-		  	<tr class="tfoot">
-		  	  <td colspan="5"></td>
-		  	</tr>
-		  </tfoot>
-		</table>
-		</div>
-		<% end -%>
-		<h3><%= t(:shared_public) %></h3>
-	<% end %>
-	<div id="errors">
-		
-	</div>
-	<div id="container">
-	</div>
-	<table id="documents_table">
+<% if @folder.is_root? %>
+	<h3><%= t(:my_space) %></h3>
+	<table class="table table-condensed table-striped table-hover">
 	  <thead>
 		<tr>
 			<th class="icon"></th>
-			<th colspan="2"><%= t :name %></th>
+			<th><%= t :name %></th>
 			<th><%= t :size %></th>
 			<th><%= t :date_modified %></th>
-			<th><%= t :by %></th>
 			<th></th>
 		</tr>
 	  </thead>
-	<% unless @folder.is_root? -%>
-		<tr class="<%= cycle('even','odd') %>">
-			<td><%= image_tag('folder.png') %></td>
-			<td class="file_name" colspan="2">&uarr; <%= link_to t(:up), folder_path(@folder.parent), :title => @folder.parent.name %></td>
-			<td class="file_size">--</td>
-			<td class="file_modified">--</td>
-			<td class="by"></td>
-			<td></td>
-		</tr>
-	<% end -%>
-	
-	<tbody id="documents">
-	<% @folder.children.each do |folder| -%>
-		<% if current_user.can_groups_read(folder) && !(folder.private && @folder.is_root?) -%>
-		<tr class="<%= cycle('even','odd') %>">
-			<td class="icon"><%= image_tag('folder.png') %></td>
-			<td class="file_name" colspan="2"><%= link_to folder.name, folder_path(folder) %></td>
-			<td class="file_size">--</td>
-			<td class="file_modified"><%= l folder.updated_at, :format => :long %></td>
-			<td class="by"><%= folder.user.name unless folder.user.nil? %></td>
-			<td class="options"><%= link_to image_tag('clipboard_add.png', :alt => t(:add_to_clipboard)),
-					{ :controller => :clipboard, :action => :create, :id => folder.id, :type => 'folder', :folder_id => @folder, :authenticity_token => form_authenticity_token },
-					:method => :post, :title => t(:add_to_clipboard)
-			%><% 
-			if current_user.can_update(folder)
-			%><%= link_to image_tag('edit.png', :alt => t(:edit)), edit_folder_path(folder), :title => t(:edit) %><%
-			end 
-			if current_user.can_delete(folder) 
-			%><%= link_to image_tag('icons/delete.png', :alt => t(:delete_item)), folder_path(folder), :method => :delete, :confirm => t(:are_you_sure), :title => t(:delete_item) %><%
-			end 
-			%></td>
-		</tr>
-		<% end -%>
-	<% end -%>
-	<% @folder.documents.each do |document| -%>
-		<% if current_user.can_groups_read(@folder) -%>
-		<tr id="document_<%= document.id %>" class="<%= cycle('even','odd') %>">
-			<td class="icon"><div class="relative"><%= image_tag(document_icon(document.attachment_file_type), :width => 16, :height => 16) %><%= image_tag('icons/text_only16.png', :class => 'hover16') if document.text_only? %></div></td>
-			<td class="document_name">
-				<%= link_to document.name.truncate(40), document_path(document), :class => 'trigger alt', :title => "#{t(:download)} #{document.name}" %>
-				<div id="popup_<%= document.id %>" class="popup alt">
-					<% if document.metadatas.empty? %>
-						<span class="no"><%= t :no_metadata %></span>
-					<% else %>
-						<table><tbody>
-						<% document.metadatas.each do |meta| %>
-							<tr class="<%= cycle('odd','even') %>">
-							<th valign="top" class="header" style="text-align: right;"><label><%= meta.key %></label>:</th>
-							<td valign="top" class=""><%= meta.value %></td>
-							</tr>
-						<% end %>
-						</tbody></table>		
-					<% end %>		 
-				</div>
-			</td>
-			<td class="document_status"></td>
-			<td class="document_size"><%= number_to_human_size(document.attachment_file_size, :locale=>I18n.locale) %></td>
-			<td class="document_modified"><%= l document.updated_at, :format => :long %></td>
-			<td class="by"><%= document.user.name unless document.user.nil? %></td>
-			<td class="options"><%= link_to image_tag('share.png', :alt => t(:share)), new_document_share_link_path(document), :title => t(:share) 
-				%><%= link_to image_tag('clipboard_add.png', :alt => t(:add_to_clipboard)),
-					{ :controller => :clipboard, :action => :create, :id => document.id, :type => 'document', :folder_id => @folder, :authenticity_token => form_authenticity_token },
-					:method => :post, :title => t(:add_to_clipboard)
-				%><%
-				if current_user.can_update(document.folder) 
-				%><%= link_to image_tag('edit.png', :alt => t(:edit)), edit_document_path(document), :title => t(:edit) %><% 
-				end 
-				if current_user.can_delete(document.folder)
-				%><%= link_to image_tag('icons/delete.png', :alt => t(:delete_item)), document_path(document), :method => :delete, :confirm => t(:are_you_sure), :title => t(:delete_item) %><%
-				end 
-				-%></td>
-		</tr>
-		<% end -%>
-	<% end -%>
-	</tbody>
+	  <tbody>
+	  	<% @folder.children.each do |folder| -%>
+	  		<% if current_user.can_user_read(folder) -%>
+	  		<tr class="<%= cycle('odd','even') %> <%= 'private' if current_user.is_admin && folder != current_user.scans_folder && folder != current_user.private_folder %>">
+	  			<td class="icon"><%= image_tag('folder.png') %></td>
+	  			<td class="file_name"><%= link_to folder.name, folder_path(folder) %></td>
+	  			<td class="file_size">--</td>
+	  			<td class="file_modified"><%= l folder.updated_at, :format => :long %></td>
+	  			<td class="options"><%= link_to image_tag('clipboard_add.png', :alt => t(:add_to_clipboard)),
+	  					{ :controller => :clipboard, :action => :create, :id => folder.id, :type => 'folder', :folder_id => @folder, :authenticity_token => form_authenticity_token },
+	  					:method => :post, :title => t(:add_to_clipboard)
+	  			%><% 
+	  			if current_user.can_update(folder)
+	  			%><%= link_to image_tag('edit.png', :alt => t(:edit)), edit_folder_path(folder), :title => t(:edit) %><%
+	  			end 
+	  			if current_user.can_delete(folder) 
+	  			%><%= link_to image_tag('icons/delete.png', :alt => t(:delete_item)), folder_path(folder), :method => :delete, :confirm => t(:are_you_sure), :title => t(:delete_item) %><%
+	  			end 
+	  			%></td>
+	  			
+	  		</tr>
+	  		<% end -%>
+	  	<% end -%>
 	  <tfoot>
-		<% if current_user.can_create(@folder) -%>
-		<tr>
-			<td colspan="7" class="transparent">
-				<div id="drop">
-					<div style="text-align: center;">Drag & Drop your documents here</div>
-				</div>
-			</td>
-		</tr>
-		<% end %>
-	  	<tr>
-	  	  <td colspan="7">		
-	  	  </td>
+	  	<tr class="tfoot">
+	  	  <td colspan="5"></td>
 	  	</tr>
 	  </tfoot>
 	</table>
+	<% if current_user.member_of_admins? -%>
+	<div class="private">
+	<table>
+	  	<tbody>
+	  		<tr class="<%= cycle('odd','even') %>">
+	  			<th colspan="5"><%= t(:users_private_folders) %></th>
+	  		</tr>
+		  	<% @folder.children.each do |folder| -%>
+			  	<% if folder.private && !current_user.can_user_read(folder) -%>
+			  		<tr class="<%= cycle('odd','even') %>">
+			  			<td class="icon"><%= image_tag('folder.png') %></td>
+			  			<td class="file_name"><%= link_to folder.name, folder_path(folder) %></td>
+			  			<td class="file_size">--</td>
+			  			<td class="file_modified"><%= l folder.updated_at, :format => :long %></td>
+			  			<td class="options"><%= link_to image_tag('clipboard_add.png', :alt => t(:add_to_clipboard)),
+			  					{ :controller => :clipboard, :action => :create, :id => folder.id, :type => 'folder', :folder_id => @folder, :authenticity_token => form_authenticity_token },
+			  					:method => :post, :title => t(:add_to_clipboard)
+			  			%><% 
+			  			if current_user.can_update(folder)
+			  			%><%= link_to image_tag('edit.png', :alt => t(:edit)), edit_folder_path(folder), :title => t(:edit) %><%
+			  			end 
+			  			if current_user.can_delete(folder) 
+			  			%><%= link_to image_tag('icons/delete.png', :alt => t(:delete_item)), folder_path(folder), :method => :delete, :confirm => t(:are_you_sure), :title => t(:delete_item) %><%
+			  			end 
+			  			%></td>
+			  		</tr>	
+			  	<% end -%>
+		  	<% end -%>
+	  </tbody>
+	  <tfoot>
+	  	<tr class="tfoot">
+	  	  <td colspan="5"></td>
+	  	</tr>
+	  </tfoot>
+	</table>
+	</div>
+	<% end -%>
+	<h3><%= t(:shared_public) %></h3>
+<% end %>
 
+<div id="errors">
 	
-	<% content_for :head do %>
-		<script type="text/javascript" charset="utf-8">
-		
-		  $(document).ready(function(){
+</div>
 
-			var count = 0;
-			var uploader;
-			update_status();
-			initUploader();
-			
-			$('input[type=checkbox]#toggle_privates').iToggle({
-				easing: 'easeOutExpo',
-				keepLabel: true,
-				speed: 300,
-				onClickOn: function(){ 
-					$('.private').slideDown(); 
-				},
-				onClickOff: function(){ 
-					$('.private').slideUp(); 
-				}
-			});
-			
-			$('input[type=checkbox]#document_text_only').iToggle({
-				easing: 'easeOutExpo',
-				keepLabel: true,
-				speed: 300,
-				onClickOn: function(){ 
-					uploader.destroy();
-					initUploader({
-						multipart_params: {
-							'document_text_only': true,
-					      '<%= request_forgery_protection_token %>': '<%= form_authenticity_token %>',
-					      '<%= request.session_options[:key] %>': '<%= request.session_options[:id] %>'
-					    }
-					});
-				},
-				onClickOff: function(){ 
-					uploader.destroy();
-					initUploader({
-						multipart_params: {
-							'document_text_only': false,
-					      '<%= request_forgery_protection_token %>': '<%= form_authenticity_token %>',
-					      '<%= request.session_options[:key] %>': '<%= request.session_options[:id] %>'
-					    }
-					});
-				}
-			});
-			
-			function update_status(){
-				$.getJSON('<%= statement_folder_path(@folder) %>', function(data) {
-					var folder = data["folder"]
-					var running = false;
-					//console.log(data);		
-					$.each(folder.documents, function(i, doc) {
-						$.extend(doc, {
-							folder_id: <%= @folder.id %>,
-							updated_at: I18n.strftime(new Date(doc.updated_at), "%B %d,%Y %H:%M"),
-							form_authenticity_token: '<%= form_authenticity_token %>',
-							name: truncate(doc.name, 40),
-							tr_class: i%2?'even':'odd',
-							state: document_status(doc.status), //status.icon + status.text,
-							attachment_file_size: plupload.formatSize(doc.attachment_file_size)
-						});
-						
-						html_row = $($.tmpl("document_row", doc));
-											
-						if ($('#document_'+doc.id).length>0){
-							if($('#document_status_'+doc.id).html() != $(html_row).find('#document_status_'+doc.id).html())
-								$('#document_'+doc.id).find('.document_status').html($(html_row).find('.document_status').html());
-						}
-						else {
-							tr_class = $('#documents tr').last().hasClass('even') ? 'odd' : 'even';
-							$('#documents').append(html_row);
-						}
-						if (doc.status < 3) { running = true; }						
-					});
-					if(running) setTimeout(update_status, 2000);
-				});	
-			}
-			
-			
-			function initUploader(params){		
+<table id="documents_table" class="table table-condensed table-striped table-hover">
+  <thead>
+	<tr>
+		<th colspan="2"><%= t :name %></th>
+		<th><%= t :size %></th>
+		<th><%= t :date_modified %></th>
+		<th><%= t :by %></th>
+		<th></th>
+	</tr>
+  </thead>
+<% unless @folder.is_root? -%>
+	<tr class="<%= cycle('even','odd') %>">
+		<td class="file_name" colspan="2"><%= link_to icon('folder-open')+icon('arrow-up')+@folder.parent.name, folder_path(@folder.parent), :title => @folder.parent.name %></td>
+		<td class="file_size">--</td>
+		<td class="file_modified">--</td>
+		<td class="by"></td>
+		<td></td>
+	</tr>
+<% end -%>
 
-			    settings = {
-			    	url: '<%= url_for([@folder, Document.new]) %>',
-			    	multipart_params: {
-				  		'document_text_only': true,
-			      		'<%= request_forgery_protection_token %>': '<%= form_authenticity_token %>',
-			      		'<%= request.session_options[:key] %>': '<%= request.session_options[:id] %>'
-			    	},
-					runtimes: 'html5,gears,flash,silverlight,browserplus',
-			        drop_element : "documents_table",
-					browse_button : 'upload_btn',
-					container : 'container',
-					max_file_size : '100mb',
-					//rename: true,
-					filters : [
-						{title : "AntiKobpae Supported Documents", extensions : "doc,docx,pdf,rtf,txt,html"}
-					],
-			        //autostart : true
-				};
-
-				$.extend(settings, params);
-
-				//console.log(settings);
-
-				uploader = new plupload.Uploader(settings);
-
-				uploader.bind('Init', function(up, params) {
-					$('#upload_runtime').html(params.runtime);
-				});
-
-				uploader.init();
-
-				uploader.bind('FilesAdded', function(up, files) {
-					$.each(files, function(i, file) {
-						//console.log('doc',file);
-						$.extend(file, {
-							name: truncate(file.name, 40),
-							updated_at: I18n.strftime(new Date(), "%B %d,%Y %H:%M"),
-							tr_class: i%2?'even':'odd',
-							state: document_status(0),
-							attachment_file_size: plupload.formatSize(file.size),
-							attachment_file_type: file.name.split('.').pop()
-						});
-						tr_class = $('#documents tr').last().hasClass('even') ? 'odd' : 'even';
-						html_row = $.tmpl("document_row", file);
-						$("#documents").append(html_row);
-						$('#document_status_'+file.id).progressBar(file.percent, {barImage: "<%= asset_path 'progressbg_blue.gif' %>"});
-					/*	$('#uploads').prepend(
-							$('<div id="document_'+file.id+'">').addClass((i%2?'even':'odd')+' span-22')
-							.append($('<div>').addClass('span-1 icon').text(''))
-							.append($('<div>').addClass('span-10 file_name')
-								.append($('<a href="/documents/'+(file.id)+'">').text(file.name))
-							)
-							.append($('<div id="document_status_'+file.id+'">').addClass('span-3'))
-							.append($('<div>').addClass('span-3 document_size').text(plupload.formatSize(file.size)))
-							.append($('<div>').addClass('span-4 last options'))
-						);*/
-					});
-					up.refresh(); // Reposition Flash/Silverlight
-					up.start();
-				});
-
-				uploader.bind('UploadProgress', function(up, file) {
-					$('#document_status_'+file.id).progressBar(file.percent, {barImage: "<%= asset_path 'progressbg_blue.gif' %>"});
-				});
-
-				uploader.bind('Error', function(up, err) {
-					console.log('ERROR', up, err);
-					msg = "Error: "+err.code+", Message: "+err.message+(err.file?", File: "+err.file.name:"");
-					div = $('<div class="option error" style="margin-bottom: 2px;">').text(msg)
-					$('#errors').append(div); div.fadeOut(10000);
-					if(err.file){
-						$('#document_'+err.file.id).addClass('error');
-						$('#document_status_'+err.file.id).html(msg)
-					} else {
-						alert(msg)
-					}
-					up.refresh(); // Reposition Flash/Silverlight
-				});
-
-				uploader.bind('FileUploaded', function(up, file) {
-					$('#document_status_'+file.id).progressBar(file.percent, {barImage: "<%= asset_path 'progressbg_green.gif' %>"});
-					$('#document_'+file.id).fadeOut("fast");
-					update_status();
-				});	
-			}
-		  });
-		</script>
+<tbody id="documents">
+<% @folder.children.each do |folder| -%>
+	<% if current_user.can_groups_read(folder) && !(folder.private && @folder.is_root?) -%>
+	<tr class="<%= cycle('even','odd') %>">
+		<td class="file_name" colspan="2"><%= link_to icon('folder-close')+folder.name, folder_path(folder) %></td>
+		<td class="file_size">--</td>
+		<td class="file_modified"><%= l folder.updated_at, :format => :long %></td>
+		<td class="by"><%= folder.user.name unless folder.user.nil? %></td>
+		<td class="options"><span class="pull-right">
+			<%= link_to icon('share'), '#', :title => t(:share), :rel => 'tooltip' %>
+			<%= link_to icon('inbox'),{ :controller => :clipboard, :action => :create, :id => folder.id, :type => 'folder', :folder_id => @folder, :authenticity_token => form_authenticity_token },:method => :post, :title => t(:add_to_clipboard), :rel => 'tooltip' %>
+			<% if current_user.can_update(folder) %>
+				<%= link_to icon('edit'), edit_folder_path(folder), :title => t(:edit), :rel => 'tooltip' %>
+			<% end %>
+			<% if current_user.can_delete(folder) %>
+				<%= link_to icon('remove'), folder_path(folder), :method => :delete, :confirm => t(:are_you_sure), :title => t(:delete_item), :rel => 'tooltip' %>
+			<% end %>
+		</span></td>
+	</tr>
+	<% end -%>
+<% end -%>
+<% @documents.each do |document| -%>
+	<% if current_user.can_groups_read(@folder) -%>
+	<tr id="document_<%= document.id %>" class="<%= cycle('even','odd') %>">
+		<td class="document_name">
+			<%= link_to document_icon(document.attachment_file_type)+document.name.truncate(40), document_path(document), :class => 'trigger alt', :title => "#{t(:download)} #{document.name}" %>
+			<!--div id="popup_<%= document.id %>" class="popup alt">
+				<% if document.metadatas.empty? %>
+					<span class="no"><%= t :no_metadata %></span>
+				<% else %>
+					<table><tbody>
+					<% document.metadatas.each do |meta| %>
+						<tr class="<%= cycle('odd','even') %>">
+						<th valign="top" class="header" style="text-align: right;"><label><%= meta.key %></label>:</th>
+						<td valign="top" class=""><%= meta.value %></td>
+						</tr>
+					<% end %>
+					</tbody></table>		
+				<% end %>		 
+			</div-->
+		</td>
+		<td class="document_status"></td>
+		<td class="document_size"><%= number_to_human_size(document.attachment_file_size, :locale=>I18n.locale) %></td>
+		<td class="document_modified"><%= l document.updated_at, :format => :long %></td>
+		<td class="by"><%= document.user.name unless document.user.nil? %></td>
+		<td class="options"><span class="pull-right">
+			<%= link_to icon('share'), new_document_share_link_path(document), :title => t(:share), :rel => 'tooltip' %>
+			<%= link_to icon('inbox'),{ :controller => :clipboard, :action => :create, :id => document.id, :type => 'document', :folder_id => @folder, :authenticity_token => form_authenticity_token },:method => :post, :title => t(:add_to_clipboard), :rel => 'tooltip' %>
+			<% if current_user.can_update(document.folder) %>
+				<%= link_to icon('edit'), edit_document_path(document), :title => t(:edit), :rel => 'tooltip' %>
+			<% end %>
+			<% if current_user.can_delete(document.folder) %>
+				<%= link_to icon('remove'), document_path(document), :method => :delete, :confirm => t(:are_you_sure), :title => t(:delete_item), :rel => 'tooltip' %>
+			<% end %>
+		</span></td>
+	</tr>
+	<% end -%>
+<% end -%>
+</tbody>
+  <tfoot>
+	<% if current_user.can_create(@folder) -%>
+	<tr>
+		<td colspan="7" class="transparent">
+			<div id="drop">
+				<div style="text-align: center;">Drag & Drop your documents here</div>
+			</div>
+		</td>
+	</tr>
 	<% end %>
-	<div id="errors">
-		
-	</div>
-	<div id="container">
-	</div>
+  	<tr>
+  	  <td colspan="7">		
+  	  </td>
+  	</tr>
+  </tfoot>
+</table>
 
+<%= will_paginate @documents, :renderer => BootstrapPagination::Rails %>
+
+<% content_for :head do %>
+	<script type="text/javascript" charset="utf-8">
+	
+	  $(document).ready(function(){
+
+		var count = 0;
+		var uploader;
+		update_status();
+		initUploader();
+		
+		function update_status(){
+			$.getJSON('<%= statement_folder_path(@folder) %>', function(data) {
+				var folder = data["folder"]
+				var running = false;
+				//console.log(data);		
+				$.each(folder.documents, function(i, doc) {
+					$.extend(doc, {
+						folder_id: <%= @folder.id %>,
+						updated_at: I18n.strftime(new Date(doc.updated_at), "%B %d,%Y %H:%M"),
+						form_authenticity_token: '<%= form_authenticity_token %>',
+						name: truncate(doc.name, 40),
+						tr_class: i%2?'even':'odd',
+						state: document_status_html(doc.status), //status.icon + status.text,
+						attachment_file_size: plupload.formatSize(doc.attachment_file_size),
+						icon: document_icon(doc.attachment_file_type),
+						user: doc.user.name
+					});
+
+					console.log("icon",document_icon(doc.attachment_file_type));
+					console.log("status",document_status_html(doc.status));
+					
+					html_row = $($.tmpl("document_row", doc));
+										
+					if ($('#document_'+doc.id).length>0){
+						if($('#document_status_'+doc.id).html() != $(html_row).find('#document_status_'+doc.id).html())
+							$('#document_'+doc.id).find('.document_status').html($(html_row).find('.document_status').html());
+					}
+					else {
+						tr_class = $('#documents tr').last().hasClass('even') ? 'odd' : 'even';
+						$('#documents').append(html_row);		
+					    $("[rel='tooltip']").tooltip();
+					    $("[rel='tooltip nofollow']").tooltip();
+					    $("[rel='nofollow']").tooltip();
+					}
+
+					if (doc.status < 3) { running = true; }						
+				});
+				if(running) setTimeout(update_status, 2000);
+			});	
+		}
+		
+		
+		function initUploader(params){		
+
+		    settings = {
+		    	url: '<%= url_for([@folder, Document.new]) %>',
+		    	multipart_params: {
+			  		'document_text_only': true,
+		      		'<%= request_forgery_protection_token %>': '<%= form_authenticity_token %>',
+		      		'<%= request.session_options[:key] %>': '<%= request.session_options[:id] %>'
+		    	},
+				runtimes: 'html5,gears,flash,silverlight,browserplus',
+		        drop_element : "documents_table",
+				browse_button : 'upload_btn',
+				container : 'container',
+				max_file_size : '100mb',
+				//rename: true,
+				filters : [
+					{title : "AntiKobpae Supported Documents", extensions : "doc,docx,pdf,rtf,txt,html"}
+				],
+		        //autostart : true
+			};
+
+			$.extend(settings, params);
+
+			//console.log(settings);
+
+			uploader = new plupload.Uploader(settings);
+
+			uploader.bind('Init', function(up, params) {
+				$('#upload_runtime').html(params.runtime);
+			});
+
+			uploader.init();
+
+			uploader.bind('FilesAdded', function(up, files) {
+				$.each(files, function(i, file) {
+					//console.log('doc',file);
+					$.extend(file, {
+						name: truncate(file.name, 40),
+						updated_at: I18n.strftime(new Date(), "%B %d,%Y %H:%M"),
+						tr_class: i%2?'even':'odd',
+						state: document_status_html(0),
+						attachment_file_size: plupload.formatSize(file.size),
+						attachment_file_type: file.name.split('.').pop(),
+						icon: document_icon(file.name.split('.').pop()),
+						user: "<%= current_user.name %>"
+					});
+					var tr_class = $('#documents tr').last().hasClass('even') ? 'odd' : 'even';
+					var html_row = $.tmpl("document_row", file);
+					$("#documents").append(html_row);
+
+				    $("[rel='tooltip']").tooltip();
+				    $("[rel='tooltip nofollow']").tooltip();
+				    $("[rel='nofollow']").tooltip();
+					$('#document_status_'+file.id+' .bar').css('width', file.percent+'%');
+				/*	$('#uploads').prepend(
+						$('<div id="document_'+file.id+'">').addClass((i%2?'even':'odd')+' span-22')
+						.append($('<div>').addClass('span-1 icon').text(''))
+						.append($('<div>').addClass('span-10 file_name')
+							.append($('<a href="/documents/'+(file.id)+'">').text(file.name))
+						)
+						.append($('<div id="document_status_'+file.id+'">').addClass('span-3'))
+						.append($('<div>').addClass('span-3 document_size').text(plupload.formatSize(file.size)))
+						.append($('<div>').addClass('span-4 last options'))
+					);*/
+				});
+				up.refresh(); // Reposition Flash/Silverlight
+				up.start();
+			});
+
+			uploader.bind('UploadProgress', function(up, file) {
+				$('#document_status_'+file.id+' .bar').css('width', file.percent+'%');
+			});
+
+			uploader.bind('Error', function(up, err) {
+				console.log('ERROR', up, err);
+				msg = "Error: "+err.code+", Message: "+err.message+(err.file?", File: "+err.file.name:"");
+				div = $('<div class="option error" style="margin-bottom: 2px;">').text(msg)
+				$('#errors').append(div); div.fadeOut(10000);
+				if(err.file){
+					$('#document_'+err.file.id).addClass('error');
+					$('#document_status_'+err.file.id).html(msg)
+				} else {
+					alert(msg)
+				}
+				up.refresh(); // Reposition Flash/Silverlight
+			});
+
+			uploader.bind('FileUploaded', function(up, file) {
+				$('#document_status_'+file.id+' .bar').css('width', file.percent+'%');
+				$('#document_'+file.id).fadeOut("fast");
+				update_status();
+			});	
+		}
+	  });
+	</script>
+<% end %>
+
+<div id="errors">
+	
+</div>
+<div id="container">
 </div>
 	
 </div>

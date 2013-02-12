@@ -25,6 +25,39 @@ class DocumentsController < ApplicationController
     render :xml => File.open([File.dirname(@document.attachment.path), 'images', 1].join('/'), 'r').read 
   end
 
+  def typeahead 
+    results = Content.search params[:query], 
+      :rank_mode => :bm25,
+      :field_weights => {
+        :name => 10,
+        :attachment_file_name => 6,
+        :text => 3
+      }, 
+      :page => 1, 
+      :per_page => 10
+    respond_to do |format|
+      format.json  {render :json => results.map {|result| result.document }}
+    end
+  end
+
+  def search 
+    results = Content.search params[:query], 
+      :rank_mode => :bm25,
+      :field_weights => {
+        :name => 10,
+        :attachment_file_name => 6,
+        :text => 3
+      }, 
+      :page => params[:page], 
+      :per_page => 50
+    @documents = results.map {|result| result.document}
+    @documents = @documents.paginate(
+      :page => results.current_page, 
+      :per_page => results.per_page, 
+      :total_entries => results.total_entries
+    )
+  end
+
   def download
   	respond_to do |format|
   	  format.orig do
@@ -45,50 +78,50 @@ class DocumentsController < ApplicationController
   
   # @target_folder is set in require_existing_target_folder
   def new
-    @document = @target_folder.documents.build(:content => '<h1>New Document</h1>')
+    @document = @target_folder.documents.build(:content => Content.new(:text => I18n.t(:document_content)))
     @document[:name] = nil
   end
 
   # @target_folder is set in require_existing_target_folder
   def create
     
-  	newparams = coerce(params) 
-  	
-  	puts "------"
-  	puts newparams.inspect
-  	puts "------"
-  	
-    @document = @target_folder.documents.build(newparams[:document])
+    newparams = coerce(params) 
 
-    #@document = @target_folder.documents.build(data)   
-    @document.status = 0
+    @document = @target_folder.documents.build(newparams[:document])  
+
+    @document.status = 1
     @document.from = @target_folder.parent == current_user.scans_folder ? 'scan' : 'file'
     @document.user = current_user
-    #@document.attachment_file_type = @document.extension || 'file' unless @document.attachment_file_name.nil?
 
     case params[:from]
     when 'upload' 
-      @document.name = File.basename(@document.attachment_file_name, File.extname(@document.attachment_file_name)).sub(/_/,' ') if @document.name.blank? && !@document.attachment_file_name.blank? 
+      if @document.name.blank? && !@document.attachment_file_name.blank?
+        @document.name = File.basename(@document.attachment_file_name, File.extname(@document.attachment_file_name)).sub(/_/,' ')  
+      end
     when 'scratch'
+      tempfile = Tempfile.new('document', Rails.root.join('tmp') )
+      tempfile.write params[:content][:text]
+      tempfile.close
+      @document.attachment = File.open(tempfile.path)
       @document.attachment_file_name = [@document.name,'file'].join('.')
+      @document.content = nil
     when 'webpage'
       require 'open-uri'
       @document.attachment_file_type = 'html'
       uri = URI.parse(URI::escape(@document.attachment_file_name))
-      @document.name = [uri.host,'-',ActiveSupport::SecureRandom.hex(6)].join 
+      @document.name = [uri.host,'-',SecureRandom.hex(6)].join 
     end
     
-    if @document.save
-      flash[:notice] = "Successfully uploaded document."
+    if @document.save!
+      flash[:notice] = I18n.t(:document_create_success)
       respond_to do |format| 
         format.html { redirect_to folder_url(@target_folder) } 
         format.json  { render :json => { :result => 'success', :upload => document_path(@document) } } 
       end	
     else
-    	@document[:content] = newparams[:document][:content]
-    	@document[:attachment] = newparams[:document][:attachment]
-      @document[:name] = newparams[:document][:name]
-      flash[:notice] = "Only gif, jpg or png files allowed"
+    	@document[:content] = params[:document][:content]
+      @document[:name] = params[:document][:name]
+      flash[:error] = I18n.t(:document_create_fail)
       respond_to do |format| 
         format.html { render :action => 'new' } 
         format.json  { render :json => { :result => 'failed' } } 
@@ -107,12 +140,16 @@ class DocumentsController < ApplicationController
 
   # @document and @folder are set in require_existing_file
   def update
-  	
-  	data = params[:document]
-  	data[:status] = 0
-  	data[:user] = current_user
-  		  	
-    if @document.update_attributes(data)
+
+  	File.open(@document.attachment.path, 'wb') do |f|
+      f.puts params[:content][:text]
+    end
+
+    params[:document].delete(:name) if params[:document][:name].empty?
+    params[:document][:status] = 1
+  	params[:document][:user] = current_user
+ 
+    if @document.update_attributes(params[:document])
       redirect_to edit_document_url(@document), :notice => t(:your_changes_were_saved)
     else
       render :action => 'edit'
@@ -149,7 +186,20 @@ class DocumentsController < ApplicationController
   end
   
   def require_html_content
-    @document[:content] = File.open([@document.attachment.path,'html'].join('.'), 'r:UTF-8').read 
+    if File.exists? [@document.attachment.path,'html'].join('.')
+      @document.content = Content.new(:text => File.open([@document.attachment.path,'html'].join('.'), 'r:UTF-8').read) 
+    else @document.content = Content.new(:text => "
+      <div class=\"hero-unit\"> 
+      <h1>Wait !</h1> 
+      <p>Your file is being queued for conversion. Please wait for a moment. 
+      This can take while, espacially if the file is big</p> 
+      <p> 
+      <a href=\"#{folder_url(@document.folder)}\" class=\"btn btn-primary btn-large\"> 
+        Take me back 
+      </a> 
+      </p> 
+      </div>")
+    end
   rescue Errno::ENOENT
     redirect_to folder_url(@folder), :alert => t(:already_deleted, :type => t(:this_content)+[@document.attachment.path,'html'].join('.'))
   end

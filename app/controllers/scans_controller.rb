@@ -15,11 +15,11 @@ class ScansController < ApplicationController
     @folder.children.each do |folder|
     	@scans << folder.scan
     end
-    render :json => @scans.to_json(:include => :scan_files)
+    render :json => @scans.to_json(:include => {:scan_files => {:methods => [:count_sources , :count_file_sources, :count_web_sources, :count_recursive_sources]}})
   end
   
   def statement 
-    render :json => @scan.scan_files.to_json(:methods => [:count_sources , :count_file_sources, :count_web_sources, :count_recursive_sources])
+    render :json => @scan.to_json(:include => {:scan_files => {:methods => [:count_sources , :count_file_sources, :count_web_sources, :count_recursive_sources]}})
   end
 
   def start 
@@ -44,13 +44,14 @@ class ScansController < ApplicationController
     @folder.children.each do |folder|
     	@scans << folder.scan
     end
+    @scans.sort! { |a,b| b.created_at <=> a.created_at }
   end
 
   def new
   	t = Time.now
   	@folder = current_user.scans_folder
   	@scan = @folder.scans.create(params[:scan])
-  	@scan.folder = current_user.scans_folder.children.create(:name => [t.strftime("Scan %m/%d/%Y %H:%M"),ActiveSupport::SecureRandom.hex(3)]*'-')
+  	@scan.folder = current_user.scans_folder.children.create(:name => [t.strftime("Scan %m/%d/%Y %H:%M"),SecureRandom.hex(3)]*'-')
   	if @scan.save
   	  redirect_to edit_scan_url(@scan)#render :action => 'edit'
     else

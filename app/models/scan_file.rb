@@ -8,20 +8,17 @@ class ScanFile < ActiveRecord::Base
   has_many :duplicate_ranges, :through => :similarities, :foreign_key => "scan_file_duplicate_range"
   has_many :similarities, :dependent => :destroy
   
-  attr_accessible :document, :status, :progress, :sphinx_progress, :web_progress, :score, :time
+  attr_accessible :document, :status, :progress, :score, :time
   
   def start_scan
     require "benchmark"
   
-    update_attributes(:status => 1, :progress => 0,
-      :web_progress => scan.web ? 0 : 100,
-      :sphinx_progress => scan.sphinx ? 0 : 100,
-      :time => Benchmark::Tms.new
-    )
+    update_attributes(:status => 1, :progress => 0, :time => Benchmark::Tms.new)
     
     time = Benchmark.measure do
-      sphinx_exit = Process.wait(fork_with_new_connection { self.sphinx_search }) if scan.sphinx
-      web_exit = Process.wait(fork_with_new_connection { self.web_search }) if scan.web
+      self.search
+      #sphinx_exit = Process.wait(fork_with_new_connection { self.search }) if scan.sphinx
+      #web_exit = Process.wait(fork_with_new_connection { self.web_search }) if scan.web
     end
     
     update_attributes(:status => 2, :progress => 100, :time => time)
@@ -29,7 +26,7 @@ class ScanFile < ActiveRecord::Base
   
   handle_asynchronously :start_scan, :queue => 'scans'
   
-  def sphinx_search(limit=50)
+  def search(limit=50)
     tolerence = scan.tolerence
     words = Marshal.load(File.open([document.attachment.path,'words','obj'].join('.')))
     matches = Hash.new
@@ -39,11 +36,15 @@ class ScanFile < ActiveRecord::Base
     # 1. Document Filtering 
     puts "<ScanFile ##{id}> Sphinx Search..."
     begin
-      for i in (0..size) 
-        self.update_attributes(:sphinx_progress => 50*i/size)
-        hash = words[i..i+tolerence].join(' ')
-        documents = Document.search_for_ids(hash)
-        documents.each do |src_id|
+      i = 0
+      while(i < size)
+      #for i in (0..size) 
+        self.update_attributes(:progress => 75*i/size)
+        hash = words[i..i+tolerence]*' '
+        i+=tolerence
+        contents = Content.search hash, :match_mode => :phrase
+        contents.each do |content|
+          src_id = content.document_id
           matches[src_id]=0 if matches[src_id].nil?
           matches[src_id]+=1
         end
@@ -54,8 +55,6 @@ class ScanFile < ActiveRecord::Base
       rebuilt ? raise : rebuilt = true and retry
     rescue Errno::EADDRNOTAVAIL => e
       puts "Errno::EADDRNOTAVAIL => #{e.message}"  
-      #puts e.backtrace.inspect  
-      #sleep 0.42 and retry
     rescue => e
       puts "OTHER::ERROR => #{e.inspect}"
     end
@@ -66,10 +65,11 @@ class ScanFile < ActiveRecord::Base
     # 2. Matches Sorting
     matches = matches.sort {|a,b| b[1] <=> a[1]}
     matches.select! {|src_id, score| src = Document.find(src_id)
-      skip = src == document # Identical
-      skip ||= (src.from == 'web') # Web Cache
-      skip ||= (src.from == 'scan' && src.folder != scan.folder)
-      !skip
+      #skip = src == document # Identical
+      #skip ||= (src.from == 'web') # Web Cache
+      #skip ||= (src.from == 'scan' && src.folder != scan.folder)
+      #!skip
+      true
     }
     
     # 3. Hightlighting
@@ -78,168 +78,12 @@ class ScanFile < ActiveRecord::Base
       ActiveRecord::Base.connection.reconnect!
       src_id, score = hash[0], hash[1]
       source = Document.find(src_id)
-      self.update_attributes(:sphinx_progress => 50+50*i/limit)
+      self.update_attributes(:progress => 75+25*i/limit)
       puts "<ScanFile ##{id}> <=> <Document ##{source.id}>"
       compare_with source
     end     
     
-    self.update_attributes(:sphinx_progress => 100)
-  end
-  
-  def web_search(limit=20)
-    
-    # 1. Url Filtering
-    require 'open-uri'
-    require 'uri'
-    retry_exceptions = [Timeout::Error, Errno::ETIMEDOUT, Errno::ECONNRESET]
-    ignore_exceptions = [OpenURI::HTTPError, SocketError]
-    tolerence = scan.tolerence
-    words = Marshal.load(File.open([document.attachment.path,'words','obj'].join('.')))
-    urls, titles, encoding = Hash.new, Hash.new, Hash.new
-    grouped_words = words.in_groups_of(tolerence)
-    size = grouped_words.length
-    config = ActiveRecord::Base.remove_connection
-    
-    puts "<ScanFile ##{id}> Web Search..."
-    
-    results = Parallel.map_with_index(grouped_words) do |s, i|
-      web_results = []
-
-      begin
-        ActiveRecord::Base.establish_connection(config)
-        ActiveRecord::Base.connection.reconnect!
-        hash = s*' '
-        retries = 3
-        http = "http://www.gigablast.com/search?q=#{URI::escape(hash)}&sc=0&dr=0&raw=8&nrt=11"
-        #http = "http://api.bing.net/json.aspx?AppId=#{AppConfig.bing_api_key}&Query=#{URI::escape(hash)}&Sources=Web"
-
-        Timeout::timeout(10){
-          response = Nokogiri::XML(open(http).read)
-          #response = ActiveSupport::JSON.decode(open(http).read)
-          web_results = response.css('result').map do |n| {
-            :url => n.css('url').text,
-            :title => n.css('title').text,
-            :encoding => n.css('charset').text
-          } end
-          #web_results = response["SearchResponse"]["Web"]
-          print "W"
-          puts response.inspect
-          puts "-----"
-          self.update_attributes(:web_progress => 25*i/size)
-        }
-      rescue *retry_exceptions
-        retries -= 1
-        sleep 0.42 and retry if retries > 0
-      rescue *ignore_exceptions
-        print 'i'
-      rescue Exception => exception
-        puts ("Forked operation failed with exception: #{exception.inspect}")
-        success = false
-      ensure
-        ActiveRecord::Base.remove_connection
-      end
-      web_results
-    end
-    
-    ActiveRecord::Base.establish_connection(config)
-    
-    puts "<ScanFile ##{id}> #{results.length} Web Results"
-    
-    puts results.inspect
-    # 2. Matches Sorting (TODO : Try with "CacheUrl" if "Url" doesn't work)
-    results.flatten.each do |result|
-      puts result.inspect
-      if urls[result[:url]].nil?
-        urls[result[:url]]=0 
-        titles[result[:url]]=result[:title]
-        encoding[result[:url]]=result[:encoding]
-      else
-        urls[result[:url]]+=1
-      end
-    end
-    
-    urls.select! {|url, score| score > tolerence % 5 }
-    limit = urls.length if urls.length < limit
-    urls = urls.sort {|a,b| b[1] <=> a[1]}
-    
-    # 3. Content Caching
-    cache_folder = scan.folder.children.find_by_name('Cache') || scan.folder.children.create(:name => 'Cache')
-    cache_folder.save!
-    cache_dir = Dir.mktmpdir
-    urls = urls.take(limit)
-    size = urls.length
-    return if urls.empty?
-    
-    attachments = Parallel.map_with_index(urls) do |hash, i| 
-      ActiveRecord::Base.connection.reconnect!
-      url, score = hash[0], hash[1]
-      self.update_attributes(:web_progress => 25+25*i/size)
-      uri = ''
-  	  retries = 3
-  	  response = nil
-  	  encoding = nil
-      retry_exceptions = [Timeout::Error, Errno::ETIMEDOUT, Errno::ECONNRESET]
-      ignore_exceptions = [OpenURI::HTTPError, SocketError, RuntimeError]
-      
-      begin
-        uri = URI.parse(URI.escape(url))
-      rescue URI::InvalidURIError
-        require 'cgi'
-        uri = URI.parse(CGI.escape(url))
-      end
-      
-      file = File.new("#{cache_dir}/#{ActiveSupport::SecureRandom.hex(6)}", 'wb')
-  	  #puts "<URL '#{url}'> (#{score} bing matches) Retrieving contents into '#{file.path}'..."
-  	  begin
-  	    Timeout::timeout(10){
-  	      content = open(uri).read
-  	      file.puts content
-  	    }
-      rescue *retry_exceptions => e
-        retries -= 1
-        #puts "=> ERROR: #{e.message} - #{retries} retries left"
-        sleep 0.42 and retry if retries > 0
-        #puts "=> ERROR: #{e.message}"
-        file.write "<div class='option error'><h1>WebPage Error</h1>"
-        file.write "<p>#{e.message}</p></div>"
-      rescue *ignore_exceptions => e
-  	    #puts "=> ERROR: #{e.message}"
-        file.write "<div class='option error'><h1>WebPage Error</h1>"
-        file.write "<p>#{e.message}</p></div>"
-      ensure
-	      file.close
-	    end
-     	{ :url => url, :path => file.path }
-    end
-    
-    # 4. Cache Document Processing / Highlighting
-    Parallel.each_with_index(attachments) do |data, i| # Switch back to non-parallel
-      print 'C'
-      self.update_attributes(:web_progress => 50+50*i/size)
-      url, path = data[:url], data[:path]
-      puts "<URL '#{url}'> Cache Processing... => #{path}"
-      name = title = titles[url].gsub(/[\/\\\?\*:|"<>]+/, ' ') || truncate(URI.parse(URI.escape(url))).gsub(/[\/\\\?\*:|"<>]+/, ' ') || ["Unknown",'-',ActiveSupport::SecureRandom.hex(6)].join
-      count = 1
-      until cache_folder.documents.find_by_name(name).nil?
-        name = "#{title} (#{count})"
-        count += 1
-      end
-      source = cache_folder.documents.create({
-        :from => 'web', 
-        :status => 0,
-        :text_only => true,
-        :attachment => File.open(path),
-        :attachment_file_type => 'html', 
-        :attachment_file_name => URI.unescape(url), 
-        :name => name
-      })
-      source.attachment_file_name = URI.unescape(url)
-      source.save!
-      compare_with source
-    end
-    
-    self.update_attributes(:web_progress => 100)
-
+    self.update_attributes(:progress => 100)
   end
   
   def compare_with(source)
@@ -266,7 +110,7 @@ class ScanFile < ActiveRecord::Base
     doc_matches, src_matches = dup_filter[0], dup_filter[1]
     puts " Done."  
     
-    print "  | Finding Similarities... "
+    puts "  | Finding Similarities... "
     sims = Parallel.map(doc_matches, :in_threads => 3) do |doc_match|
       Parallel.map(src_matches, :in_threads => 3) do |src_match|       
         doc_chunk = doc_words[doc_match.first..doc_match.last]

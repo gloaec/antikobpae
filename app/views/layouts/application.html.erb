@@ -1,23 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title><%= yield(:title).present? ? ['AntiKobpae','|',yield(:title)].join(' '): 'AntiKobpae 2.0' %></title>
+	<title><%= yield(:title).present? ? ['Pasted','|',yield(:title)]*' ': 'Pasted Plagiarism Scanner' %></title>
 	<%= favicon_link_tag %>
 	
 	<%= stylesheet_link_tag    'application' %>	
 	<%= javascript_include_tag 'application' %>
 	<%= csrf_meta_tags %>
 	
-	<%= javascript_include_tag "ckeditor/ckeditor.js" %>
-	<%= javascript_include_tag "easing.js" %>
-	<%= javascript_include_tag "engage.itoggle.js" %>
-	
-	<%= stylesheet_link_tag    'engage.itoggle.css' %>
+	<%= javascript_include_tag 'ckeditor/ckeditor.js' %>
+	<%= javascript_include_tag 'easing.js' %>
 
 	<script type="text/javascript" charset="utf-8">
 		(function($){
 			$(document).ready(function() {
-				$("a.fancybox").fancybox();
+                /*
 				var $sidebar   = $("#sidebar"),
        				$window    = $(window),
         			offset     = $sidebar.offset(),
@@ -40,6 +37,7 @@
             					});
         				}
     				});
+                */
 			});
 		})(jQuery);
 	</script>
@@ -47,84 +45,61 @@
 	<%= yield :head %>
 	
 </head>
-<body>
-	<%- flash.each do |name, msg| -%>
-			<%= content_tag :div, msg, :class => "flash #{name}" if msg.is_a?(String) %>
-	<%- end -%>
+<body data-offset="80" data-target=".subnav" data-spy="scroll" style="margin-top: 0px;">
 
-<%# DEVELOPMENT CONSOLE --- Reformat for release --- %>
-
-	<style>
-	#console {
-		position: fixed;
-		background: rgba(0, 0, 0, .5);
-		top: 10px;
-		right: 10px;
-		width: auto;
-		height: auto;
-		z-index: 1;
-		padding: 10px;
-		color: white;
-		-webkit-border-radius: 10px;
-		-moz-border-radius: 10px;
-		border-radius: 10px;
-	}
-	#console hr { margin:0; padding:0;}
-	</style>
-	
-	<div id="console">
-		<% jobs = Delayed::Job.all %>
-		Scan Queue : <span id="jobs"><%= jobs.select { |j| j.queue == 'scans' }.count %></span><br />
-		Document Queue : <span id="jobs"><%= jobs.select { |j| j.queue == 'documents' }.count  %></span><br />
-		Delta Queue : <span id="jobs"><%= jobs.select { |j| j.queue == 'delta' }.count  %></span><hr />
-		Documents : <span id="document_count"><%= Document.count %></span>
-	</div>
-
-<%# END DEVELOPMENT CONSOLE --------------------- %>
-	
 	<%= render 'shared/header' %>
-	
-	<div id="wrapper">
-	
-	<div id="navigation" class="<%= "home" if current_page?(new_user_session_path) %>">
-		<ul class="container">
-			<%= render 'shared/menu' %>
-		</ul>
-	</div>
-	
+
+        <%= yield(:subnav) %>
 	<% if current_page?(new_user_session_path) %>
 		<%= yield %>
 	<% else %>
-		<div id="header">
-			<div class="container">
-				<h1 class="container"><%= yield :title %></h1>
-				<% if yield(:subtitle).present? %>
-					<h2 class="container"><%= yield :subtitle %></h2>
-				<% end %>
-			</div>
-		</div>  
-		
-		<div id="body">
-			<div class="container">
-				<div class="span-6">
-				<div id="sidebar">
-					<%= yield(:sidebar) %>
-					<ul>
-						<li><%= link_to image_tag('icons/back32.png')+t(:back), :back %></li>
-					</ul>
-				</div>
-				</div>
-				<div class="span-18 last">
-					<%= yield %>	
-				</div>
-			</div>
-		</div>
-	<% end %>
-	
-	</div>
-	
-	<%= render 'shared/footer' %>
+		<div class="container-fluid">
+	      <div class="row-fluid">
+	        <div class="span3">
+	          <div class="well sidebar-nav">
+	            <ul class="nav nav-list">
+				  <%= yield(:sidebar) %>
+				  <li><%= link_to icon('arrow-left')+t(:back), :back %></li>
+	            </ul>
+	          </div><!--/.well -->
 
+	          <script type="text/javascript"><!--
+			  google_ad_client = "ca-pub-9631132359401447";
+			  /* Pasted Sidebar 1 */
+			  google_ad_slot = "6724419338";
+			  google_ad_width = 300;
+			  google_ad_height = 250;
+			  //-->
+			  </script>
+			  <script type="text/javascript"
+			  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+			  </script>
+
+	        </div>
+	        <div class="span9">
+			  <%#= bootstrap_flash %>
+			  <% flash.each do |name, msg| %>
+  <% if msg.is_a?(String) %>
+    <div class="alert alert-<%= name == :notice ? "success" : "error" %>">
+      <a class="close" data-dismiss="alert">&#215;</a>
+      <%= content_tag :div, msg, :id => "flash_#{name}" %>
+    </div>
+  <% end %>
+<% end %>
+			  <!--<h1><%= yield :title %></h1>
+			  <% if yield(:subtitle).present? %>
+				<h2><%= yield :subtitle %></h2>
+			  <% end %>-->
+	          <%= yield %>
+	        </div>
+	      </div>
+
+	     
+	    </div>
+
+	    <%= render 'shared/footer' %>
+
+	<% end %>
 </body>
 </html>
 

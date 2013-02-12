@@ -1,16 +1,8 @@
-pre {
-background: transparent;
-padding: 0;
-white-space: pre-wrap;
+.field_with_errors {
+  padding: 2px;
+  background-color: red;
+  display: table;
 }
-
-  
-div {
-  &.field, &.actions {
-    margin-bottom: 10px; } }
-
-#notice {
-  color: green; }
 
 #error_explanation {
   width: 450px;
@@ -27,7 +19,10 @@ div {
     margin: -7px;
     margin-bottom: 0px;
     background-color: #c00;
-    color: #fff; }
+    color: #fff;
+  }
   ul li {
     font-size: 12px;
-    list-style: square; } }
+    list-style: square;
+  }
+}

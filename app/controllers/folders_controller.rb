@@ -11,7 +11,7 @@ class FoldersController < ApplicationController
   respond_to :html, :json
 
   def statement
-    render :json => @folder.to_json(:include => :documents)
+    render :json => @folder.to_json(:include => {:documents => {:except => :content, :include => { :user => { :only => :name }}}})
   end
 
   def index
@@ -28,6 +28,9 @@ class FoldersController < ApplicationController
   	if @folder == current_user.scans_folder
   	  redirect_to scans_url, :alert => params[:alert]
   	end
+    if @folder == Folder.index
+      redirect_to domains_url, :alert => params[:alert]
+    end
   	if @folder.parent == current_user.scans_folder
   	  @scan = Scan.find(:first, :conditions => {:folder_id => @folder})
   	  if @scan.scan_files.count != @folder.documents.count 
@@ -36,7 +39,13 @@ class FoldersController < ApplicationController
   	    redirect_to scan_path(@scan), :alert => flash[:alert]
 	    end
   	end
+    require 'will_paginate/array'
 
+    # TODO => @entries = [@folder.documents,@folder.children].flatten
+
+    @documents = @folder.documents
+    @documents = @documents.paginate(:page => params[:page], :per_page => 30, :total_entries => @documents.count)
+    #WillPaginate.per_page = 10
     #respond_with(@folder, :include => [:documents, :children])
   end
 

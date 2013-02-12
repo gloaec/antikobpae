@@ -8,7 +8,7 @@
 	</ul>
 <% end -%>
 
-<div class="breadcrumbs">
-	<%= breadcrumbs(@document.folder, "<span class=\"breadcrumb nowrap\">#{link_to(@document.attachment_file_name, file_path(@document))}</span>") %>
-</div>
+<ul class="breadcrumb">
+	<%= breadcrumbs(@document) %>
+</ul>
 <%= @document.content.html_safe %>

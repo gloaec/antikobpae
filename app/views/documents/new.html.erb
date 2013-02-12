@@ -27,10 +27,9 @@
 	</script>
 <% end %>
 
-<div class="breadcrumbs">
-	<% bread = link_to(t(:new_document), :action => :new, :from => params[:from], :target_folder => @targer_folder) %>
-	<%= breadcrumbs(@document.folder, "<span class=\"breadcrumb nowrap\">#{bread}</span>") %>
-</div>
+<ul class="breadcrumb">
+	<%= breadcrumbs(@document) %>
+</ul>
 
 <% case params[:from] -%>
 <% when "upload" -%>
@@ -52,7 +51,7 @@
 		</div>
 	<% end %>			
 <% when "scratch" -%>
-	<%= form_for [@target_folder, @document], :url => { :action => 'create', :from => "scratch" }, :html => { :multipart => true } do |f| %>
+	<%= form_for [@target_folder, @document], :url => { :action => 'create', :from => "scratch" }, :html => { :multipart => true, :class => "form-horizontal" } do |f| %>
 		<%= render 'form', :f => f %>
 		<div id="hidden" style="display:none;">
 			<%= f.check_box :text_only %>

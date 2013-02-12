@@ -1,0 +1,15 @@
+/.cvsignore/1.1.1.1/Fri Dec 21 10:57:03 2001//
+/Makefile.am/1.1.1.1/Fri Dec 21 10:57:03 2001//
+/conv.cxx/1.2/Thu Apr  3 09:54:59 2003//
+/conv.h/1.2/Thu Apr  3 09:54:59 2003//
+/convfact.cxx/1.2/Thu Apr  3 09:54:59 2003//
+/convfact.h/1.2/Thu Apr  3 09:54:59 2003//
+/convkit.cxx/1.1.1.1/Fri Dec 21 10:57:03 2001//
+/convkit.h/1.1.1.1/Fri Dec 21 10:57:03 2001//
+/tis620.cxx/1.3/Fri Apr  4 09:09:43 2003//
+/tis620.h/1.2/Thu Apr  3 09:54:59 2003//
+/tischar.h/1.1.1.1/Fri Dec 21 10:57:03 2001//
+/unichar.h/1.1.1.1/Fri Dec 21 10:57:03 2001//
+/utf8.cxx/1.3/Fri Apr  4 09:09:43 2003//
+/utf8.h/1.2/Thu Apr  3 09:54:59 2003//
+D

@@ -7,9 +7,6 @@ class Scan < ActiveRecord::Base
 	attr_accessible :web, :recursive, :scan_files
 	
 	def start
-	  cache_folder = folder.children.find_by_name('Cache') || folder.children.create(:name => 'Cache')
-	  cache_folder.documents.destroy_all
-	  pids = []
 	  Parallel.each(scan_files, :in_processes => 0) do |scan_file|
 	    ActiveRecord::Base.connection.reconnect!
 	    scan_file.start_scan

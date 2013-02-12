@@ -4,6 +4,7 @@ class CreateMetadata < ActiveRecord::Migration
       t.string :key
       t.string :value
       t.references :document
+      t.boolean :delta, :boolean, :default => true, :null => false
       t.timestamps
     end
   end

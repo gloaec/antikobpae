@@ -1,0 +1,65 @@
+/*
+ * This is a manifest file that'll automatically include all the stylesheets available in this directory
+ * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
+ * the top of the compiled file, but it's generally better to create a new file per style scope.
+ *= require_self
+ *= require_tree .
+*/
+
+@import "bootswatch/united/variables";
+@import "bootstrap";
+body { padding-top: 60px; padding-bottom: 60px; }
+@import "bootstrap-responsive";
+@import "bootswatch/united/bootswatch";
+//@import "base";
+
+/*.navbar .brand {
+    background: url('logo-small.png') no-repeat left center;
+    height: 20px;
+    width: 120px;
+    padding-left: 140px;   
+    font-size: 10px;
+}*/
+
+.document_status .progress,
+.scan_file_status .progress,
+.scan_status .progress {
+    margin-bottom: 0;
+}
+
+.duplicated {
+    white-space: normal;
+}
+
+[class^="icon-locale-"],
+[class^="icon-file-"],
+[class^="icon-cus-"],
+[class*=" icon-locale-"],
+[class*=" icon-file-"],
+[class*=" icon-cus-"] {
+    display: inline-block !important;
+    width: 17px !important;
+    height: 16px;
+    *margin-right: .3em;
+    line-height: 14px !important;
+    vertical-align: text-top;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+[class^="icon-locale-"]:last-child,
+[class^="icon-file-"]:last-child,
+[class^="icon-cus-"]:last-child,
+[class*=" icon-locale-"]:last-child,
+[class*=" icon-file-"]:last-child,
+[class*=" icon-cus-"]:last-child {
+    *margin-left: 0;
+}
+.icon-locale-en { background-image: url('icons/locale/en.png') !important; } 
+.icon-locale-fr { background-image: url('icons/locale/fr.png') !important; }
+.icon-file-pdf { background-image: url('/images/fileicons/pdf.png') !important; }
+.icon-file-rtf { background-image: url('/images/fileicons/rtf.png') !important; }
+.icon-file-odt { background-image: url('/images/fileicons/odt.png') !important; }
+.icon-file-doc { background-image: url('/images/fileicons/doc.png') !important; }
+.icon-file-docx { background-image: url('/images/fileicons/docx.png') !important; }
+.icon-file-html { background-image: url('/images/fileicons/html.png') !important; }
+.icon-cus-loading { background-image: url('icons/loading.gif') !important; }

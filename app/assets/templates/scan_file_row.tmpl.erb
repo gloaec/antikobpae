@@ -1,0 +1,18 @@
+<tr id="scan_file_${id}" class="${tr_class}">
+    <td class="file_name"><a href="/documents/${document_id}">{{html icon}} ${name}</a></td>
+    <td class="scan_file_status"> 
+        <div id="scan_file_status_${id}">{{html state}}</div>
+    </td>
+    <td class="file_size">${attachment_file_size}</td>
+    <td class="scan_score">
+        <a href="">
+            <span class="scan_file_status" id="scan_file_score_${id}">${score}</span> / <span id="scan_file_sources_${id}">${count_sources}</span> sources
+        </a>
+    </td>
+    <td class="options"><span class="pull-right">
+        <a href="/documents/${id}/share_links/new" title="<%= I18n.t(:share) %>" rel="tooltip"><i class="icon-share"></i> </a>
+        <a href="/clipboard?authenticity_token=${form_authenticity_token}&folder_id=${folder_id}&id=${id}&type=document" data-method="post" rel="nofollow" title="<%= I18n.t(:add_to_clipboard) %>" rel="tooltip"><i class="icon-inbox"></i> </a>
+        <a href="/documents/${id}/edit" title="<%= I18n.t(:edit) %>" rel="tooltip"><i class="icon-edit"></i> </a>
+        <a href="/documents/${id}" data-confirm="Are you sure?" data-method="delete" rel="nofollow" title="<%= I18n.t(:delete_item) %>" rel="tooltip"><i class="icon-remove"></i> </a>
+    </span></td>
+</tr>

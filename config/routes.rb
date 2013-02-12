@@ -1,6 +1,10 @@
 AntiKobpae::Application.routes.draw do
 
-  root :to => 'scans#index'
+  resources :routes
+
+  resources :domains
+
+  root :to => 'folders#index'
   
   mount Ckeditor::Engine => '/ckeditor'
   
@@ -9,6 +13,9 @@ AntiKobpae::Application.routes.draw do
     :action => '_plupload_uploader', 
     :as => 'pluploader'
 
+  match '/typeahead' => 'documents#typeahead'
+  match '/search' => 'documents#search'
+  
   devise_for :users, :path_prefix => 'auth', :controllers => {
     :sessions => 'users/sessions',
     :registrations => 'users/registrations'
@@ -72,6 +79,13 @@ AntiKobpae::Application.routes.draw do
     resources :folders, :only => [:new, :create]
   end
    
+   resources :domains, :shallow => true, :except => [:new, :create] do
+    resources :domains, :only => [:new, :create] 
+    resources :documents, :only => [:new, :create] 
+    resources :folders, :only => [:new, :create]
+    resources :document_text
+  end
+
   resources :scan_files, :shallow => true, :except => [:new, :create] do
     resources :similarities, :only => [:index, :new, :create]
   end
