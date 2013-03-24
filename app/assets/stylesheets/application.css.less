@@ -7,7 +7,8 @@
 */
 
 @import "twitter/bootstrap";
-body { padding-top: 60px; padding-bottom: 60px; }
+body { padding-top: 70px; padding-bottom: 60px; }
+body.home { padding-top: 50px; }
 @import "twitter/bootstrap/responsive";
 @import "font-awesome";
 @import "bootswatch/antikobpae/variables";
@@ -35,11 +36,12 @@ body { padding-top: 60px; padding-bottom: 60px; }
 }
 
 .navbar.navbar-inverse .navbar-inner {
-    background: url('/images/navigation-bg.jpg');
+    background: #061E4A url('navigation-bg.jpg') no-repeat center top;
 }
 
 .navbar .navbar-inner {
     background: url('navigation-home-bg.jpg');
+    background: #061E4A url('navigation-home-bg.jpg') no-repeat center top;
 }
 .dropdown-menu div {
   color: #333;
@@ -77,3 +79,16 @@ body { padding-top: 60px; padding-bottom: 60px; }
 .icon-file-html { background-image: url('/images/fileicons/html.png') !important; }
 .icon-file-file { background-image: url('/images/file.png') !important; }
 .icon-cus-loading { background-image: url('icons/loading.gif') !important; }
+
+
+.home .navbar .navbar-inner {
+        background: #061E4A url('navigation-home-bg.jpg') no-repeat center top;
+}
+
+#home {
+	background: url('home-bg2.png') no-repeat center top;
+	margin: 0 auto;
+	padding: 23px 0 0 0;
+	position: relative;
+	height: 450px;
+}

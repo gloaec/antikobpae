@@ -45,7 +45,7 @@
 	<%= yield :head %>
 	
 </head>
-<body data-offset="80" data-target=".subnav" data-spy="scroll" style="margin-top: 0px;">
+<body class="<%= 'home' if current_page?(new_user_session_path) %>" data-offset="80" data-target=".subnav" data-spy="scroll" style="margin-top: 0px;">
 
 	<%= render 'shared/header' %>
 
@@ -54,7 +54,7 @@
 		<%= yield %>
 	<% else %>
            
-		<div class="container-fluid">
+	    <div class="container-fluid">
 	      <div class="row-fluid">
 	        <div class="span3">
 	          <div class="well sidebar-nav">

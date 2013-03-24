@@ -2,43 +2,29 @@
 
 <div id="home">
 	<div class="container">	
-		<div class="span-12">
+		<div class="span6">
 		<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
 		  
-		  <div class="span-3 align-r">
-		  	<%= f.label :name %>
+		  <div class="control-group">
+		     <%= f.text_field :name, :class => 'title', :placeholder => t(:username) %>
 		  </div>
-		  <div class="span-8 append-2 last">
-		     <%= f.text_field :name, :class => 'title' %>
+		  <div class="control-group">
+		    <%= f.password_field :password, :class => 'title', :placeholder => t(:password) %>
 		  </div>
-		  <div class="span-3 align-r">
-		    <%= f.label :password %>
-		  </div>
-		  <div class="span-8 append-2 last">
-		    <%= f.password_field :password, :class => 'title' %>
-		  </div>
-		  <% if devise_mapping.rememberable? -%>
-			  <div class="span-3 align-r remember">
-				<%= label_tag :remember_me, t(:remember_me) %>
-			  </div>
-			  <div class="span-2 spacing">
-			  	  <%= check_box_tag :remember_me, 'true' %>
-			  </div>
+                  <div class="control-group">
+		  <div class="input-append input-prepend">
+                  <% if devise_mapping.rememberable? -%>
+                          <button type="button" class="btn" data-toggle="button"><%= t(:remember_me) %></button>
 		  <% end %>
-		  <div class="span-5 last remember">
+                  
+			  <button type="submit" class="btn btn-primary">
+			  	<img/> <%= t(:sign_in) %>
+			  </button> 
+                  </div>
+                  </div>
 			<%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
 			  <%= link_to t(:reset_password), new_password_path(resource_name) %><br />
 			<% end -%>
-		  </div>
-		  
-		  <div class="prepend-3 span-19 last">
-			  <button type="submit" class="button blue">
-			  	<img/> <%= t(:sign_in) %>
-			  </button> 
-		  </div>
-		  
-		  <div class="span-12 last">
-		  </div>
 		  
 		<% end %>
 		</div>
