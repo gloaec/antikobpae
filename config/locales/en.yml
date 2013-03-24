@@ -356,6 +356,7 @@
 
   #scans/edit
   edit_scan: Edit Scan
+  scan_name: Scan Name
   update_scan: Update Scan
   start_scan: Start Scan
   add_documents: Add Documents

@@ -31,7 +31,7 @@ AntiKobpae::Application.routes.draw do
       put 'reset'
     end
   end
-  
+ 
   # Update a collection of permissions
   resources :group_folder_permissions, :only => :update_multiple do
     put :update_multiple, :on => :collection
@@ -89,4 +89,5 @@ AntiKobpae::Application.routes.draw do
   resources :scan_files, :shallow => true, :except => [:new, :create] do
     resources :similarities, :only => [:index, :new, :create]
   end
+
 end

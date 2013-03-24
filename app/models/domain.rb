@@ -20,8 +20,12 @@ class Domain < ActiveRecord::Base
       uri = URI.parse(CGI.escape(seed_uri))
     end
 
-    Anemone.crawl(uri) do |anemone|
+    Anemone.crawl(uri, :discard_page_bodies => true, :threads => 8) do |anemone|
       #anemone.focus_crawl { |page| page.links.slice(0..1) }
+      #anemone.on_every_page do |page|
+      puts 'Crawling '+uri.to_s+'...'
+      #anemone.storage = Anemone::Storage.MongoDB 
+
       #anemone.on_every_page do |page|
 
       anemone.on_pages_like(/\/?#{Regexp.escape(path)}\/.*$/) do |page|
@@ -49,16 +53,18 @@ class Domain < ActiveRecord::Base
             :text_only => true,
             #:attachment => File.open(tempfile.path),
             :attachment_file_type => 'html',
-            :attachment_file_name => URI.unescape(page.url.to_s),
+            :attachment_file_name => page.url.to_s,
             :name => name
           })
           #source.save!
 
       end
+
     end
 
   end
   
 handle_asynchronously :crawl, :queue => 'crawler'
+
 
 end

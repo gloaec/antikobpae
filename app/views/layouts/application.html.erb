@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title><%= yield(:title).present? ? ['Pasted','|',yield(:title)]*' ': 'Pasted Plagiarism Scanner' %></title>
+	<title><%= yield(:title).present? ? ['Antikobpae','|',yield(:title)]*' ': 'Antikobpae Plagiarism Scanner' %></title>
 	<%= favicon_link_tag %>
 	
 	<%= stylesheet_link_tag    'application' %>	
@@ -10,7 +10,7 @@
 	
 	<%= javascript_include_tag 'ckeditor/ckeditor.js' %>
 	<%= javascript_include_tag 'easing.js' %>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<script type="text/javascript" charset="utf-8">
 		(function($){
 			$(document).ready(function() {
@@ -50,9 +50,10 @@
 	<%= render 'shared/header' %>
 
         <%= yield(:subnav) %>
-	<% if current_page?(new_user_session_path) %>
+	<% if current_page?(new_user_session_path) || controller.controller_name == 'similarities' %> 
 		<%= yield %>
 	<% else %>
+           
 		<div class="container-fluid">
 	      <div class="row-fluid">
 	        <div class="span3">
@@ -62,7 +63,7 @@
 				  <li><%= link_to icon('arrow-left')+t(:back), :back %></li>
 	            </ul>
 	          </div><!--/.well -->
-
+                  <%#
 	          <script type="text/javascript"><!--
 			  google_ad_client = "ca-pub-9631132359401447";
 			  /* Pasted Sidebar 1 */
@@ -73,7 +74,7 @@
 			  </script>
 			  <script type="text/javascript"
 			  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-			  </script>
+			  </script>%>
 
 	        </div>
 	        <div class="span9">

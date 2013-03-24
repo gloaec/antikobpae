@@ -317,6 +317,7 @@ th:
   
   #scans/edit
   edit_scan: แก้ไขการตรวจ
+  scan_name: Scan Name
   update_scan: ปรับปรุงการตรวจ
   start_scan: เริ่มการตรวจ
   add_documents: เพิ่มเอกสาร

@@ -3,29 +3,36 @@
 <% grouped_similarities = @similarities.group_by(&:document) %>
 <% nb_colors = grouped_similarities.length %>
 <%
- result = { :label => "Original", :class => 'green' }
+ result = { :label => "success", :class => 'success' }
  if @scan_file.score == 0
-    result = { :label => "Original", :class => 'green' }
+    result = { :label => "Original", :class => 'success', :class2 => 'success' }
  elsif @scan_file.score < 10
     result = { :label => "Require Human Check", :class => 'yellow' }
  elsif @scan_file.score < 25
     result = { :label => "Very Suspicious", :class => 'orange' }
  else
-    result = { :label => "Plagiarized", :class => 'red' }
+    result = { :label => "Plagiarized", :class => 'important', :class2 => 'error' }
  end
 %>
 
 <% content_for :subnav do %>
 	<div class="container visible-desktop">
 		<header id="overview" class="jumbotron subhead">
-		  <div class="row">
+		  <div class="row-fluid">
 		    <div class="span6">
-		      <h1><%= @scan_file.document.name+"'s "+t(:similarities) %></h1>
-		      <p class="lead">A calm, blue sky.</p>
+		      <h2>
+                        <%= @scan_file.document.name+"'s "+t(:similarities) %>
+                      </h2>
+		      <h3>
+                        <span class="badge badge-<%= result[:class] %>"><%= @scan_file.score %>%</span> 
+                        out of <%= @scan_file.similarities.collect {|s| s.document.id}.uniq.length %> sources :
+                      </h3>
 		    </div>
 		    <div class="span6">
-		      <div class="bsa well">
-		  
+		      <div class="bsa well alert-<%= result[:class2] %>">
+                        <strong><%= result[:label] %></strong><br/>
+			    <%= image_tag('icons/word16.png', :width => 16) %> <%= @scan_file.word_score %>% - <%= @scan_file.dup_words %>/<%= @scan_file.document.words_length-1 %> <%= t(:words) %><br/>
+			    <%= image_tag('icons/char16.png', :width => 16) %> <%= @scan_file.char_score %>% - <%= @scan_file.dup_chars %>/<%= @scan_file.document.chars_length-1 %> <%= t(:characters) %>
 		      </div>
 		    </div>
 		  </div>
@@ -45,11 +52,12 @@
     <li><%= link_to icon('print')+t(:print), new_scan_file_similarity_path(@scan_file) %></li>
 <% end -%>
 
+<div class="container">
 <% grouped_similarities.each do |document, similarities| -%>
     <% score = calculate_score(similarities) %>
 
 	<section id="document_<%= document.id %>">
-		<div class="breadcrumb">
+		<h3 class="breadcrumb">
 		  <% if document.from == 'web' %>
             <% uri = URI.unescape(document.attachment_file_name) %>
             <% title = [
@@ -62,7 +70,7 @@
           <% else %>
             <%= breadcrumbs(document, false) %>
           <% end %>
-        </div>
+        </h3>
 
 		<table class="table table-condensed table-striped table-hover">
           <thead>
@@ -94,7 +102,7 @@
         </table>
 	</section>
 <% end %>
-
+</div>
 <% content_for :head do %>
 <script type="text/javascript">
 	(function ($) {

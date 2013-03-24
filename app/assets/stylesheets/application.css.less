@@ -3,23 +3,26 @@
  * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
  * the top of the compiled file, but it's generally better to create a new file per style scope.
  *= require_self
- *= require_tree .
+ *= require ./bootswatch-custom
 */
 
-@import "bootswatch/united/variables";
-@import "bootstrap";
+@import "twitter/bootstrap";
 body { padding-top: 60px; padding-bottom: 60px; }
-@import "bootstrap-responsive";
-@import "bootswatch/united/bootswatch";
-//@import "base";
+@import "twitter/bootstrap/responsive";
+@import "font-awesome";
+@import "bootswatch/antikobpae/variables";
+@import "bootswatch/antikobpae/bootswatch";
+//@import "./bootswatch-custom";
 
-/*.navbar .brand {
+
+.navbar i {
+}
+.navbar .brand {
     background: url('logo-small.png') no-repeat left center;
     height: 20px;
     width: 120px;
-    padding-left: 140px;   
     font-size: 10px;
-}*/
+}
 
 .document_status .progress,
 .scan_file_status .progress,
@@ -31,6 +34,16 @@ body { padding-top: 60px; padding-bottom: 60px; }
     white-space: normal;
 }
 
+.navbar.navbar-inverse .navbar-inner {
+    background: url('/images/navigation-bg.jpg');
+}
+
+.navbar .navbar-inner {
+    background: url('navigation-home-bg.jpg');
+}
+.dropdown-menu div {
+  color: #333;
+}
 [class^="icon-locale-"],
 [class^="icon-file-"],
 [class^="icon-cus-"],
@@ -62,4 +75,5 @@ body { padding-top: 60px; padding-bottom: 60px; }
 .icon-file-doc { background-image: url('/images/fileicons/doc.png') !important; }
 .icon-file-docx { background-image: url('/images/fileicons/docx.png') !important; }
 .icon-file-html { background-image: url('/images/fileicons/html.png') !important; }
+.icon-file-file { background-image: url('/images/file.png') !important; }
 .icon-cus-loading { background-image: url('icons/loading.gif') !important; }

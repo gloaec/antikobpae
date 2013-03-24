@@ -146,7 +146,8 @@ class Document < ActiveRecord::Base
       FileUtils.cp attachment.path, [attachment.path,'html'].join('.')
 	  when 'html'  
 	    
-	    unless self.from == 'web' or File.exists?([attachment.path,'html'].join('.'))
+	    #unless self.from == 'web' or
+      unless File.exists?([attachment.path,'html'].join('.'))
 	    
   	    require 'open-uri'
         require 'net/http'

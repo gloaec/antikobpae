@@ -1,4 +1,4 @@
-<div class="navbar navbar-fixed-top">
+<div class="navbar  navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
       <a data-target=".navbar-inverse-collapse" data-toggle="collapse" class="btn btn-navbar">
@@ -16,13 +16,13 @@
           <li class="active"><%= link_to icon('home')+t(:home) %></li>
           <li><%= link_to icon('tasks')+t(:scans), scans_path %></li>
           <li><%= link_to icon('folder-open')+t(:documents), folder_path(current_user.private_folder) %></li>
-          <li><%= link_to icon('globe')+t(:index), domains_path %></li>
 
           <% if current_user.member_of_admins? -%>
               <li class="dropdown">
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                 <%= icon('wrench')+t(:admin) %><b class="caret"></b></a>
                 <ul class="dropdown-menu">
+                  <li><%= link_to icon('globe')+t(:index), domains_path %></li>
                   <li><%= link_to icon('user')+t(:users), users_path %></li> 
                   <li><%= link_to icon('group')+t(:groups), groups_path %></li>
                   <li class="divider"></li>
@@ -47,7 +47,7 @@
 
           <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-            <%= icon('locale-'+I18n.locale.to_s)+t(I18n.locale) %> <b class="caret"></b></a>
+            <%= icon('locale-'+I18n.locale.to_s) %> <b class="caret"></b></a>
             <ul class="dropdown-menu">
               <% [:en,:fr].each do |locale| %>
                 <li><%= link_to icon('locale-'+locale.to_s)+t(locale), :locale => locale %></li>

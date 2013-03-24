@@ -6,7 +6,7 @@
 
 <% content_for :sidebar do -%>
 	<li><%= link_to document_icon(@document.attachment_file_type)+t(:download_original)+" (#{@document.attachment_file_type})", download_document_path(@document,:format => :orig) %></li>
-	<li><%= link_to document_icon('txt')+t(:download_plain_text), download_document_path(@document, :format => :txt) %></li>
+	<li><%= link_to document_icon('file')+t(:download_plain_text), download_document_path(@document, :format => :txt) %></li>
 	<li><%= link_to document_icon('pdf')+t(:download_pdf), download_document_path(@document, :format => :pdf) %></li>
 	<li><%= link_to document_icon('html')+t(:download_html), download_document_path(@document, :format => :html) %></li>
 	<li><%= link_to document_icon('html')+t(:embed_document), download_document_path(@document, :format => :pdf) %></li>

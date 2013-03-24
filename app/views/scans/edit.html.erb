@@ -12,12 +12,12 @@
 	<% if current_user.member_of_admins? -%>
 		<li id="show_permissions_link"><%= link_to_function icon('lock')+t(:permissions), "show_element('permissions')" %></li>
 	<% end %>
-	<li>
+	<!--<li>
 		<div>
 		<label for="scan_tolerence">Tolerence : <%= f.text_field :tolerence, :size => 2, :class => 'title' %>words</label>
 		<div id="scan_tolerence_slider"></div>		
 		</div>		
-	</li>
+	</li>-->
 <% end -%>
 	
 <% unless @scan.folder.is_root? -%>
@@ -28,22 +28,21 @@
 
 <%= f.error_messages %>
 
-<%= fields_for @scan.folder do |g| %>
-	<%= g.error_messages %>
-	<%= g.label :name %>: <%= g.text_field :name, { :class => 'text_input' } %>
-<% end %>
-<p>
-	Import documents you want to submit for plagrasim scan. Then select targets to include in the search index and click "Start Scan" !
-</p>	
-
-<button type="submit" name="start" value="0" class="btn">
-	<%= t(:update_scan) %>
-</button>
-
-<button type="submit" name="start" value="1" class="btn btn-primary">
-	<%= t(:start_scan) %>
-</button>
-
+<div class="row-fluid"><div class="span6"><div class="row-fluid">
+	<%= fields_for @scan.folder do |g| %>
+		<%= g.error_messages %>
+		<%= g.text_field :name, { :class => 'span12', :size => '', :placeholder => t(:scan_name) } %>
+	<% end %>
+</div>
+	</div>
+	<button type="submit" name="start" value="0" class="btn span3">
+		<i class="icon-refresh"></i> <%= t(:update_scan) %>
+	</button>
+	
+	<button type="submit" name="start" value="1" class="btn btn-primary span3">
+		<i class="icon-ok"></i> <%= t(:start_scan) %>
+	</button>
+</div>
 <div id="errors">
 
 </div>

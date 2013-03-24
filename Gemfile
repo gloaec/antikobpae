@@ -6,6 +6,7 @@ gem 'rails', '3.2.0'
 gem 'activesupport'
 gem 'therubyracer'
 gem 'mysql2','0.3.12b4'
+gem 'mongodb'
 gem 'devise'
 gem 'devise_ldap_authenticatable', :path => 'lib/devise_ldap_authenticatable'
 gem 'capistrano'
@@ -42,8 +43,6 @@ gem 'ts-delayed-delta', :git => 'git://github.com/onland/ts-delayed-delta.git', 
 gem 'chardet'
 gem 'difflcs'
 gem 'plupload-rails'
-gem 'bootstrap-sass'
-gem 'bootswatch-rails'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 gem 'jquery-tmpl-rails'
@@ -55,6 +54,13 @@ group :assets do
   gem 'coffee-rails'
   gem 'therubyracer', :platform => :ruby
   gem 'uglifier'
+  gem 'less-rails'
+  gem 'less-rails-bootstrap'
+  gem 'less-rails-bootswatch'
+  #gem 'bootstrap-sass'
+  #gem 'bootswatch-rails'
+  #gem 'twitter-bootstrap-rails'
+  #gem 'twitter-bootswatch-rails'
 end
 
 group :test do
@@ -66,3 +72,4 @@ group :test do
 end
 
 gem 'rspec-rails', :group => [:development, :test]
+#gem 'twitter-bootswatch-rails-helpers'

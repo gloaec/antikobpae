@@ -7,7 +7,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-tmpl
-//= require bootstrap
+//= require twitter/bootstrap
 //= require_tree ../templates
 //= require plupload
 //= require jquery.plupload.queue 
@@ -41,7 +41,7 @@ function icon(name){
 }
 
 function document_icon(extension){
-    if($.inArray(extension, ['pdf','doc','docx','odt','txt','html','rtf']))
+    if($.inArray(extension, ['pdf','doc','docx','odt','txt','html','rtf']) >= 0)
         return icon("file-"+extension);
     else
         return icon("file");
@@ -51,7 +51,7 @@ function document_status(i){
     var status = new Array(
         { icon: icon('upload'), text: I18n.t('upload') },
         { icon: icon('time'), text: I18n.t('in_queue'), badge: 'badge' },
-        { icon: icon('cus-loading'), text: I18n.t('indexing'), badge: 'badge badge-info' },
+        { icon: icon('cus-loading'), text: I18n.t('indexing'), badge: 'badge badge-inverse' },
         { icon: icon('ok'), text: I18n.t('ready'), badge: 'badge badge-success' }            
     );
     return (i<0 || i>=status.length) ? { icon: icon('warning-sign'), text: I18n.t('error'), badge: 'badge badge-important' } : status[i];

@@ -15,3 +15,4 @@ public/assets/*
 public/system/*
 config/deploy/templates/*
 src/*
+*.swp
