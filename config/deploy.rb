@@ -40,7 +40,9 @@ set :git_enable_submodules, 1
 #after 'deploy:setup', 'deploy:config'
 #after 'deploy:finalize_update', 'thinking_sphinx:symlink_indexes'
 #after 'deploy:update_code', 'deploy:config_symlink'
+
 before 'deploy:update_code', 'thinking_sphinx:stop'
+before 'deploy:assets:precompile', 'deploy:config'
 before 'deploy:assets:precompile', 'deploy:config_symlink'
 after 'deploy:config_symlink', 'thinking_sphinx:start'
 after 'thinking_sphinx:start', 'thinking_sphinx:symlink_indexes'
@@ -88,7 +90,7 @@ namespace :god do
   end
 
   task :deploy, :roles => :app do
-    god.stop
+    #god.stop
     god.deploy_init_script
     god.deploy_config
     god.start
@@ -115,7 +117,8 @@ namespace :deploy do
   
   task :config, :roles => :app do
     server = "antikobpae.cpe.ku.ac.th"
-    run [ "cp #{release_path}/config/deploy/templates/#{server}/antikobpae.yml #{shared_path}/config/antikobpae.yml",
+    run [
+          "cp #{release_path}/config/deploy/templates/#{server}/antikobpae.yml #{shared_path}/config/antikobpae.yml",
           "cp #{release_path}/config/deploy/templates/#{server}/database.yml #{shared_path}/config/database.yml",
           "cp #{release_path}/config/deploy/templates/#{server}/sphinx.yml #{shared_path}/config/sphinx.yml",
           "cp #{release_path}/config/deploy/templates/#{server}/ldap.yml #{shared_path  }/config/ldap.yml"
