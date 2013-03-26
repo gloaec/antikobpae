@@ -16,4 +16,3 @@ public/system/*
 #config/deploy/templates/*
 src/*
 *.swp
-Gemfile.lock
