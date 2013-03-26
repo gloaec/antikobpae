@@ -1,3 +1,5 @@
+require 'thinking_sphinx/tasks'
+
 namespace :db do
   
   desc "Database Drop"

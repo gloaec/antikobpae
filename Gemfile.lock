@@ -1,9 +1,4 @@
 GIT
-  remote: git://github.com/freelancing-god/thinking-sphinx.git
-  revision: 1376b208693aa31904dd4ceab66de0d9b53c318e
-  specs:
-
-GIT
   remote: git://github.com/onland/ts-delayed-delta.git
   revision: 440b0918b09bad99d3a3a8e135b3647a475b9994
   specs:
@@ -25,6 +20,16 @@ PATH
     devise_ldap_authenticatable (0.7.0)
       devise (~> 2.0)
       net-ldap (~> 0.2.2)
+
+PATH
+  remote: lib/thinking-sphinx
+  specs:
+    thinking-sphinx (3.0.2)
+      activerecord (>= 3.1.0)
+      builder (>= 2.1.2)
+      innertube (>= 1.0.2)
+      middleware (>= 0.1.0)
+      riddle (>= 1.5.4)
 
 GEM
   remote: http://rubygems.org/
@@ -312,12 +317,6 @@ GEM
     therubyracer (0.11.3)
       libv8 (~> 3.11.8.12)
       ref
-    thinking-sphinx (3.0.2)
-      activerecord (>= 3.1.0)
-      builder (>= 2.1.2)
-      innertube (>= 1.0.2)
-      middleware (>= 0.1.0)
-      riddle (>= 1.5.4)
     thor (0.14.6)
     tilt (1.3.6)
     treetop (1.4.12)
