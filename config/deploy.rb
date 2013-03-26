@@ -13,11 +13,11 @@ set :rvm_path, "/usr/local/rvm"
 set :rvm_gem_path, "#{rvm_path}/gems/ruby-#{rvm_ruby_string}"
 
 # main details
-set :server, "158.108.33.164"
+set :server, "antikobpae.cpe.ku.ac.th"
 set :application, "antikobpae"
-role :web, "158.108.33.164"
-role :app, "158.108.33.164"
-role :db,  "158.108.33.164", :primary => true
+role :web, "antikobpae.cpe.ku.ac.th"
+role :app, "antikobpae.cpe.ku.ac.th"
+role :db,  "antikobpae.cpe.ku.ac.th", :primary => true
 
 # server details
 default_run_options[:pty] = true
@@ -32,8 +32,8 @@ set :distribution, :linux # :redhat / :rhel / :fedora / :centos / :debian / :ubu
 # repo details
 set :scm, :git
 set :scm_username, "passenger"
-set :repository, "git@bitbucket.org:ghis182/kobpae-rails.git"
-set :branch, "164"
+set :repository, "git@github.com:gloaec/antikobpae.git"
+set :branch, "master"
 set :git_enable_submodules, 1
 
 #after 'deploy:setup', 'deploy:config'
