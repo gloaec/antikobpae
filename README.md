@@ -35,8 +35,9 @@ or
  1. Download and extract [`antikobpae-master.zip`](https://github.com/gloaec/antikobpae/archive/master.zip)
  
  2. `$ cd antikobpae` Go to the project root directory
- 3.	`$ bash install` Attempts to install all AntiKobpae's dependencies
- 4. `$ bundle install` Install the bundle
+ 3. `$ bash install` Attempts to install all AntiKobpae's dependencies
+ 4. `$ git submodule init && git submodule update` Install submodules
+ 5. `$ bundle install` Install the bundle
 
 You may need to configure the databases and specify the third party programs which will 
 perform in document processing. Edit these entries for each environements :
@@ -58,9 +59,9 @@ perform in document processing. Edit these entries for each environements :
 	swath_bin: <swath_bin>
 
 
- 5. `$ rake db:install` Drop/Create/Migrate the database and the schema
- 6. `$ rails s` Start the development server
- 7. Point your browser to [http://localhost:3000/](http://localhost:3000/)
+ 6. `$ rake db:install` Drop/Create/Migrate the database and the schema
+ 7. `$ rails s` Start the development server
+ 8. Point your browser to [http://localhost:3000/](http://localhost:3000/)
 
 In order to switch the environement to _production_ with Apache, check out the **Production** section
 
