@@ -4,7 +4,7 @@
 require 'rvm/capistrano'
 require 'bundler/capistrano'
 require 'capistrano_colors'
-require 'thinking_sphinx/deploy/capistrano'
+require './lib/thinking-sphinx/lib/thinking_sphinx/capistrano'
 load 'deploy/assets'
 
 set :rvm_type, :system
