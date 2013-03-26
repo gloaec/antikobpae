@@ -149,7 +149,7 @@ class Document < ActiveRecord::Base
 	    #unless self.from == 'web' or
       unless File.exists?([attachment.path,'html'].join('.'))
 	    
-  	    require 'open-uri'
+  	require 'open-uri'
         require 'net/http'
         require 'net/https'
         retry_exceptions = [Timeout::Error, Errno::ETIMEDOUT, Errno::ECONNRESET]
@@ -163,16 +163,16 @@ class Document < ActiveRecord::Base
           uri = URI.parse(CGI.escape(self.attachment_file_name))
         end
         
-  	    retries = 3
-  	    response = nil
-  	    encoding = nil
+  	retries = 3
+  	response = nil
+  	encoding = nil
 
-  	    puts "<Document ##{id}> Retrieving contents from: #{self.attachment_file_name}"
-	    
-  	    begin
-  	        file = open(uri)
-  	        File.open(attachment.path, "wb") do |f|
-  	          f.write file.read
+  	puts "<Document ##{id}> Retrieving contents from: #{self.attachment_file_name}"
+	
+  	begin
+  	    file = open(uri)
+  	    File.open(attachment.path, "wb") do |f|
+  	      f.write file.read
             end
         rescue *retry_exceptions => e
           retries -= 1
@@ -188,13 +188,16 @@ class Document < ActiveRecord::Base
   	        return
           end
         rescue *ignore_exceptions => e
-  	      puts "=> ERROR: #{e.message}"
+          uri = self.attachment_file_name
+          retries -= 1
+          retry if retries > 1
+  	  puts "=> ERROR: #{e.message}"
           File.open(attachment.path, "wb") do |f|
             f.write "<div class='option error'><h1>WebPage Timeout</h1>"
             f.write "<p>The server couldn't retrieve this webpage content because is was getting too long..</p></div>"
           end
-  	      return
-  	    end
+  	  return
+  	end
       end
       
       file_type = File.extname(self.attachment_file_name)[1..-1]
