@@ -142,6 +142,6 @@ if ( window.addEventListener ) {
 
 <% tag = ['txt','pdf'].include?(@document.attachment_file_type) ? 'pre' : 'div' %>
 
-<<%=tag%> class="">
+<<%=tag%> class="document">
 	<%= @document.content.text.html_safe %>
 </<%=tag%>>

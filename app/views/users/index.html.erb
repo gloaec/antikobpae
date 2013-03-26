@@ -1,15 +1,12 @@
 <% content_for :title, t(:users) -%>
 
 <% content_for :sidebar do -%>
-	<ul>
-		<li><%= link_to image_tag('user_add.png', :alt => t(:create_a_new_user)) + t(:create_a_new_user), new_user_path %></li>
-	</ul>
+	<li><%= link_to icon('user') + t(:create_a_new_user), new_user_path %></li>
 <% end -%>
 		
-<table>
+<table class="table table-condensed table-striped">
   <thead>
 	<tr>
-		<th class="icon"></th>
 		<th><%= t :name %></th>
 		<th><%= t :email %></th>
 		<th></th>
@@ -18,23 +15,15 @@
   <tbody>
   <% @users.each do |user| -%>
 	<tr class="<%= cycle('odd','even') %>">
-		<td class="icon"><%= image_tag('user.png') %></td>
-		<td class="user_name"><%= user.name %></td>
+		<td class="user_name"><i class="icon-user"></i> <%= user.name %></td>
 		<td class="user_email"><%= user.email %></td>
-		<td class="options"><%= 
-			link_to image_tag('edit.png', :alt => t(:edit)), edit_user_path(user), :title => t(:edit) %><% 
-			unless user.is_admin 
-			%><%= link_to image_tag('icons/delete.png', :alt => t(:delete_item)), user_path(user), :method => :delete, :confirm => t(:are_you_sure), :title => t(:delete_item) %><% 
-			end 
-		%></td>
+		<td class="options"><span class="pull-right">
+		  <%= link_to icon('edit'), edit_user_path(user), :title => t(:edit) %>
+		  <% unless user.is_admin %>
+		  <%= link_to icon('trash') + t(:delete_item), user_path(user), :method => :delete, :confirm => t(:are_you_sure), :title => t(:delete_item) %>
+		  <% end %></span>
+		</td>
 	</tr>
   <% end -%>
   </tbody>
-  <tfoot>
-    <tr class="tfoot">
-      <td colspan="4">
-      
-      <td>
-    </tr>
-  </tfoot>
 </table>

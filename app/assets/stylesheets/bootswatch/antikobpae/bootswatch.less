@@ -19,7 +19,7 @@ font-size: 50px;
 }
 
 h3, h3 .label, h3 .badge {
-font-size: 24px;
+font-size: 20px;
 }
 
 h4 {
@@ -168,6 +168,32 @@ color: @gray;
 	border-right: 1px solid #C03D14;
 	border-left: 1px solid #E6633A;
 }
+
+.nav-list {
+	border-color: transparent;
+
+	li > a {
+		border-color: transparent;
+		.border-radius(0);
+		.box-shadow(0);
+	}
+
+	li.active > a,
+	li.active > a:hover {
+		color: @textColor;
+	}
+
+	li.active > a,
+	li > a:hover,
+	li.active > a:hover {
+		background-color: #8AD5DC;
+		border-color: transparent;
+		text-shadow: none;
+                color: @white;
+                .gradient(top, @blue, darken(@blue, 5%));
+	}
+}
+
 
 // BUTTONS
 // -----------------------------------------------------

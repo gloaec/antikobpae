@@ -97,7 +97,7 @@ God.watch do |w| # ------------------------------------ Watch for delayed_job
   }
   w.uid = USER
   w.gid = GROUP
-  w.start = File.join(RAILS_ROOT, "script/delayed_job -n 4 --queues=scans,documents,delta start")
+  w.start = File.join(RAILS_ROOT, "script/delayed_job -n 4 --queues=scans,documents,deltas start")
   w.restart = "#{File.join(RAILS_ROOT, "script/delayed_job stop")} && #{File.join(RAILS_ROOT, "script/delayed_job -n 4 --queues=scans,documents,delta start")}"#File.join(RAILS_ROOT, "script/delayed_job restart")
   w.start_grace = 10.seconds
   w.restart_grace = 10.seconds
