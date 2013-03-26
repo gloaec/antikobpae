@@ -39,7 +39,7 @@ gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'anemone'
-gem 'thinking-sphinx', :path => 'lib/thinking-sphinx'#, '3.0.2',
+gem 'thinking-sphinx', :path => 'lib/thinking-sphinx',#, '3.0.2',
 #  :git => 'git://github.com/freelancing-god/thinking-sphinx.git',
 #  :branch => 'rails3',
   :require => 'thinking_sphinx'
