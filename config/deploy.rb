@@ -1,5 +1,5 @@
 # RVM bootstrap
-$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
+#$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 
 require 'rvm/capistrano'
 require 'bundler/capistrano'

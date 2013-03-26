@@ -10,6 +10,7 @@ gem 'mongodb'
 gem 'devise'
 gem 'devise_ldap_authenticatable', :path => 'lib/devise_ldap_authenticatable'
 gem 'capistrano'
+gem 'rvm-capistrano'
 gem 'capistrano_colors'
 gem 'passenger'
 gem 'rb-readline'
@@ -57,10 +58,6 @@ group :assets do
   gem 'less-rails'
   gem 'less-rails-bootstrap'
   gem 'less-rails-bootswatch'
-  #gem 'bootstrap-sass'
-  #gem 'bootswatch-rails'
-  #gem 'twitter-bootstrap-rails'
-  #gem 'twitter-bootswatch-rails'
 end
 
 group :test do
