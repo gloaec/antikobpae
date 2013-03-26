@@ -1,4 +1,9 @@
 GIT
+  remote: git://github.com/freelancing-god/thinking-sphinx.git
+  revision: 1376b208693aa31904dd4ceab66de0d9b53c318e
+  specs:
+
+GIT
   remote: git://github.com/onland/ts-delayed-delta.git
   revision: 440b0918b09bad99d3a3a8e135b3647a475b9994
   specs:
@@ -398,7 +403,7 @@ DEPENDENCIES
   sass-rails
   spine-rails
   therubyracer
-  thinking-sphinx
+  thinking-sphinx!
   ts-delayed-delta!
   turn
   uglifier
