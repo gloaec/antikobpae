@@ -13,6 +13,6 @@ import/*
 vendor/bundle/*
 public/assets/*
 public/system/*
-config/deploy/templates/*
+#config/deploy/templates/*
 src/*
 *.swp

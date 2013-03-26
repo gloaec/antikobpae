@@ -8,12 +8,13 @@ require 'thinking_sphinx/deploy/capistrano'
 load 'deploy/assets'
 
 set :rvm_type, :system
-set :rvm_ruby_string, '1.9.3-p194'
+set :rvm_ruby_string, '1.9.3-p392'
 set :rvm_path, "/usr/local/rvm"
 set :rvm_gem_path, "#{rvm_path}/gems/ruby-#{rvm_ruby_string}"
 
 # main details
 set :server, "antikobpae.cpe.ku.ac.th"
+set :port, 9999
 set :application, "antikobpae"
 role :web, "antikobpae.cpe.ku.ac.th"
 role :app, "antikobpae.cpe.ku.ac.th"
@@ -113,7 +114,7 @@ namespace :deploy do
   end
   
   task :config, :roles => :app do
-    server = "158.108.33.164"
+    server = "antikobpae.cpe.ku.ac.th"
     run [ "cp #{release_path}/config/deploy/templates/#{server}/antikobpae.yml #{shared_path}/config/antikobpae.yml",
           "cp #{release_path}/config/deploy/templates/#{server}/database.yml #{shared_path}/config/database.yml",
           "cp #{release_path}/config/deploy/templates/#{server}/sphinx.yml #{shared_path}/config/sphinx.yml",
