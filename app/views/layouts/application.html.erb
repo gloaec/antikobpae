@@ -50,7 +50,10 @@
 	<%= render 'shared/header' %>
 
         <%= yield(:subnav) %>
-	<% if current_page?(new_user_session_path) || controller.controller_name == 'similarities' %> 
+	<% if current_page?(new_user_session_path) \
+           || controller.controller_name == 'similarities' \
+           || controller.controller_name == 'scans' \
+           || current_page?(root_path) %> 
 		<%= yield %>
 	<% else %>
            

@@ -4,9 +4,47 @@
 	<li><%= link_to icon('tasks')+t(:new_scan), new_scan_path %></li>
 <% end %>
 
-<ul class="breadcrumb">
-	<%= breadcrumbs(@folder) %>
-</ul>	
+<div class="container-fluid">
+
+  <ul class="breadcrumb">
+  	<%= breadcrumbs(@folder) %>
+  </ul>	
+   
+  <div class="navbar">
+    <div class="navbar-inner">
+      <ul class="nav">
+        <li><a href="#" class=""><i class="icon-upload"></i> Upload</a></li>
+        <li><a href="#" class=""><i class="icon-file"></i> Create</a></li>
+        <li><a href="#" class=""><i class="icon-globe"></i> Webpage</a></li>
+        <li><a href="#" class=""><i class="icon-ok"></i> Start Scan</a></li>
+      </ul> 
+    </div>
+  </div>
+
+  <div class="row-fluid">
+    <div class="span8">
+      <div class="well well-drop">
+        <ul class="nav nav-list">
+          <li class="nav-header">Drop documents for a new scan here</li>
+        </ul>
+      </div>
+    </div>
+    <div class="span4">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
 
 <div class="accordion" id="accordion">
 

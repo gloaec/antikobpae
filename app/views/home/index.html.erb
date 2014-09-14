@@ -1,2 +1,36 @@
-<h1>Index PAge</h1>
-<%= link_to 'Sign Out', destroy_user_session_path, :method => :delete %>
+<div class="container-fluid">
+  <div class="hero-unit">
+
+  </div>
+  <div class="row-fluid">
+    <div class="span4">
+      <div class="well">
+        <ul class="nav nav-list">
+          <li class="nav-header"><%= t(:latest_scanned_documents) %></li>
+          <% @scan_files.each do |scan_file| %>
+            <li>
+              <a href="<%= scan_file_similarities_path(scan_file) %>"> 
+                <%= document_icon(scan_file.document.attachment_file_type)+scan_file.document.name.truncate(30) %>
+                <span class="label pull-right"><%= scan_file.score %></span>
+              </a>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <div class="span4">
+      <div class="well">
+        <ul class="nav nav-list">
+          <li class="nav-header"><%= t(:latest_documents) %></li>
+        </ul>
+      </div>
+    </div>
+    <div class="span4">
+      <div class="well">
+        <ul class="nav nav-list">
+          <li class="nav-header"><%= t(:latest_indexed_domains) %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

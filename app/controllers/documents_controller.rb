@@ -103,8 +103,9 @@ class DocumentsController < ApplicationController
       tempfile.write params[:content][:text]
       tempfile.close
       @document.attachment = File.open(tempfile.path)
-      @document.attachment_file_name = [@document.name,'file'].join('.')
+      @document.attachment_file_name = [@document.name,'txt'].join('.')
       @document.content = nil
+      FileUtils.cp @document.attachment.path, [@document.attachment.path,'html'].join('.')
     when 'webpage'
       require 'open-uri'
       @document.attachment_file_type = 'html'

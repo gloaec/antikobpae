@@ -4,7 +4,7 @@ AntiKobpae::Application.routes.draw do
 
   resources :domains
 
-  root :to => 'folders#index'
+  root :to => 'home#index' # folders#index'
   
   mount Ckeditor::Engine => '/ckeditor'
   

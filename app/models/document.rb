@@ -33,6 +33,7 @@ class Document < ActiveRecord::Base
   validates_format_of :name, :with => /^[^\/\\\?\*:|"<>]+$/, :message => I18n.t(:invalid_characters, :scope => [:activerecord, :errors, :messages])
   validates_format_of :attachment_file_type, :with => %r{^(file|docx|doc|pdf|odt|txt|html|rtf)$}i, :message => I18n.t(:file_format_not_supported)
   validates_uniqueness_of :name, :scope => 'folder_id', :message => I18n.t(:exists_already, :scope => [:activerecord, :errors, :messages])
+  do_not_validate_attachment_file_type :attachment
 
   after_save :prepare_processing
   
@@ -412,6 +413,7 @@ class Document < ActiveRecord::Base
           r_end += word.length
           word.downcase!
           #word = word.force_encoding('utf-8')
+	  word.gsub!(/[^0-9a-z ]/i, '')
           word.gsub!(/\p{Punct}+/,'')
           word.gsub!(/(\s|\u00A0)+/, '')
           if word.length >= 1

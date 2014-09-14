@@ -54,12 +54,25 @@ namespace :thinking_sphinx do
   end
 end
 
+task :god do 
+  god.terminate
+  god.deploy_config
+  god.init
+  god.load_config
+  god.status
+end 
+
 namespace :god do
 
-  ["start", "stop", "restart", "status"].each do |cmd|
+  ["terminate", "start", "stop", "restart", "status"].each do |cmd|
     task cmd.to_sym, :roles => :app do
-      sudo "service god #{cmd}"
+      #sudo "service god #{cmd}"
+      run "god #{cmd}"
     end
+  end
+  
+  task :init, :roles => :app do 
+    run "god -c /etc/god/monitoring.god"
   end
 
   task :log, :roles => :app do

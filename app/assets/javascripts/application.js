@@ -9,20 +9,26 @@
 //= require jquery-tmpl
 //= require twitter/bootstrap
 //= require_tree ../templates
-//= require plupload
-//= require jquery.plupload.queue 
-//= require plupload.settings 
-//= require plupload.flash        
-//= require plupload.silverlight  
-//= require plupload.html4        
-//= require plupload.html5        
-//= require plupload.gears        
-//= require plupload.browserplus
 //= require i18n
 //= require i18n/translations
 //= require_tree .
 //= require_self
 
+
+//=# require plupload
+//=# require jquery.plupload.queue 
+//=# require plupload.settings 
+//=# require plupload.flash        
+//=# require plupload.silverlight  
+//=# require plupload.html4        
+//=# require plupload.html5        
+//=# require plupload.gears        
+//=# require plupload.browserplus
+//= require moxie
+//= require plupload.dev
+//= require plupload/i18n/de
+//= require plupload.settings
+//= require jquery.plupload.queue
 
 function show_element(element) {
     if($('#'+element) == null) { element = 'files_and_folders'; }

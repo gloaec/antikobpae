@@ -39,7 +39,7 @@ class ScanFile < ActiveRecord::Base
       i = 0
       while(i < size)
       #for i in (0..size) 
-        self.update_attributes(:progress => 75*i/size)
+        #self.update_attributes(:progress => 75*i/size)
         hash = words[i..i+tolerence]*' '
         i+=tolerence
         contents = Content.search hash, :match_mode => :phrase
@@ -55,8 +55,8 @@ class ScanFile < ActiveRecord::Base
       rebuilt ? raise : rebuilt = true and retry
     rescue Errno::EADDRNOTAVAIL => e
       puts "Errno::EADDRNOTAVAIL => #{e.message}"  
-    rescue => e
-      puts "OTHER::ERROR => #{e.inspect}"
+    #rescue => e
+    #  puts "OTHER::ERROR => #{e.inspect}"
     end
     
     puts "<ScanFile ##{id}> #{matches.length} Sphinx Results"
