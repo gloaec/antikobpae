@@ -9,7 +9,7 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
-module AntiKobpae
+module Antikobpae
   class Application < Rails::Application
     # Enable the asset pipeline
     config.assets.enabled = true
@@ -61,7 +61,13 @@ module AntiKobpae
     
     config.jquery_templates.prefix = "templates"
 
-    
+    config.to_prepare do
+      Devise::SessionsController.layout "devise"
+      Devise::RegistrationsController.layout proc{ |controller| user_signed_in? ? "application"   : "devise" }
+      Devise::ConfirmationsController.layout "devise"
+      Devise::UnlocksController.layout "devise"            
+      Devise::PasswordsController.layout "devise"        
+    end
 
     config.yml = OpenStruct.new(YAML.load_file("#{Rails.root}/config/antikobpae.yml")[::Rails.env].symbolize_keys) #OpenStruct.new(YAML.load_file("#{Rails.root}/config/antikobpae.yml")[Rails.env].symbolize_keys) if require 'ostruct'
   end

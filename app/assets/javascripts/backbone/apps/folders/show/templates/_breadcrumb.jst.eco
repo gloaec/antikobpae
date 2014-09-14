@@ -1,0 +1,13 @@
+<% if @parent_id: %>
+  <a href="/folders/<%= @id %>" class="">
+    <i class="fa fa-folder-open"></i>
+    <span class="name"><%= @name %></span>
+  </a>
+<% else: %>
+  <a href="/dashboard">
+    <i class="fa fa-dashboard"></i>
+    Dashboard
+  </a>
+<% end %>
+
+

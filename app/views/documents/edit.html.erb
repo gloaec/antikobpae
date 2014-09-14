@@ -1,8 +1,0 @@
-<% content_for :title, t(:edit_document) -%>
-
-<div class="breadcrumb">
-	<%= breadcrumbs(@document) %>
-</div>
-<%= form_for [@target_folder, @document], :url => { :action => 'update' }, :html => { :multipart => true, :class => 'form-horizontal' } do |f| %>
-	<%= render 'form', :f => f %>
-<% end %>

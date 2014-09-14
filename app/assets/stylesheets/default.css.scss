@@ -1,0 +1,573 @@
+
+.page-header.navbar {
+    background-color: #1f1f1f;
+}
+.page-header.navbar .top-menu .navbar-nav > li.dropdown .dropdown-toggle:hover {
+    background-color: #333333;
+}
+.page-header.navbar .top-menu .navbar-nav > li.dropdown .dropdown-toggle > i {
+    color: #999999;
+}
+.page-header.navbar .top-menu .navbar-nav > li.dropdown .dropdown-toggle .badge.badge-default {
+    background-color: #d64635;
+    color: white;
+}
+.page-header.navbar .top-menu .navbar-nav > li.dropdown.open .dropdown-toggle {
+    background-color: #333333;
+}
+.page-header.navbar .top-menu .navbar-nav > li.dropdown-user .dropdown-toggle {
+    background-color: #151515;
+}
+.page-header.navbar .top-menu .navbar-nav > li.dropdown-user .dropdown-toggle .username {
+    color: #999999;
+}
+.page-header.navbar .top-menu .navbar-nav > li.dropdown-user .dropdown-toggle > i {
+    color: #999999;
+}
+.page-header.navbar .search-form {
+    background: none repeat scroll 0 0 #151515;
+}
+.page-header.navbar .search-form:hover {
+    background: none repeat scroll 0 0 #333333;
+}
+.page-header.navbar .search-form .input-group .form-control {
+    color: #999999;
+}
+.page-header.navbar .search-form .input-group .form-control::-moz-placeholder {
+    color: #969696;
+    opacity: 1;
+}
+.page-header.navbar .search-form .input-group .input-group-btn .btn.submit > i {
+    color: #999999;
+}
+.page-header.navbar .search-form.open {
+    background: none repeat scroll 0 0 #333333;
+}
+.page-header.navbar .menu-toggler {
+    background-image: url("../../img/sidebar_toggler_icon_default.png");
+}
+.page-header.navbar {
+}
+.page-header.navbar .hor-menu .navbar-nav {
+}
+.page-header.navbar .hor-menu .navbar-nav > li.mega-menu-dropdown > .dropdown-menu {
+    box-shadow: 5px 5px rgba(51, 51, 51, 0.2);
+}
+.page-header.navbar .hor-menu .navbar-nav > li.mega-menu-dropdown > .dropdown-menu .mega-menu-content .mega-menu-submenu {
+    border-right: 1px solid #404040;
+}
+.page-header.navbar .hor-menu .navbar-nav > li.mega-menu-dropdown > .dropdown-menu .mega-menu-content .mega-menu-submenu li > h3 {
+    color: #a6a6a6;
+}
+.page-header.navbar .hor-menu .navbar-nav > li > a {
+    color: #999999;
+}
+.page-header.navbar .hor-menu .navbar-nav > li.open > a, .page-header.navbar .hor-menu .navbar-nav > li > a:hover, .page-header.navbar .hor-menu .navbar-nav > li > a:focus {
+    background: none repeat scroll 0 0 #333333;
+    color: #999999;
+}
+.page-header.navbar .hor-menu .navbar-nav > li.active > a, .page-header.navbar .hor-menu .navbar-nav > li.active > a:hover, .page-header.navbar .hor-menu .navbar-nav > li.current > a, .page-header.navbar .hor-menu .navbar-nav > li.current > a:hover {
+    background: none repeat scroll 0 0 #d64635;
+    color: #f1f1f1;
+}
+.page-header.navbar .hor-menu .navbar-nav > li.active .selected, .page-header.navbar .hor-menu .navbar-nav > li.current .selected {
+    border-top: 6px solid #d64635;
+}
+.page-header.navbar .hor-menu .navbar-nav > li .dropdown-menu {
+    background: none repeat scroll 0 0 #333333;
+    box-shadow: 5px 5px rgba(51, 51, 51, 0.2);
+}
+.page-header.navbar .hor-menu .navbar-nav > li .dropdown-menu li > a {
+    color: #999999;
+}
+.page-header.navbar .hor-menu .navbar-nav > li .dropdown-menu li > a:hover {
+    background: none repeat scroll 0 0 #d64635;
+    color: #f1f1f1;
+}
+.page-header.navbar .hor-menu.hor-menu-light .navbar-nav {
+}
+.page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li.mega-menu-dropdown > .dropdown-menu {
+    box-shadow: 5px 5px rgba(91, 91, 91, 0.2);
+}
+.page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li.mega-menu-dropdown > .dropdown-menu .mega-menu-content .mega-menu-submenu {
+    border-right: 1px solid #eeeeee;
+}
+.page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li.mega-menu-dropdown > .dropdown-menu .mega-menu-content .mega-menu-submenu li h3 {
+    color: #666666;
+}
+.page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li.mega-menu-dropdown > .dropdown-menu .mega-menu-content .mega-menu-submenu li a {
+    color: #777777;
+}
+.page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li.mega-menu-dropdown > .dropdown-menu .mega-menu-content .mega-menu-submenu:last-child {
+    border-right: 0 none;
+}
+.page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li > a {
+    color: #999999;
+}
+.page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li > a:hover, .page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li > a:focus {
+    background: none repeat scroll 0 0 #333333;
+    color: #999999;
+}
+.page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li.open > a {
+    background: none repeat scroll 0 0 #fefefe;
+    color: #777777;
+}
+.page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li.open > a:hover, .page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li.open > a:focus {
+    background: none repeat scroll 0 0 #fefefe;
+    color: #777777;
+}
+.page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li.open > a[data-hover="dropdown"] {
+    background: none repeat scroll 0 0 #fefefe;
+    color: #777777;
+}
+.page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li.open > a[data-hover="dropdown"]:hover, .page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li.open > a[data-hover="dropdown"]:focus {
+    background: none repeat scroll 0 0 #fefefe;
+    color: #777777;
+}
+.page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li.active > a, .page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li.active > a:hover, .page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li.current > a, .page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li.current > a:hover {
+    background: none repeat scroll 0 0 #d64635;
+    color: #f1f1f1;
+}
+.page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li.active .selected, .page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li.current .selected {
+    border-top: 6px solid #d64635;
+}
+.page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li .dropdown-menu {
+    background: none repeat scroll 0 0 #fefefe;
+    box-shadow: 5px 5px rgba(91, 91, 91, 0.2);
+}
+.page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li .dropdown-menu li > a {
+    color: #777777;
+}
+.page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li .dropdown-menu li > a:hover {
+    background: none repeat scroll 0 0 #f0f0f0;
+    color: #777777;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover, .page-sidebar {
+    background-color: #3d3d3d;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu, .page-sidebar .page-sidebar-menu {
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li > a, .page-sidebar .page-sidebar-menu > li > a {
+    border-top: 1px solid #4d4d4d;
+    color: #d9d9d9;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li > a > i, .page-sidebar .page-sidebar-menu > li > a > i {
+    color: #888888;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li > a > i[class^="icon-"], .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li > a > i[class*="icon-"], .page-sidebar .page-sidebar-menu > li > a > i[class^="icon-"], .page-sidebar .page-sidebar-menu > li > a > i[class*="icon-"] {
+    color: #959595;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li > a > .arrow:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li > a > .arrow.open:before, .page-sidebar .page-sidebar-menu > li > a > .arrow:before, .page-sidebar .page-sidebar-menu > li > a > .arrow.open:before {
+    color: #777777;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li:hover > a, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.open > a, .page-sidebar .page-sidebar-menu > li:hover > a, .page-sidebar .page-sidebar-menu > li.open > a {
+    background: none repeat scroll 0 0 #303030;
+    color: #d9d9d9;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li:hover > a > i, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.open > a > i, .page-sidebar .page-sidebar-menu > li:hover > a > i, .page-sidebar .page-sidebar-menu > li.open > a > i {
+    color: #888888;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li:hover > a > .arrow:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li:hover > a > .arrow.open:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.open > a > .arrow:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.open > a > .arrow.open:before, .page-sidebar .page-sidebar-menu > li:hover > a > .arrow:before, .page-sidebar .page-sidebar-menu > li:hover > a > .arrow.open:before, .page-sidebar .page-sidebar-menu > li.open > a > .arrow:before, .page-sidebar .page-sidebar-menu > li.open > a > .arrow.open:before {
+    color: #888888;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active > a, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active.open > a, .page-sidebar .page-sidebar-menu > li.active > a, .page-sidebar .page-sidebar-menu > li.active.open > a {
+    background: none repeat scroll 0 0 #d64635;
+    border-top-color: transparent;
+    color: white;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active > a:hover, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active.open > a:hover, .page-sidebar .page-sidebar-menu > li.active > a:hover, .page-sidebar .page-sidebar-menu > li.active.open > a:hover {
+    background: none repeat scroll 0 0 #d64635;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active > a > i, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active.open > a > i, .page-sidebar .page-sidebar-menu > li.active > a > i, .page-sidebar .page-sidebar-menu > li.active.open > a > i {
+    color: white;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active > a > .arrow:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active > a > .arrow.open:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active.open > a > .arrow:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active.open > a > .arrow.open:before, .page-sidebar .page-sidebar-menu > li.active > a > .arrow:before, .page-sidebar .page-sidebar-menu > li.active > a > .arrow.open:before, .page-sidebar .page-sidebar-menu > li.active.open > a > .arrow:before, .page-sidebar .page-sidebar-menu > li.active.open > a > .arrow.open:before {
+    color: white;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active + li > a, .page-sidebar .page-sidebar-menu > li.active + li > a {
+    border-top-color: transparent;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active.open + li > a, .page-sidebar .page-sidebar-menu > li.active.open + li > a {
+    border-top-color: #4d4d4d;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li:last-child > a, .page-sidebar .page-sidebar-menu > li:last-child > a {
+    border-bottom: 1px solid transparent !important;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu li > a > .arrow:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu li > a > .arrow.open:before, .page-sidebar .page-sidebar-menu li > a > .arrow:before, .page-sidebar .page-sidebar-menu li > a > .arrow.open:before {
+    color: #777777;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu li:hover > a > .arrow:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu li:hover > a > .arrow.open:before, .page-sidebar .page-sidebar-menu li:hover > a > .arrow:before, .page-sidebar .page-sidebar-menu li:hover > a > .arrow.open:before {
+    color: #888888;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu li.active > a > .arrow:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu li.active > a > .arrow.open:before, .page-sidebar .page-sidebar-menu li.active > a > .arrow:before, .page-sidebar .page-sidebar-menu li.active > a > .arrow.open:before {
+    color: white;
+}
+.page-sidebar-closed .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu:hover .sub-menu, .page-sidebar-closed .page-sidebar .page-sidebar-menu:hover .sub-menu {
+    background-color: #3d3d3d;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu > li > a, .page-sidebar .page-sidebar-menu .sub-menu > li > a {
+    color: #bdbdbd;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu > li > a > i, .page-sidebar .page-sidebar-menu .sub-menu > li > a > i {
+    color: #777777;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu > li > a > i[class^="icon-"], .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu > li > a > i[class*="icon-"], .page-sidebar .page-sidebar-menu .sub-menu > li > a > i[class^="icon-"], .page-sidebar .page-sidebar-menu .sub-menu > li > a > i[class*="icon-"] {
+    color: #959595;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu > li > a > .arrow:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu > li > a > .arrow.open:before, .page-sidebar .page-sidebar-menu .sub-menu > li > a > .arrow:before, .page-sidebar .page-sidebar-menu .sub-menu > li > a > .arrow.open:before {
+    color: #777777;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu > li:hover > a, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu > li.open > a, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu > li.active > a, .page-sidebar .page-sidebar-menu .sub-menu > li:hover > a, .page-sidebar .page-sidebar-menu .sub-menu > li.open > a, .page-sidebar .page-sidebar-menu .sub-menu > li.active > a {
+    background: none repeat scroll 0 0 #474747 !important;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu > li:hover > a > i, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu > li.open > a > i, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu > li.active > a > i, .page-sidebar .page-sidebar-menu .sub-menu > li:hover > a > i, .page-sidebar .page-sidebar-menu .sub-menu > li.open > a > i, .page-sidebar .page-sidebar-menu .sub-menu > li.active > a > i {
+    color: #bbbbbb;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu > li:hover > a > .arrow:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu > li:hover > a > .arrow.open:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu > li.open > a > .arrow:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu > li.open > a > .arrow.open:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu > li.active > a > .arrow:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu > li.active > a > .arrow.open:before, .page-sidebar .page-sidebar-menu .sub-menu > li:hover > a > .arrow:before, .page-sidebar .page-sidebar-menu .sub-menu > li:hover > a > .arrow.open:before, .page-sidebar .page-sidebar-menu .sub-menu > li.open > a > .arrow:before, .page-sidebar .page-sidebar-menu .sub-menu > li.open > a > .arrow.open:before, .page-sidebar .page-sidebar-menu .sub-menu > li.active > a > .arrow:before, .page-sidebar .page-sidebar-menu .sub-menu > li.active > a > .arrow.open:before {
+    color: #888888;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu.page-sidebar-menu-light, .page-sidebar .page-sidebar-menu.page-sidebar-menu-light {
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu.page-sidebar-menu-light > li:hover > a, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu.page-sidebar-menu-light > li.open > a, .page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li:hover > a, .page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li.open > a {
+    background: none repeat scroll 0 0 #424242;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu.page-sidebar-menu-light > li.active > a, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu.page-sidebar-menu-light > li.active.open > a, .page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li.active > a, .page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li.active.open > a {
+    background: none repeat scroll 0 0 #474747;
+    border-left: 4px solid #d64635;
+    color: #f1f1f1;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu.page-sidebar-menu-light > li.active > a:hover, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu.page-sidebar-menu-light > li.active.open > a:hover, .page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li.active > a:hover, .page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li.active.open > a:hover {
+    background: none repeat scroll 0 0 #424242;
+    border-left: 4px solid #d64635;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu.page-sidebar-menu-light > li.active > a > i, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu.page-sidebar-menu-light > li.active.open > a > i, .page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li.active > a > i, .page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li.active.open > a > i {
+    color: #eeeeee;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu.page-sidebar-menu-light > li.active > a > .arrow:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu.page-sidebar-menu-light > li.active > a > .arrow.open:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu.page-sidebar-menu-light > li.active.open > a > .arrow:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu.page-sidebar-menu-light > li.active.open > a > .arrow.open:before, .page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li.active > a > .arrow:before, .page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li.active > a > .arrow.open:before, .page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li.active.open > a > .arrow:before, .page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li.active.open > a > .arrow.open:before {
+    color: #eeeeee;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu.page-sidebar-menu-light > li .sub-menu, .page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li .sub-menu {
+    background: none repeat scroll 0 0 #424242;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu.page-sidebar-menu-light > li .sub-menu > li:hover > a, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu.page-sidebar-menu-light > li .sub-menu > li.open > a, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu.page-sidebar-menu-light > li .sub-menu > li.active > a, .page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li .sub-menu > li:hover > a, .page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li .sub-menu > li.open > a, .page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li .sub-menu > li.active > a {
+    background: none repeat scroll 0 0 #474747 !important;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .sidebar-toggler, .page-sidebar .sidebar-toggler {
+    background: url("/assets/sidebar_inline_toggler_icon_default.jpg") repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .sidebar-search .input-group, .page-sidebar .sidebar-search .input-group {
+    border-bottom: 1px solid #4d4d4d;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .sidebar-search .input-group .form-control, .page-sidebar .sidebar-search .input-group .form-control {
+    background-color: #3d3d3d;
+    color: #616161;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .sidebar-search .input-group .form-control::-moz-placeholder, .page-sidebar .sidebar-search .input-group .form-control::-moz-placeholder {
+    color: #616161;
+    opacity: 1;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .sidebar-search .input-group .input-group-btn .btn > i, .page-sidebar .sidebar-search .input-group .input-group-btn .btn > i {
+    color: #616161;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .sidebar-search.sidebar-search-bordered .input-group, .page-sidebar .sidebar-search.sidebar-search-bordered .input-group {
+    border: 1px solid #4d4d4d;
+}
+.page-sidebar-closed .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .sidebar-search.open .input-group, .page-sidebar-closed .page-sidebar .sidebar-search.open .input-group {
+    background-color: #3d3d3d;
+}
+.page-sidebar-closed .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .sidebar-search.open .remove > i, .page-sidebar-closed .page-sidebar .sidebar-search.open .remove > i {
+    color: #616161;
+}
+.page-sidebar-closed .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .sidebar-search.sidebar-search-solid .input-group, .page-sidebar-closed .page-sidebar .sidebar-search.sidebar-search-solid .input-group {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .sidebar-search.sidebar-search-solid .input-group, .page-sidebar .sidebar-search.sidebar-search-solid .input-group {
+    background: none repeat scroll 0 0 #303030;
+    border: 1px solid #303030;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .sidebar-search.sidebar-search-solid .input-group .form-control, .page-sidebar .sidebar-search.sidebar-search-solid .input-group .form-control {
+    background: none repeat scroll 0 0 #303030;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .sidebar-search.sidebar-search-solid.open .input-group, .page-sidebar .sidebar-search.sidebar-search-solid.open .input-group {
+    background: none repeat scroll 0 0 #3d3d3d;
+    border: 1px solid #3d3d3d;
+}
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .sidebar-search.sidebar-search-solid.open .input-group .form-control, .page-sidebar .sidebar-search.sidebar-search-solid.open .input-group .form-control {
+    background: none repeat scroll 0 0 #3d3d3d;
+}
+.page-sidebar-reversed .page-sidebar-menu.page-sidebar-menu-light {
+}
+.page-sidebar-reversed .page-sidebar-menu.page-sidebar-menu-light > li.active > a, .page-sidebar-reversed .page-sidebar-menu.page-sidebar-menu-light > li.active.open > a {
+    border-left: 0 none;
+    border-right: 4px solid #d64635;
+}
+.page-sidebar-reversed .page-sidebar-menu.page-sidebar-menu-light > li.active > a:hover, .page-sidebar-reversed .page-sidebar-menu.page-sidebar-menu-light > li.active.open > a:hover {
+    border-left: 0 none;
+    border-right: 4px solid #d64635;
+}
+.page-quick-sidebar-wrapper {
+    background: none repeat scroll 0 0 #393939;
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar {
+    background: none repeat scroll 0 0 #393939;
+}
+.page-quick-sidebar-toggler {
+    background: none repeat scroll 0 0 #525252;
+}
+.page-quick-sidebar-toggler:hover {
+    background: none repeat scroll 0 0 #4a4a4a;
+}
+.page-quick-sidebar-toggler > i {
+    color: #a2a2a2;
+}
+.page-quick-sidebar-wrapper {
+    color: #a2a2a2;
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar {
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar .nav-justified > li > a {
+    background: none repeat scroll 0 0 #525252;
+    color: #9a9a9a;
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar .nav-justified > li > a:hover {
+    background: none repeat scroll 0 0 #454545;
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar .nav-justified > li.open > a {
+    background: none repeat scroll 0 0 #525252;
+    color: #9a9a9a;
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar .nav-justified > li.active > a {
+    background: none repeat scroll 0 0 #393939;
+    border: 0 none;
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar .nav-justified > li .dropdown-menu {
+    background: none repeat scroll 0 0 #525252;
+    border: 0 none;
+    box-shadow: 5px 5px rgba(133, 133, 133, 0.1);
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar .nav-justified > li .dropdown-menu:before {
+    border-bottom: 7px solid #525252;
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar .nav-justified > li .dropdown-menu:after {
+    border-bottom: 7px solid #525252;
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar .nav-justified > li .dropdown-menu > li > a {
+    color: #a2a2a2;
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar .nav-justified > li .dropdown-menu > li > a:hover {
+    background: none repeat scroll 0 0 #5a5a5a;
+    color: #a2a2a2;
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar .nav-justified > li .dropdown-menu > li.active > a {
+    background: none repeat scroll 0 0 #555555;
+    color: #a2a2a2;
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar .nav-justified > li .dropdown-menu > li.divider {
+    background-color: #5a5a5a;
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar .list-heading {
+    color: #7b7b7b;
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar .list-items {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar .list-items > li {
+    border-bottom-color: #404040;
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar .list-items > li:hover {
+    background: none repeat scroll 0 0 #404040;
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar-item {
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar-item .page-quick-sidebar-nav .page-quick-sidebar-back-to-list {
+    color: #9a9a9a;
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar-chat .page-quick-sidebar-chat-users .media-list .media .media-body .media-heading-sub {
+    color: #747474;
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar-chat .page-quick-sidebar-chat-users .media-list .media .media-body .media-heading-small {
+    color: dimgray;
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar-chat .page-quick-sidebar-chat-user .page-quick-sidebar-chat-user-messages .post .name {
+    color: #909090;
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar-chat .page-quick-sidebar-chat-user .page-quick-sidebar-chat-user-messages .post .datetime {
+    color: #909090;
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar-chat .page-quick-sidebar-chat-user .page-quick-sidebar-chat-user-messages .post .message {
+    background: none repeat scroll 0 0 #525252;
+    color: #9a9a9a;
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar-chat .page-quick-sidebar-chat-user .page-quick-sidebar-chat-user-messages .post.in .message .arrow {
+    border-right-color: #525252;
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar-chat .page-quick-sidebar-chat-user .page-quick-sidebar-chat-user-messages .post.out .message .arrow {
+    border-left-color: #525252;
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar-alerts .page-quick-sidebar-alerts-list .feeds li a {
+    color: #8b8b8b;
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar-alerts .page-quick-sidebar-alerts-list .feeds li a .desc {
+    text-decoration: underline;
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar-alerts .page-quick-sidebar-alerts-list .feeds li .desc {
+    color: #858585;
+}
+.page-quick-sidebar-wrapper .page-quick-sidebar-alerts .page-quick-sidebar-alerts-list .feeds li .date {
+    color: dimgray;
+}
+.page-footer .page-footer-inner {
+    color: #a3a3a3;
+}
+.page-footer .page-footer-tools .go-top {
+    background-color: #4f4f4f;
+}
+.page-footer .page-footer-tools .go-top:hover {
+    opacity: 0.7;
+}
+.page-footer .page-footer-tools .go-top i {
+    color: #8a8a8a;
+}
+.page-footer-fixed .page-footer {
+    background-color: #2b2b2b;
+}
+@media (min-width: 992px) {
+.page-sidebar-menu.page-sidebar-menu-hover-submenu > li:hover > .sub-menu {
+    box-shadow: 5px 5px rgba(48, 48, 48, 0.2);
+}
+.page-sidebar-menu.page-sidebar-menu-hover-submenu > li:hover > .sub-menu.sidebar-toggler-wrapper, .page-sidebar-menu.page-sidebar-menu-hover-submenu > li:hover > .sub-menu.sidebar-search-wrapper {
+    box-shadow: none;
+}
+.page-sidebar-menu.page-sidebar-menu-closed > li:hover {
+    box-shadow: 5px 5px rgba(48, 48, 48, 0.2);
+}
+.page-sidebar-menu.page-sidebar-menu-closed > li.sidebar-toggler-wrapper:hover, .page-sidebar-menu.page-sidebar-menu-closed > li.sidebar-search-wrapper:hover {
+    box-shadow: none;
+}
+.page-sidebar-menu.page-sidebar-menu-closed > li:hover > .sub-menu {
+    box-shadow: 5px 5px rgba(48, 48, 48, 0.2);
+}
+.page-sidebar-menu.page-sidebar-menu-closed > li:hover > .sub-menu.sidebar-toggler-wrapper, .page-sidebar-menu.page-sidebar-menu-closed > li:hover > .sub-menu.sidebar-search-wrapper {
+    box-shadow: none;
+}
+.page-sidebar-fixed:not(.page-footer-fixed) .page-content {
+    border-bottom: 0 none;
+}
+.page-sidebar-fixed:not(.page-footer-fixed) .page-footer {
+    background-color: #fff;
+}
+.page-sidebar-fixed:not(.page-footer-fixed) .page-footer .page-footer-inner {
+    color: #333;
+}
+.page-sidebar-fixed:not(.page-footer-fixed) .page-footer .page-footer-tools .go-top {
+    background-color: #7b838a;
+}
+.page-sidebar-fixed:not(.page-footer-fixed) .page-footer .page-footer-tools .go-top i {
+    color: #ddd;
+}
+.page-boxed {
+    background-color: #353535 !important;
+}
+.page-boxed .page-container {
+    background-color: #3d3d3d;
+    border-bottom: 1px solid #4d4d4d;
+    border-left: 1px solid #4d4d4d;
+}
+.page-boxed.page-sidebar-reversed .page-container {
+    border-left: 0 none;
+    border-right: 1px solid #4d4d4d;
+}
+.page-boxed.page-sidebar-fixed .page-container {
+    border-bottom: 0 none;
+    border-left: 0 none;
+}
+.page-boxed.page-sidebar-reversed.page-sidebar-fixed .page-container {
+    border-bottom: 0 none;
+    border-left: 0 none;
+    border-right: 0 none;
+}
+.page-boxed.page-sidebar-fixed .page-sidebar {
+    border-left: 1px solid #4d4d4d;
+}
+.page-boxed.page-sidebar-reversed.page-sidebar-fixed .page-sidebar {
+    border-left: 0 none;
+    border-right: 1px solid #4d4d4d;
+}
+.page-boxed.page-sidebar-fixed.page-footer-fixed .page-footer {
+    background-color: #353535 !important;
+}
+.page-boxed.page-sidebar-fixed.page-footer-fixed .page-footer .page-footer-inner {
+    color: #a3a3a3;
+}
+.page-sidebar-menu-hover-submenu li:hover a > .arrow {
+    border-right: 8px solid #3a3a3a;
+}
+.page-sidebar-reversed .page-sidebar-menu-hover-submenu li:hover a > .arrow {
+    border-left: 8px solid #3a3a3a;
+}
+.page-sidebar-menu-hover-submenu li:hover > .sub-menu {
+    background: none repeat scroll 0 0 #3a3a3a !important;
+}
+}
+@media (max-width: 991px) {
+.page-sidebar {
+    background-color: #2b2b2b;
+}
+.page-sidebar .page-sidebar-menu > li > a {
+    border-top: 1px solid #3d3d3d;
+}
+.page-sidebar .page-sidebar-menu > li:hover > a, .page-sidebar .page-sidebar-menu > li.open > a {
+    background: none repeat scroll 0 0 #333333;
+}
+.page-sidebar .page-sidebar-menu > li:last-child > a {
+    border-bottom: 0 none !important;
+}
+.page-sidebar .page-sidebar-menu > li .sub-menu {
+    background-color: #2b2b2b !important;
+}
+.page-sidebar .page-sidebar-menu .sidebar-search input {
+    background-color: #2b2b2b !important;
+}
+.page-sidebar .page-sidebar-menu.page-sidebar-menu-light {
+}
+.page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li:hover > a, .page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li.open > a {
+    background: none repeat scroll 0 0 #333333;
+}
+.page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li.active > a, .page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li.active.open > a {
+    background: none repeat scroll 0 0 #333333;
+}
+.page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li.active > a:hover, .page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li.active.open > a:hover {
+    background: none repeat scroll 0 0 #333333;
+}
+.page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li .sub-menu {
+    background: none repeat scroll 0 0 #2b2b2b !important;
+}
+.page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li .sub-menu > li:hover > a, .page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li .sub-menu > li.open > a, .page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li .sub-menu > li.active > a {
+    background: none repeat scroll 0 0 #333333 !important;
+}
+}
+@media (max-width: 480px) {
+.page-header.navbar {
+}
+.page-header.navbar .top-menu {
+    background-color: #3d3d3d;
+}
+.page-header-fixed-mobile .page-header.navbar .top-menu {
+    background-color: #1f1f1f;
+}
+.page-header.navbar .top-menu .navbar-nav > li.dropdown-user .dropdown-toggle {
+    background-color: #363636;
+}
+.page-header-fixed-mobile .page-header.navbar .top-menu .navbar-nav > li.dropdown-user .dropdown-toggle {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+.page-header.navbar .top-menu .navbar-nav > li.dropdown-user .dropdown-toggle:hover {
+    background-color: #333333;
+}
+}
+body {
+    background-color: #3d3d3d;
+}
+

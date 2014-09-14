@@ -8,45 +8,19 @@ class FoldersController < ApplicationController
   before_filter :require_update_permission, :only => [:edit, :update]
   before_filter :require_delete_permission, :only => :destroy
 
-  respond_to :html, :json
+  respond_to :json
 
   def statement
     render :json => @folder.to_json(:include => {:documents => {:except => :content, :include => { :user => { :only => :name }}}})
   end
 
   def index
-    #respond_with(Folder.root)
-    redirect_to folder_url(Folder.root)
+    respond_with(Folder.root)
   end
 
   # Note: @folder is set in require_existing_folder
   def show
-
-  	if @folder.is_a? Scan
-  	  redirect_to show_scan_path @folder
-  	end
-  	if @folder == current_user.scans_folder
-  	  redirect_to scans_url, :alert => params[:alert]
-  	end
-    if @folder == Folder.index
-      redirect_to domains_url, :alert => params[:alert]
-    end
-  	if @folder.parent == current_user.scans_folder
-  	  @scan = Scan.find(:first, :conditions => {:folder_id => @folder})
-  	  if @scan.scan_files.count != @folder.documents.count 
-  	    redirect_to edit_scan_path(@scan), :alert => flash[:alert]
-  	  else
-  	    redirect_to scan_path(@scan), :alert => flash[:alert]
-	    end
-  	end
-    require 'will_paginate/array'
-
-    # TODO => @entries = [@folder.documents,@folder.children].flatten
-
-    @documents = @folder.documents
-    @documents = @documents.paginate(:page => params[:page], :per_page => 30, :total_entries => @documents.count)
-    #WillPaginate.per_page = 10
-    #respond_with(@folder, :include => [:documents, :children])
+    respond_with(@folder, include: [:documents, :children])
   end
 
   # Note: @target_folder is set in require_existing_target_folder

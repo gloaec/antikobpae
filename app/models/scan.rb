@@ -36,4 +36,42 @@ class Scan < ActiveRecord::Base
       ActiveRecord::Base.establish_connection(config)
       pid
     end
+
+    def progress
+      if self.scan_files.size == 0
+        0
+      else
+        self.scan_files.map(&:progress).reduce(:+).to_f / self.scan_files.size
+      end
+    end
+
+    def count_documents
+      self.documents.count
+    end
+
+    def count_pending
+      self.scan_files.where(progress: 0).count || self.documents.count
+    end
+
+    def count_passed
+      self.scan_files.where(progress: 100, score: 0).count
+    end
+
+    def count_suspicious
+      self.scan_files.where(progress: 100, score: 1..50).count
+    end
+
+    def count_plagiarized
+      self.scan_files.where(progress: 100, score: 51..100).count
+    end
+
+    def count_similarities
+      self.scan_files.map {|sf| sf.similarities.count }.reduce(:+) || 0
+    end
+
+    def count_sources
+      self.scan_files.map {|sf|
+        sf.similarities.collect {|s| s.document.id}
+      }.flatten.uniq.length
+    end
 end

@@ -39,12 +39,27 @@ class ScansController < ApplicationController
   end
   
   def index
-  	@folder = current_user.scans_folder
-  	@scans = []
+    @folder = current_user.scans_folder
+    @scans = []
     @folder.children.each do |folder|
-    	@scans << folder.scan
+      @scans << folder.scan
     end
-    @scans.sort! { |a,b| b.created_at <=> a.created_at }
+    @scans.sort! { |a,b| b.updated_at <=> a.updated_at }
+    if params[:limit]
+      @scans = @scans.first(params[:limit].to_i)
+    end
+    render :json => @scans.to_json(
+      :methods => [
+        :progress,
+        :count_documents,
+        :count_pending,
+        :count_passed,
+        :count_suspicious,
+        :count_plagiarized,
+        :count_similarities,
+        :count_sources
+      ]
+    )
   end
 
   def new

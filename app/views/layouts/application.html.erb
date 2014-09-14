@@ -1,106 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title><%= yield(:title).present? ? ['Antikobpae','|',yield(:title)]*' ': 'Antikobpae Plagiarism Scanner' %></title>
-	<%= favicon_link_tag %>
-	
-	<%= stylesheet_link_tag    'application' %>	
-	<%= javascript_include_tag 'application' %>
-	<%= csrf_meta_tags %>
-	
-	<%= javascript_include_tag 'ckeditor/ckeditor.js' %>
-	<%= javascript_include_tag 'easing.js' %>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<script type="text/javascript" charset="utf-8">
-		(function($){
-			$(document).ready(function() {
-                /*
-				var $sidebar   = $("#sidebar"),
-       				$window    = $(window),
-        			offset     = $sidebar.offset(),
-        			topPadding = 15;
-				
-				function adjustSidebar(){
-					$sidebar.css('max-height',$window.height());
-				}
-				adjustSidebar();
-				$window.resize(adjustSidebar);
-
-				$window.scroll(function() {
-        				if ($window.scrollTop() > offset.top) {
-            					$sidebar.stop().animate({
-                					marginTop: $window.scrollTop() - offset.top + topPadding
-            					});
-        				} else {
-            					$sidebar.stop().animate({
-                					marginTop: 0
-            					});
-        				}
-    				});
-                */
-			});
-		})(jQuery);
-	</script>
-	
-	<%= yield :head %>
-	
+  <title>Antikobpae</title>
+  <%= favicon_link_tag 'favicon.ico' %>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
 </head>
-<body class="<%= 'home' if current_page?(new_user_session_path) %>" data-offset="80" data-target=".subnav" data-spy="scroll" style="margin-top: 0px;">
+<body class="page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo page-container-bg-solid">
 
-	<%= render 'shared/header' %>
+<%= yield %>
 
-        <%= yield(:subnav) %>
-	<% if current_page?(new_user_session_path) || controller.controller_name == 'similarities' %> 
-		<%= yield %>
-	<% else %>
-           
-	    <div class="container-fluid">
-	      <div class="row-fluid">
-	        <div class="span3">
-	          <div class="well sidebar-nav">
-	            <ul class="nav nav-list">
-				  <%= yield(:sidebar) %>
-				  <li><%= link_to icon('arrow-left')+t(:back), :back %></li>
-	            </ul>
-	          </div><!--/.well -->
-                  <%#
-	          <script type="text/javascript"><!--
-			  google_ad_client = "ca-pub-9631132359401447";
-			  /* Pasted Sidebar 1 */
-			  google_ad_slot = "6724419338";
-			  google_ad_width = 300;
-			  google_ad_height = 250;
-			  //-->
-			  </script>
-			  <script type="text/javascript"
-			  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-			  </script>%>
-
-	        </div>
-	        <div class="span9">
-			  <%#= bootstrap_flash %>
-			  <% flash.each do |name, msg| %>
-  <% if msg.is_a?(String) %>
-    <div class="alert alert-<%= name == :notice ? "success" : "error" %>">
-      <a class="close" data-dismiss="alert">&#215;</a>
-      <%= content_tag :div, msg, :id => "flash_#{name}" %>
-    </div>
-  <% end %>
-<% end %>
-			  <!--<h1><%= yield :title %></h1>
-			  <% if yield(:subtitle).present? %>
-				<h2><%= yield :subtitle %></h2>
-			  <% end %>-->
-	          <%= yield %>
-	        </div>
-	      </div>
-
-	     
-	    </div>
-
-	    <%= render 'shared/footer' %>
-
-	<% end %>
 </body>
 </html>
-

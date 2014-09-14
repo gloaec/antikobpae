@@ -1,0 +1,4 @@
+<i class="fa fa-<%= @icon %>"></i>
+<% unless @leaf: %><a href="<%= @url %>"><% end %>
+  <span class="name"><%= @name %></span>
+<% unless @leaf: %></a><% end %>

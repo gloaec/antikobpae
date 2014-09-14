@@ -1,0 +1,31 @@
+<td>
+    <i class="fa fa-<%= @icon() %>"></i>
+  <a href="/documents/<%= @id %>">
+    <span class="name"></span>
+  </a>
+</td>
+<td data-order="<%= @attachment_file_size %>">
+  <span class="size"></span>
+</td>
+<td class="text-muted" data-order="<%= +@created_at %>">
+  <span class="updated_at"></span>
+  <div class="btn-toolbar pull-right" role="toolbar">
+    <div class="btn-group">
+      <a href="/documents/<%= @id %>/edit" class="text-muted btn btn-sm btn-default">
+        <i class="fa fa-edit"></i>
+      </a>
+      <a href="/documents/<%= @id %>/delete" class="text-muted btn btn-sm btn-default">
+        <i class="fa fa-times"></i>
+      </a>
+    </div>
+  </div>
+</td>
+
+<!--i class="fa fa-<%= @icon() %>"></i>
+<span class="name"></span>
+<span class="pull-right">
+  <span class="updated_at"></span>
+  <a href="#documents/<%= @id %>/edit" class="text-muted">
+    <i class="fa fa-edit"></i>
+  </a>
+</span-->

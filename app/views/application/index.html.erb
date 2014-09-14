@@ -1,0 +1,31 @@
+<div class="page-header navbar navbar-fixed-top">
+    <div id="header-region" class="page-header-inner"></div>
+</div>
+<div class="clearfix"></div>
+<div class="page-container">
+    <div class="page-sidebar-wrapper">
+        <div id="sidebar-region" class="page-sidebar navbar-collapse collapse"></div>
+    </div>
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <div id="flash-region"></div>
+            <div class="page-bar">
+                <div id="breadcrumbs-region"></div>
+            </div>
+            <div id="main-region"></div>
+        </div>
+    </div>
+    <a class="page-quick-sidebar-toggler" href="javascript:;"></a>
+    <div class="page-quick-sidebar-wrapper"></div>
+</div>
+<div id="footer-region" class="page-footer"></div>
+<div id="dialog-region" class="modal fade"></div>
+
+<%= javascript_tag do %>
+  $(function() {
+    Antikobpae.current_user = new
+    Antikobpae.Entities.User(<%= current_user.to_json.html_safe %>);
+    Antikobpae.current_user.set({ authenticity_token: '<%= form_authenticity_token %>' });
+    Antikobpae.start();
+  });
+<% end %>

@@ -1,0 +1,10 @@
+[user]
+	name = Ghislain Loaec
+	email = gloaec@cadoles.com
+[color]
+	interactive = auto
+	ui = true
+[core]
+	editor = vim
+[http]
+	sslCAInfo = /home/ghis/.config/certs/ACInfraEducation.crt

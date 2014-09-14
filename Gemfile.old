@@ -1,0 +1,24 @@
+ruby "1.9.3"
+source 'https://rubygems.org'
+
+gem 'rails', '3.2.11'
+
+group :assets do
+  gem 'sass-rails',   '~> 3.2.3'
+  gem 'coffee-rails', '~> 3.2.1'
+  gem 'uglifier', '>= 1.0.3'
+end
+
+gem 'jquery-rails'
+gem 'spinjs-rails'
+gem 'font-awesome-rails', '~> 4.1.0'
+gem 'thin'
+
+group :assets do
+  gem 'eco'
+  gem 'compass-rails'
+  gem 'bootstrap-sass', '~> 3.2.0'
+end
+
+gem 'thinking-sphinx', :path => 'lib/thinking-sphinx'#, '3.0.2',
+gem 'ts-delayed-delta', :git => 'git://github.com/onland/ts-delayed-delta.git', :require => 'thinking_sphinx/deltas/delayed_delta' 

@@ -1,0 +1,41 @@
+<div id="page-wrapper">
+  <div class="row">
+    <div class="col-lg-12">
+      <h1 class="page-header">
+        <i class="fa fa-folder-open"></i> My Documents
+        <span class="pull-right">
+          <div class="dropdown">
+            <a href="#" class="text-muted dropdown-toggle" data-toggle="dropdown"><i class="fa fa-plus"></i></a>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+              <li><a role="menuitem" tabindex="-1" href="#"><i class="fa fa-upload"></i> Upload a file</a></li>
+              <li><a role="menuitem" tabindex="-1" href="#"><i class="fa fa-globe"></i> Import webpage</a></li>
+              <li><a role="menuitem" tabindex="-1" href="#"><i class="fa fa-file"></i> Create a new document</a></li>
+              <li class="divider"></li>
+              <li><a role="menuitem" tabindex="-1" class="new_folder" href="#folders/<%= "@id" %>/new"><i class="fa fa-folder"></i> Create a new folder</a></li>
+              <li class="divider"></li>
+              <li><a role="menuitem" tabindex="-1" href="#"><i class="fa fa-paste"></i> Paste from web clipboard</a></li>
+            </ul>
+          </div>
+        </span>
+      </h1>
+    </div>
+    <!-- /.col-lg-12 -->
+  </div>
+
+  <div class="row">
+    <div id="documents" class="col-lg-12 anchor">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Size</th>
+              <th>Modified</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    <!-- /.col-lg-12 -->
+  </div>
+</div>

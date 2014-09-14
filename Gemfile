@@ -1,8 +1,9 @@
 source 'http://rubygems.org'
 
 gem 'rake'
-gem 'rails', '3.2.0'
+gem 'rails', '~> 3.2'
 
+gem 'iconv'
 gem 'activesupport'
 gem 'therubyracer'
 gem 'mysql2','0.3.12b4'
@@ -18,10 +19,11 @@ gem 'dynamic_form'
 gem 'acts_as_tree'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'spine-rails'
+gem 'spinjs-rails'
+gem 'font-awesome-rails', '~> 4.1.0'
 gem 'eco'
 gem 'minitest'
-gem 'ckeditor', :git => 'https://github.com/galetahub/ckeditor'
+gem 'ckeditor'#, :git => 'https://github.com/galetahub/ckeditor'
 gem 'paperclip'
 gem 'fileutils'
 gem 'pdf-reader'
@@ -35,14 +37,12 @@ gem 'i18n_generators'
 gem 'i18n-js'
 gem 'resque'
 gem 'parallel'
-gem 'delayed_job'
+#gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'anemone'
+gem 'thin'
 gem 'thinking-sphinx', :path => 'lib/thinking-sphinx'#, '3.0.2',
-#  :git => 'git://github.com/freelancing-god/thinking-sphinx.git',
-#  :branch => 'rails3',
-#  :require => 'thinking_sphinx'
 gem 'ts-delayed-delta', :git => 'git://github.com/onland/ts-delayed-delta.git', :require => 'thinking_sphinx/deltas/delayed_delta' 
 gem 'chardet'
 gem 'difflcs'
@@ -51,16 +51,15 @@ gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 gem 'jquery-tmpl-rails'
 gem 'color'
-
+gem 'sprockets'
 
 group :assets do
-  gem 'sass-rails'
-  gem 'coffee-rails'
+  gem 'sass-rails',   '~> 3.2.3'
+  gem 'coffee-rails', '~> 3.2.1'
+  gem 'uglifier', '>= 1.0.3'
+  gem 'compass-rails'
   gem 'therubyracer', :platform => :ruby
-  gem 'uglifier'
-  gem 'less-rails'
-  gem 'less-rails-bootstrap'
-  gem 'less-rails-bootswatch'
+  gem 'bootstrap-sass', '~> 3.2.0'
 end
 
 group :test do
@@ -72,4 +71,3 @@ group :test do
 end
 
 gem 'rspec-rails', :group => [:development, :test]
-#gem 'twitter-bootswatch-rails-helpers'

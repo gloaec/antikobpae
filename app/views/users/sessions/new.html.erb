@@ -1,32 +1,27 @@
 <% content_for :title, t(:sign_in) -%>
 
-<div id="home">
-	<div class="container">	
-		<div class="span6">
-		<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-		  
-		  <div class="control-group">
-		     <%= f.text_field :name, :class => 'title', :placeholder => t(:username) %>
-		  </div>
-		  <div class="control-group">
-		    <%= f.password_field :password, :class => 'title', :placeholder => t(:password) %>
-		  </div>
-                  <div class="control-group">
-		  <div class="input-append input-prepend">
-                  <% if devise_mapping.rememberable? -%>
-                          <button type="button" class="btn" data-toggle="button"><%= t(:remember_me) %></button>
-		  <% end %>
-                  
-			  <button type="submit" class="btn btn-primary">
-			  	<img/> <%= t(:sign_in) %>
-			  </button> 
-                  </div>
-                  </div>
-			<%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
-			  <%= link_to t(:reset_password), new_password_path(resource_name) %><br />
-			<% end -%>
-		  
-		<% end %>
-		</div>
-	</div>
+<div class="container">
+  <div class="login-container">
+    <div id="output">
+      <% flash.each do |name, msg| %>
+        <% if msg.is_a?(String) %>
+          <div class="alert alert-<%= name == :notice ? "success" : "danger" %> animated fadeInUp">
+            <a class="close" data-dismiss="alert">&#215;</a>
+            <%= content_tag :div, msg, :id => "flash_#{name}" %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="avatar"></div>
+    <div class="form-box">
+      <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+        <input name="user[name]" type="text" placeholder="username">
+        <input name="user[password]" type="password" placeholder="password">
+	<button class="btn btn-primary btn-block login" type="submit"><%= t(:sign_in) %></button>
+        <%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
+          <%= link_to t(:reset_password), new_password_path(resource_name) %><br />
+        <% end -%>
+      <% end %>
+    </div>
+  </div>
 </div>

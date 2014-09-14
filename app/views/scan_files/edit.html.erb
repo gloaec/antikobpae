@@ -1,8 +1,0 @@
-<% content_for :title, t(:edit_document) -%>
-
-<div class="breadcrumbs">
-	<%= breadcrumbs(@document.folder, @document.attachment_file_name) %>
-</div>
-<%= form_for [@target_folder, @document], :url => { :action => 'update' }, :html => { :multipart => true } do |f| %>
-	<%= render 'form', :f => f %>
-<% end %>

@@ -34,8 +34,17 @@ class Document < ActiveRecord::Base
   validates_format_of :attachment_file_type, :with => %r{^(file|docx|doc|pdf|odt|txt|html|rtf)$}i, :message => I18n.t(:file_format_not_supported)
   validates_uniqueness_of :name, :scope => 'folder_id', :message => I18n.t(:exists_already, :scope => [:activerecord, :errors, :messages])
 
+  do_not_validate_attachment_file_type :attachment
+
   after_save :prepare_processing
   
+  def as_json(options={})
+    options = options.merge({})
+    json = super(options)
+    json[:folder] = self.folder.as_json
+    json
+  end
+
   def copy(target_folder)
     new_file = self.dup
     new_file.instance_eval { @errors = nil }
@@ -84,16 +93,20 @@ class Document < ActiveRecord::Base
   end
   
   def prepare_processing
-  	if status < 2
-  	  unless File.exists?(attachment.path)
-	      FileUtils.mkdir_p File.dirname(attachment.path)
-	      FileUtils.touch attachment.path
+    if status < 2
+      unless File.exists?(attachment.path)
+          FileUtils.mkdir_p File.dirname(attachment.path)
+          FileUtils.touch attachment.path
+      end
+      
+      if attachment_file_type == 'file'
+        FileUtils.cp attachment.path, [attachment.path,'html'].join('.')
       end
 
       case self.from
-	    when 'web'  then self.delay(:queue => 'indexer').process_document
-      when 'scan' then self.delay(:queue => 'scans').process_document
-      else             self.delay(:queue => 'documents').process_document
+        when 'web'  then self.delay(:queue => 'indexer').process_document
+        when 'scan' then self.delay(:queue => 'scans').process_document
+        else             self.delay(:queue => 'documents').process_document
       end
     end
   end
@@ -138,13 +151,14 @@ class Document < ActiveRecord::Base
 
     self.update_attribute(:status, 2)
 
-	  case attachment_file_type
+    case attachment_file_type
     when 'txt'
       generate_utf8
-	    FileUtils.cp [attachment.path,attachment_file_type].join('.'), [attachment.path,'html'].join('.')
-	  when 'file'
-      FileUtils.cp attachment.path, [attachment.path,'html'].join('.')
-	  when 'html'  
+      FileUtils.cp [attachment.path,attachment_file_type].join('.'), [attachment.path,'html'].join('.')
+    when 'file'
+      #not performed by delayed jobs
+      #FileUtils.cp attachment.path, [attachment.path,'html'].join('.')
+    when 'html'  
 	    
 	    #unless self.from == 'web' or
       unless File.exists?([attachment.path,'html'].join('.'))
@@ -412,6 +426,7 @@ class Document < ActiveRecord::Base
           r_end += word.length
           word.downcase!
           #word = word.force_encoding('utf-8')
+	  word.gsub!(/[^0-9a-z ]/i, '')
           word.gsub!(/\p{Punct}+/,'')
           word.gsub!(/(\s|\u00A0)+/, '')
           if word.length >= 1

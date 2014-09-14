@@ -2,4 +2,3 @@ AppConfig = OpenStruct.new(YAML.load_file("#{Rails.root}/config/antikobpae.yml")
 
 Paperclip.options[:image_magick_path] = AppConfig.image_magick_path
 Paperclip.options[:command_path] = AppConfig.image_magick_path
-

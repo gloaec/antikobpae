@@ -1,0 +1,7 @@
+<div id="header-scans" class="dropdown-tasks"></div>
+<div class="dropdown-tasks top5">
+  <a href="/scans" class="text-center list-group-item clearfix">
+    <strong>See All Scans</strong>
+    <i class="fa fa-angle-right"></i>
+  </a>
+</div>

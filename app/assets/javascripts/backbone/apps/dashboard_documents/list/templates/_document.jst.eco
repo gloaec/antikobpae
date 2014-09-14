@@ -1,0 +1,3 @@
+<i class="fa fa-<%= @icon %>"></i>
+<span class="name"></span>
+<span class="pull-right text-muted updated_at"></span>

@@ -12,8 +12,16 @@ class DocumentsController < ApplicationController
   before_filter :require_update_permission, :only => [:edit, :update]
   before_filter :require_delete_permission, :only => :destroy
 
+  respond_to :json
+
+  def index
+    @documents = current_user.documents.order("updated_at").limit(params[:limit]).reverse
+    render json: @documents.to_json
+  end
+
   # @document and @folder are set in require_existing_file
   def show
+    respond_with(@document, include: [:content])
   end
   
   def xmlpipe
@@ -84,7 +92,7 @@ class DocumentsController < ApplicationController
 
   # @target_folder is set in require_existing_target_folder
   def create
-    
+
     newparams = coerce(params) 
 
     @document = @target_folder.documents.build(newparams[:document])  
@@ -99,31 +107,31 @@ class DocumentsController < ApplicationController
         @document.name = File.basename(@document.attachment_file_name, File.extname(@document.attachment_file_name)).sub(/_/,' ')  
       end
     when 'scratch'
-      tempfile = Tempfile.new('document', Rails.root.join('tmp') )
-      tempfile.write params[:content][:text]
+      tempfile = Tempfile.new(['document', '.txt'], Rails.root.join('tmp') )
+      tempfile.write params[:content]
       tempfile.close
       @document.attachment = File.open(tempfile.path)
-      @document.attachment_file_name = [@document.name,'file'].join('.')
+      @document.attachment_file_name = [@document.name,'txt'].join('.')
+      @document.attachment_file_type = 'file'
       @document.content = nil
+      @document.text_only = false
     when 'webpage'
       require 'open-uri'
       @document.attachment_file_type = 'html'
+      @document.text_only = false
       uri = URI.parse(URI::escape(@document.attachment_file_name))
       @document.name = [uri.host,'-',SecureRandom.hex(6)].join 
     end
     
     if @document.save!
       flash[:notice] = I18n.t(:document_create_success)
-      respond_to do |format| 
-        format.html { redirect_to folder_url(@target_folder) } 
-        format.json  { render :json => { :result => 'success', :upload => document_path(@document) } } 
-      end	
+      respond_with(@document)
+      
     else
-    	@document[:content] = params[:document][:content]
+      @document[:content] = params[:document][:content]
       @document[:name] = params[:document][:name]
       flash[:error] = I18n.t(:document_create_fail)
       respond_to do |format| 
-        format.html { render :action => 'new' } 
         format.json  { render :json => { :result => 'failed' } } 
       end
     end  
@@ -168,6 +176,7 @@ class DocumentsController < ApplicationController
       h[:document] = Hash.new 
       h[:document][:attachment] = params[:file] 
       h[:document][:name] = params[:name] 
+      h[:document][:attachment_file_name] = params[:attachment_file_name] 
       h[:document][:text_only] = params[:document_text_only]
       #h[:upload][:data].content_type =  MIME::Types.type_for(h[:upload][:data].original_filename).to_s 
       h 

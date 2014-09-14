@@ -1,10 +1,30 @@
-AntiKobpae::Application.routes.draw do
+Antikobpae::Application.routes.draw do
+
+  class FormatTest
+    attr_accessor :mime_type
+
+    def initialize(format)
+      @mime_type = Mime::Type.lookup_by_extension(format)
+    end
+
+    def matches?(request)
+      request.format == mime_type
+    end
+  end
+
+  devise_for :users, :path_prefix => 'auth', :controllers => {
+    :sessions => 'users/sessions',
+    :registrations => 'users/registrations'
+  }
+  
+  get '*foo', :to => 'application#index', :constraints => FormatTest.new(:html)
+  get '/', :to => 'application#index', :constraints => FormatTest.new(:html)
 
   resources :routes
 
   resources :domains
 
-  root :to => 'folders#index'
+  root :to => 'application#index' # folders#index'
   
   mount Ckeditor::Engine => '/ckeditor'
   
@@ -15,11 +35,6 @@ AntiKobpae::Application.routes.draw do
 
   match '/typeahead' => 'documents#typeahead'
   match '/search' => 'documents#search'
-  
-  devise_for :users, :path_prefix => 'auth', :controllers => {
-    :sessions => 'users/sessions',
-    :registrations => 'users/registrations'
-  }
   
   resources :users, :except => :show
   resources :groups, :except => :show

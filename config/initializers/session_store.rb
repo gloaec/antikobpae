@@ -2,7 +2,7 @@
 
 #AntiKobpae::Application.config.session_store :active_record_store, :key => '_uploader_session'
 
-AntiKobpae::Application.config.session_store :cookie_store, :key => '_antikobpae_session'
+Antikobpae::Application.config.session_store :cookie_store, :key => '_antikobpae_session'
 
 Rails.application.config.middleware.insert_before(
   Rails.application.config.session_store,

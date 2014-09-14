@@ -30,6 +30,14 @@ class User < ActiveRecord::Base
   
   before_destroy :dont_destroy_admin
 
+  def as_json(options={})
+    options = options.merge({})
+    json = super(options)
+    json[:scans_folder] = self.scans_folder.as_json
+    json[:private_folder] = self.private_folder.as_json
+    json
+  end
+
   %w{create read update delete}.each do |method|
   	define_method "can_#{method}" do |folder|
   	  has_permission = false
