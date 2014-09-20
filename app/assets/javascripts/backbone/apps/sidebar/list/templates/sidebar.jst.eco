@@ -1,10 +1,10 @@
 <ul class="page-sidebar-menu" data-slide-speed="200" data-auto-scroll="true">
+    <!-- 
     <li class="sidebar-toggler-wrapper">
-        <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
         <div class="sidebar-toggler">
         </div>
-        <!-- END SIDEBAR TOGGLER BUTTON -->
     </li>
+    -->
     <li class="sidebar-search-wrapper">
         <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
         <!-- DOC: Apply "sidebar-search-bordered" class the below search form to have bordered search box -->
@@ -22,7 +22,7 @@
         </form>
         <!-- END RESPONSIVE QUICK SEARCH FORM -->
     </li>
-    <li class="start active open">
+    <li class="">
         <a href="/dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
     </li>
     <li>

@@ -2,118 +2,11 @@
     Dashboard <small>dashboard &amp; statistics</small>
 </h3>
 <div class="row">
+    <div id="dashboard-stats-region"></div>
 
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-        <div class="dashboard-stat blue-madison">
-            <div class="visual">
-                <i class="fa fa-database fa-icon-medium"></i>
-            </div>
-            <div class="details">
-                <div class="number">
-                     168,492
-                </div>
-                <div class="desc">
-                     Documents
-                </div>
-            </div>
-            <a href="#" class="more">
-            View more <i class="m-icon-swapright m-icon-white"></i>
-            </a>
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-        <div class="dashboard-stat purple-plum">
-            <div class="visual">
-                <i class="fa fa-globe"></i>
-            </div>
-            <div class="details">
-                <div class="number">
-                     1,127,390
-                </div>
-                <div class="desc">
-                     Webpages
-                </div>
-            </div>
-            <a href="#" class="more">
-            View more <i class="m-icon-swapright m-icon-white"></i>
-            </a>
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-        <div class="dashboard-stat grey-cascade">
-            <div class="visual">
-                <i class="fa fa-bar-chart-o"></i>
-            </div>
-            <div class="details">
-                <div class="number">
-                     3,301
-                </div>
-                <div class="desc">
-                     Documents Scanned
-                </div>
-            </div>
-            <a href="#" class="more">
-            View more <i class="m-icon-swapright m-icon-white"></i>
-            </a>
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-        <div class="dashboard-stat green-haze">
-            <div class="visual">
-                <i class="fa fa-share-alt fa-icon-medium"></i>
-            </div>
-            <div class="details">
-                <div class="number">
-                     1,593
-                </div>
-                <div class="desc">
-                     Connections
-                </div>
-            </div>
-            <a href="#" class="more">
-            View more <i class="m-icon-swapright m-icon-white"></i>
-            </a>
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-        <div class="dashboard-stat yellow-casablanca">
-            <div class="visual">
-                <i class="fa fa-paste fa-icon-medium"></i>
-            </div>
-            <div class="details">
-                <div class="number">
-                     34,281
-                </div>
-                <div class="desc">
-                     Simpilarities
-                </div>
-            </div>
-            <a href="#" class="more">
-            View more <i class="m-icon-swapright m-icon-white"></i>
-            </a>
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-        <div class="dashboard-stat red-intense">
-            <div class="visual">
-                <i class="fa fa-spinner fa-spin fa-icon-medium"></i>
-            </div>
-            <div class="details">
-                <div class="number">
-                     670
-                </div>
-                <div class="desc">
-                     Tasks pending
-                </div>
-            </div>
-            <a href="#" class="more">
-            View more <i class="m-icon-swapright m-icon-white"></i>
-            </a>
-        </div>
-    </div>
     <div class="col-md-6 col-sm-6">
         <!-- BEGIN PORTLET-->
-        <div class="portlet light">
+        <div class="portlet box blue-steel">
             <div class="portlet-title line">
                 <div class="caption">
                     <i class="fa fa-bar-chart-o"></i>
@@ -134,7 +27,7 @@
     </div>
     <div class="col-md-6 col-sm-6">
         <!-- BEGIN PORTLET-->
-        <div class="portlet light">
+        <div class="portlet solid bordered grey-cararra">
             <div class="portlet-title">
                 <div class="caption">
                     <i class="fa fa-bar-chart-o"></i> 

@@ -1,0 +1,108 @@
+<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="dashboard-stat blue-madison">
+        <div class="visual">
+            <i class="fa fa-database fa-icon-medium"></i>
+        </div>
+        <div class="details">
+            <div class="number">
+                <%= @documents.toLocaleString() %>
+            </div>
+            <div class="desc">
+                 Documents
+            </div>
+        </div>
+        <a href="#" class="more">
+        View more <i class="m-icon-swapright m-icon-white"></i>
+        </a>
+    </div>
+</div>
+<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="dashboard-stat purple-plum">
+        <div class="visual">
+            <i class="fa fa-globe"></i>
+        </div>
+        <div class="details">
+            <div class="number">
+                <%= @webpages.toLocaleString() %>
+            </div>
+            <div class="desc">
+                 Webpages
+            </div>
+        </div>
+        <a href="#" class="more">
+        View more <i class="m-icon-swapright m-icon-white"></i>
+        </a>
+    </div>
+</div>
+<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="dashboard-stat grey-cascade">
+        <div class="visual">
+            <i class="fa fa-bar-chart-o"></i>
+        </div>
+        <div class="details">
+            <div class="number">
+                <%= @scanfiles.toLocaleString() %>
+            </div>
+            <div class="desc">
+                 Documents Scanned
+            </div>
+        </div>
+        <a href="#" class="more">
+        View more <i class="m-icon-swapright m-icon-white"></i>
+        </a>
+    </div>
+</div>
+<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="dashboard-stat green-haze">
+        <div class="visual">
+            <i class="fa fa-share-alt fa-icon-medium"></i>
+        </div>
+        <div class="details">
+            <div class="number">
+                <%= @connections.toLocaleString() %>
+            </div>
+            <div class="desc">
+                 Connections
+            </div>
+        </div>
+        <a href="#" class="more">
+        View more <i class="m-icon-swapright m-icon-white"></i>
+        </a>
+    </div>
+</div>
+<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="dashboard-stat yellow-casablanca">
+        <div class="visual">
+            <i class="fa fa-paste fa-icon-medium"></i>
+        </div>
+        <div class="details">
+            <div class="number">
+                <%= @similarities.toLocaleString() %>
+            </div>
+            <div class="desc">
+                 Similarities
+            </div>
+        </div>
+        <a href="#" class="more">
+        View more <i class="m-icon-swapright m-icon-white"></i>
+        </a>
+    </div>
+</div>
+<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="dashboard-stat red-intense">
+        <div class="visual">
+            <i class="fa fa-spinner fa-spin fa-icon-medium"></i>
+        </div>
+        <div class="details">
+            <div class="number">
+                <%= @tasks.toLocaleString() %>
+            </div>
+            <div class="desc">
+                 Tasks pending
+            </div>
+        </div>
+        <a href="#" class="more">
+        View more <i class="m-icon-swapright m-icon-white"></i>
+        </a>
+    </div>
+</div>

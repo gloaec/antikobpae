@@ -1,5 +1,5 @@
 class FoldersController < ApplicationController
-  before_filter :require_existing_folder, :only => [:show, :edit, :update, :destroy, :statement]
+  before_filter :require_existing_folder, :only => [:show, :edit, :update, :destroy, :statement, :files]
   before_filter :require_existing_target_folder, :only => [:new, :create]
   before_filter :require_folder_isnt_root_folder, :only => [:edit, :update, :destroy]
 
@@ -16,6 +16,11 @@ class FoldersController < ApplicationController
 
   def index
     respond_with(Folder.root)
+  end
+
+  # Note: @folder is set in require_existing_folder
+  def files
+    respond_with @folder.files
   end
 
   # Note: @folder is set in require_existing_folder

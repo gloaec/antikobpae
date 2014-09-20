@@ -1,5 +1,13 @@
 @Antikobpae.module "FolderFilesApp.List", (List, App, Backbone, Marionette, $, _) ->
 
+  status_class = (status) ->
+    switch status
+      when 1 then 'default'
+      when 2 then 'info'
+      when 3 then 'success'
+      else 'warning hidden'
+  
+
   class List.Empty extends App.Views.ItemView
     template: "folder_files/list/_empty"
 
@@ -8,6 +16,12 @@
     tagName: 'tr'
 
     initialize: ->
+      if @model instanceof App.Entities.Document
+        @type = 'document'
+      else if @model instanceof App.Entities.Folder
+        @type = 'folder'
+      else if @model instanceof App.Entities.Scan
+        @type = 'scan'
       @timer = setInterval =>
         @model.trigger "change:updated_at", @model
         @model.trigger "change:created_at", @model
@@ -34,25 +48,31 @@
         observe: "created_at"
         onGet: (value) -> "created #{moment(value).fromNow()}"
 
+    modelEvents:
+      'change status': 'onStatusChange'
+
+    ui:
+      status: '.status'
+
     events:
-      "click"         : -> @trigger "file:clicked", @model
-      "click .edit"   : -> @trigger "edit:file:clicked", @model
-      "click .delete" : -> @trigger "delete:file:clicked", @model
+      "click"         : -> @trigger "file:clicked", @model, @type
+      "click .edit"   : -> @trigger "edit:file:clicked", @model, @type
+      "click .delete" : -> @trigger "delete:file:clicked", @model, @type
       "dblclick .name": "onEditFileNameClicked"
 
     onEditFileNameClicked: ->
       console.log 'edit'
+
+    onStatusChange: =>
+      @ui.status.removeClass "label-default label-warning label-info label-success"
+      @ui.status.addClass "label-#{status_class @model.get 'status'}"
 
     onRender: ->
       @stickit()
 
     templateHelpers: ->
       status_class: ->
-        switch @status
-          when 1 then 'default'
-          when 2 then 'info'
-          when 3 then 'success'
-          else 'warning hidden'
+        status_class @status
 
     onClose: ->
       clearInterval(@timer)
@@ -69,6 +89,14 @@
 
     events:
       "click .new_folder": "newFolder"
+
+    initialize: ->
+      @timer = setInterval =>
+        if @collection.getPendingDocuments().isEmpty()
+          clearInterval @timer
+        else
+          @collection.fetch reset: false
+      , 2000
 
     newFolder: ->
       @folder = new @collection.model()
@@ -89,3 +117,5 @@
         aoColumns: [{sWidth: 1}, {}, {}, {}, {}]
         bAutoWidth: false
 
+    onClose: ->
+      clearInterval @timer

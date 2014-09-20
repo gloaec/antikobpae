@@ -3,17 +3,21 @@
   class Show.Controller extends App.Controllers.Base
 
     initialize: (options) ->
-      document = options.document #or= 
-      document = App.request "document:entity", options.id
-  
-      #App.execute 'breadcrumbs', document
-      
+
+      if options.document
+        document = options.document
+        document.fetch()
+      else
+        document = App.request "document:entity", options.id
+
       documentView = @getDocumentView document
 
       @show documentView,
         loading: true
         page:
           breadcrumb: document
+          title: 'Loading...'
+          title_attribute: 'name'
 
     getDocumentView: (document) ->
       new Show.Document

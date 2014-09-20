@@ -32,6 +32,12 @@ class Folder < ActiveRecord::Base
     json
   end
 
+  def files
+    folders = self.children.as_json.map {|folder| folder[:type] = '_folder'; folder}
+    documents = self.documents.as_json.map {|document| document[:type] = 'document'; document}
+    folders + documents
+  end
+
   def copy(target_folder, originally_copied_folder = nil)
     new_folder = self.dup
     new_folder.is_copied_folder = true

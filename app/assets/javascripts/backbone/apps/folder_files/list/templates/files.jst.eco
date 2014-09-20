@@ -5,8 +5,8 @@
         <tr>
           <th></th>
           <th>Name</th>
-          <th>Size</th>
-          <th>Modified</th>
+          <th class="">Size</th>
+          <th class="hidden-xs">Modified</th>
           <th>Status</th>
         </tr>
       </thead>

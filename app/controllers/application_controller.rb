@@ -15,6 +15,24 @@ class ApplicationController < ActionController::Base
   def index
   end
 
+  def stats
+    webpages = Document.where(attachment_file_type: 'html').count
+    documents = Document.count - webpages
+    scanfiles = ScanFile.count 
+    connections = Similarity.count('document_id, scan_file_id', distinct: true)
+    similarities = Similarity.count
+    tasks = Delayed::Job.count
+    stats = {
+        documents:    documents,
+        webpages:     webpages,
+        scanfiles:    scanfiles,
+        connections:  connections,
+        similarities: similarities,
+        tasks:        tasks
+    }
+    render json: stats.to_json
+  end
+
   def set_locale 
     I18n.locale = params[:locale] || session[:locale] || cookies[:locale] || I18n.default_locale 
     session[:locale] = I18n.locale

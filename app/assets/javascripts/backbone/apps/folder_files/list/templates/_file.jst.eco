@@ -6,10 +6,10 @@
     <span class="name"></span>
   </a>
 </td>
-<td data-order="<%= @attachment_file_size %>">
+<td class="" data-order="<%= @attachment_file_size %>">
   <span class="size"></span>
 </td>
-<td class="text-muted" data-order="<%= +@created_at %>">
+<td class="hidden-xs text-muted" data-order="<%= +@created_at %>">
   <span class="updated_at"></span>
   <!--div class="btn-toolbar pull-right" role="toolbar">
     <div class="btn-group">

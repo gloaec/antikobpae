@@ -1,9 +1,8 @@
-<h3 class="page-title">
-    <span class="title"><%= @title %></span>
-    <small class="subtitle"><%= @subtitle %></small>
-</h3>
+<div id="page-title-region"></div>
 
 <div class="page-bar">
     <div id="page-breadcrumbs-region" class="pull-left"></div>
     <div id="page-toolbar-region" class="pull-right"></div>
 </div>
+
+<div id="page-content-region"></div>

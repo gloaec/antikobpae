@@ -13,7 +13,13 @@
       scansView = @getScansView scans
 
       @show scansView,
-        loading: true
+        loading: true,
+        page:
+          title: "My Scans"
+          subtitle: "Lastest scans results"
+          breadcrumb:
+            name: "My Scans"
+            icon: "bar-chart-o"
 
     getScansView: (scans) ->
       new List.Scans

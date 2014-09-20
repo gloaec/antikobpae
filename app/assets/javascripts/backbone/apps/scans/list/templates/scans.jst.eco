@@ -1,11 +1,2 @@
-      
-      <span class="pull-right">
-        <a href="/scans/new" class="text-muted"><i class="fa fa-plus"></i></a>
-      </span>
-      <h3 class="page-title">
-        My Scans
-        <small>Latest scans results</small>
-      </h3>
-
-      <div id="scans" class="list-group dropdown-tasks anchor"></div>
+<div id="scans" class="list-group dropdown-tasks anchor"></div>
 

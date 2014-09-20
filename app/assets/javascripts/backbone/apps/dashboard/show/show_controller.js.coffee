@@ -8,16 +8,20 @@
       App.execute 'breadcrumbs', false
 
       @listenTo @layout, "show", =>
-        @listUpcoming()
-        @listTheatre()
+        @listScans()
+        @listDocuments()
+        @showStats()
 
       @show @layout
     
-    listUpcoming: ->
+    listScans: ->
       App.execute "list:dashboard:scans", @layout.scansRegion
     
-    listTheatre: ->
+    listDocuments: ->
       App.execute "list:dashboard:documents", @layout.documentsRegion
+
+    showStats: ->
+      App.execute "show:dashboard:stats", @layout.statsRegion
 
     getLayoutView: ->
       new Show.Layout

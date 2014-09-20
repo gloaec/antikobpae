@@ -15,7 +15,7 @@ do (Backbone) ->
 		
     highlightRoute: (href) ->
       console.log 'hightlight route', href
-      $('#side-menu li.active').removeClass('active')
+      $('.page-sidebar-menu li.active').removeClass('active')
       $('a').each (i, el)->
         if href.match($(el).attr('href'))
           $(el).parent('li').addClass('active')

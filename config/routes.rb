@@ -19,6 +19,7 @@ Antikobpae::Application.routes.draw do
   
   get '*foo', :to => 'application#index', :constraints => FormatTest.new(:html)
   get '/', :to => 'application#index', :constraints => FormatTest.new(:html)
+  get '/stats', :to => 'application#stats', :constraints => FormatTest.new(:json)
 
   resources :routes
 
@@ -78,6 +79,7 @@ Antikobpae::Application.routes.draw do
   
   resources :folders  do
     get :statement, :on => :member
+    get :files, :on => :member
   end
   
   resources :scans  do

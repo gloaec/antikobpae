@@ -1,4 +1,4 @@
-<h3 class="page-title">
+<!--h3 class="page-title">
   <span class="name"></span>
   <span class="pull-right">
     <div class="dropdown">
@@ -16,7 +16,7 @@
       <a href="#" class="text-muted"><i class="fa fa-times"></i></a>
     </div>
   </span>
-</h3>
+</h3-->
 <% tag = if @text_only then 'pre' else 'div' %>
 <<%= tag %> class="col-lg-12 content">
   <%- @content.text %>

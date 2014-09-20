@@ -1,4 +1,12 @@
 
+pre.content {
+    background: transparent;
+    border: none;
+    border-radius:0;
+    font-family: "Open Sans",sans-serif;
+    line-height: 1.42857;
+    font-size: 13px;
+}
 .page-header.navbar {
     background-color: #1f1f1f;
 }
@@ -9,7 +17,7 @@
     color: #999999;
 }
 .page-header.navbar .top-menu .navbar-nav > li.dropdown .dropdown-toggle .badge.badge-default {
-    background-color: #d64635;
+    background-color: #95a5a6;//d64635;
     color: white;
 }
 .page-header.navbar .top-menu .navbar-nav > li.dropdown.open .dropdown-toggle {
@@ -67,11 +75,11 @@
     color: #999999;
 }
 .page-header.navbar .hor-menu .navbar-nav > li.active > a, .page-header.navbar .hor-menu .navbar-nav > li.active > a:hover, .page-header.navbar .hor-menu .navbar-nav > li.current > a, .page-header.navbar .hor-menu .navbar-nav > li.current > a:hover {
-    background: none repeat scroll 0 0 #d64635;
+    background: none repeat scroll 0 0 #95a5a6;//d64635;
     color: #f1f1f1;
 }
 .page-header.navbar .hor-menu .navbar-nav > li.active .selected, .page-header.navbar .hor-menu .navbar-nav > li.current .selected {
-    border-top: 6px solid #d64635;
+    border-top: 6px solid #95a5a6;//d64635;
 }
 .page-header.navbar .hor-menu .navbar-nav > li .dropdown-menu {
     background: none repeat scroll 0 0 #333333;
@@ -81,7 +89,7 @@
     color: #999999;
 }
 .page-header.navbar .hor-menu .navbar-nav > li .dropdown-menu li > a:hover {
-    background: none repeat scroll 0 0 #d64635;
+    background: none repeat scroll 0 0 #95a5a6;//d64635;
     color: #f1f1f1;
 }
 .page-header.navbar .hor-menu.hor-menu-light .navbar-nav {
@@ -125,11 +133,11 @@
     color: #777777;
 }
 .page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li.active > a, .page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li.active > a:hover, .page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li.current > a, .page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li.current > a:hover {
-    background: none repeat scroll 0 0 #d64635;
+    background: none repeat scroll 0 0 #95a5a6;//d64635;
     color: #f1f1f1;
 }
 .page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li.active .selected, .page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li.current .selected {
-    border-top: 6px solid #d64635;
+    border-top: 6px solid #95a5a6;//d64635;
 }
 .page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li .dropdown-menu {
     background: none repeat scroll 0 0 #fefefe;
@@ -171,12 +179,13 @@
     color: #888888;
 }
 .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active > a, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active.open > a, .page-sidebar .page-sidebar-menu > li.active > a, .page-sidebar .page-sidebar-menu > li.active.open > a {
-    background: none repeat scroll 0 0 #d64635;
+    background: none repeat scroll 0 0 #606060;//d64635;
     border-top-color: transparent;
     color: white;
+    font-weight: normal;
 }
 .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active > a:hover, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active.open > a:hover, .page-sidebar .page-sidebar-menu > li.active > a:hover, .page-sidebar .page-sidebar-menu > li.active.open > a:hover {
-    background: none repeat scroll 0 0 #d64635;
+    background: none repeat scroll 0 0 #303030;//d64635;
 }
 .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active > a > i, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active.open > a > i, .page-sidebar .page-sidebar-menu > li.active > a > i, .page-sidebar .page-sidebar-menu > li.active.open > a > i {
     color: white;
@@ -233,12 +242,12 @@
 }
 .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu.page-sidebar-menu-light > li.active > a, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu.page-sidebar-menu-light > li.active.open > a, .page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li.active > a, .page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li.active.open > a {
     background: none repeat scroll 0 0 #474747;
-    border-left: 4px solid #d64635;
+    border-left: 4px solid #95a5a6;//d64635;
     color: #f1f1f1;
 }
 .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu.page-sidebar-menu-light > li.active > a:hover, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu.page-sidebar-menu-light > li.active.open > a:hover, .page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li.active > a:hover, .page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li.active.open > a:hover {
     background: none repeat scroll 0 0 #424242;
-    border-left: 4px solid #d64635;
+    border-left: 4px solid #95a5a6;//d64635;
 }
 .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu.page-sidebar-menu-light > li.active > a > i, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu.page-sidebar-menu-light > li.active.open > a > i, .page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li.active > a > i, .page-sidebar .page-sidebar-menu.page-sidebar-menu-light > li.active.open > a > i {
     color: #eeeeee;
@@ -299,11 +308,11 @@
 }
 .page-sidebar-reversed .page-sidebar-menu.page-sidebar-menu-light > li.active > a, .page-sidebar-reversed .page-sidebar-menu.page-sidebar-menu-light > li.active.open > a {
     border-left: 0 none;
-    border-right: 4px solid #d64635;
+    border-right: 4px solid #95a5a6;//d64635;
 }
 .page-sidebar-reversed .page-sidebar-menu.page-sidebar-menu-light > li.active > a:hover, .page-sidebar-reversed .page-sidebar-menu.page-sidebar-menu-light > li.active.open > a:hover {
     border-left: 0 none;
-    border-right: 4px solid #d64635;
+    border-right: 4px solid #95a5a6;//d64635;
 }
 .page-quick-sidebar-wrapper {
     background: none repeat scroll 0 0 #393939;

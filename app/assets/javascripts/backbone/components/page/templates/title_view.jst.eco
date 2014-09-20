@@ -1,0 +1,4 @@
+<h3 class="page-title">
+    <span class="title"><%= @title %></span>
+    <small class="subtitle"><%= @subtitle %></small>
+</h3>

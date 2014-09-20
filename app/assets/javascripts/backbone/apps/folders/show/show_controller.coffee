@@ -3,10 +3,13 @@
   class Show.Controller extends App.Controllers.Base
 
     initialize: (options) ->
-      folder = options.folder or= App.request "folder:entity", options.id
-      
-      App.execute 'breadcrumbs', folder
 
+      if options.foler
+        folder = options.folder
+        folder.fetch()
+      else
+        folder = App.request "folder:entity", options.id
+      
       @layout = @getLayoutView()
       
       @listenTo @layout, "show", =>
@@ -16,6 +19,9 @@
       @show @layout,
         loading:
           entities: folder
+        page:
+          title: 'Loading'
+          breadcrumb: folder
 
     folderView: (folder) ->
       folderView = @getFolderView folder
