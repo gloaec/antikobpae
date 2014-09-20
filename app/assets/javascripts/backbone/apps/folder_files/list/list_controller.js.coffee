@@ -4,6 +4,7 @@
 
     initialize: (options) ->
       {folder, files, region} = options
+      console.debug (options)
       folder or= App.request "folder:entity", options.id
       files or= App.request "folder:file:entities", folder
 

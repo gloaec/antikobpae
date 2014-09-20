@@ -6,10 +6,6 @@
       scans = App.request "scan:entities"
       # TODO Get the lastest one that hasn't stated yet as new
 
-      App.execute 'breadcrumbs',
-        name: 'My Scans'
-        icon: 'bar-chart-o'
-
       scansView = @getScansView scans
 
       @show scansView,
@@ -17,9 +13,17 @@
         page:
           title: "My Scans"
           subtitle: "Lastest scans results"
-          breadcrumb:
-            name: "My Scans"
-            icon: "bar-chart-o"
+          breadcrumb: App.current_user.get('scans_folder')
+          toolbar:
+            view: @toolbarView scans
+
+    toolbarView: (scans) ->
+      toolbarView = @getToolbarView scans
+      toolbarView
+
+    getToolbarView: (scans) ->
+      new List.Toolbar
+        model: scans
 
     getScansView: (scans) ->
       new List.Scans

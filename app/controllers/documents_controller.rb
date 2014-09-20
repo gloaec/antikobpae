@@ -124,16 +124,12 @@ class DocumentsController < ApplicationController
     end
     
     if @document.save!
-      flash[:notice] = I18n.t(:document_create_success)
-      respond_with(@document)
+      #flash[:notice] = I18n.t(:document_create_success)
+      render json: @document.to_json
       
     else
-      @document[:content] = params[:document][:content]
-      @document[:name] = params[:document][:name]
-      flash[:error] = I18n.t(:document_create_fail)
-      respond_to do |format| 
-        format.json  { render :json => { :result => 'failed' } } 
-      end
+      #flash[:error] = I18n.t(:document_create_fail)
+      respond_with result: :failed
     end  
       
 	#end unless params[:document].nil?
@@ -176,7 +172,7 @@ class DocumentsController < ApplicationController
       h[:document] = Hash.new 
       h[:document][:attachment] = params[:file] 
       h[:document][:name] = params[:name] 
-      h[:document][:attachment_file_name] = params[:attachment_file_name] 
+      h[:document][:attachment_file_name] = params[:attachment_file_name] || params[:name]
       h[:document][:text_only] = params[:document_text_only]
       #h[:upload][:data].content_type =  MIME::Types.type_for(h[:upload][:data].original_filename).to_s 
       h 

@@ -7,43 +7,6 @@
   <span class="name"><%= @name %></span>
   <span class="pull-right">
     <div class="dropdown">
-      <a href="#" class="text-muted dropdown-toggle" data-toggle="dropdown"><i class="fa fa-plus"></i></a>
-      <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
-        <li>
-          <a role="menuitem" tabindex="-1" class="new-folder-upload clearfix" href="#<%= @url %>/documents/new">
-            <span class="pull-left">
-            <i class="fa fa-upload"></i>
-            Upload document(s)
-            </span>
-            <span class="label label-default upload-runtime pull-right"></span>
-          </a>
-        </li>
-        <li>
-          <a role="menuitem" tabindex="-1" class="new-folder-webpage" href="<%= @url %>/documents/new/webpage">
-            <i class="fa fa-globe"></i>
-            Import a webpage
-          </a>
-        </li>
-        <li>
-          <a role="menuitem" tabindex="-1" class="new-folder-document" href="<%= @url %>/documents/new">
-            <i class="fa fa-file-text-o"></i>
-              Create a new document
-          </a>
-        </li>
-        <li class="divider"></li>
-        <li>
-          <a role="menuitem" tabindex="-1" class="new-folder-folder" href="<%= @url %>/folders/new">
-          <i class="fa fa-folder"></i> 
-          Create a new folder</a>
-        </li>
-        <li class="divider"></li>
-        <li>
-          <a role="menuitem" tabindex="-1" href="#">
-            <i class="fa fa-paste"></i> 
-            Paste from web clipboard
-          </a>
-        </li>
-      </ul>
     </div>
   </span>
 </h1-->

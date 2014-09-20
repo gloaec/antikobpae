@@ -221,11 +221,12 @@ body {
 .page-header.navbar .top-menu .navbar-nav > li.dropdown .dropdown-menu > li > a {
     color: #555;
 }
-.page-header.navbar .top-menu .navbar-nav > li.dropdown-extended .dropdown-menu {
+.page-header.navbar .top-menu .navbar-nav > li.dropdown-extended .dropdown-menu,
+.dropdown-menu.extended {
     background-color: #ffffff;
     max-width: 300px;
     min-width: 160px;
-    width: 233px;
+    width: 300px;
 }
 .page-header.navbar .top-menu .navbar-nav > li.dropdown-extended .dropdown-menu:before, .page-header.navbar .top-menu .navbar-nav > li.dropdown-extended .dropdown-menu:after {
     border-bottom-color: #eee;

@@ -4,17 +4,18 @@
 
     initialize: (options) ->
 
-      if options.foler
+      if options.folder
         folder = options.folder
         folder.fetch()
       else
         folder = App.request "folder:entity", options.id
+      files = App.request "folder:file:entities", folder
       
       @layout = @getLayoutView()
       
       @listenTo @layout, "show", =>
-        @folderView folder
-        @filesView folder
+        @folderView folder, files
+        @filesView folder, files
 
       @show @layout,
         loading:
@@ -22,9 +23,11 @@
         page:
           title: 'Loading'
           breadcrumb: folder
+          toolbar:
+            view: @toolbarView folder, files
 
-    folderView: (folder) ->
-      folderView = @getFolderView folder
+    folderView: (folder, files) ->
+      folderView = @getFolderView folder, files
 
       folderView.on "new:folder:document:clicked", (folder) ->
         App.vent.trigger "new:folder:document:clicked", folder
@@ -34,14 +37,25 @@
 
       @show folderView, region: @layout.folderRegion
 
-    filesView: (folder) ->
+    filesView: (folder, files) ->
       filesView = App.execute "list:folder:files",
         folder: folder
+        files:  files
         region: @layout.filesRegion
 
-    getFolderView: (folder) ->
+    toolbarView: (folder, files) ->
+      toolbarView = @getToolbarView folder, files
+      toolbarView
+
+    getFolderView: (folder, files) ->
       new Show.Folder
         model: folder
+        collection: files
+
+    getToolbarView: (folder, files) ->
+      new Show.Toolbar
+        model: folder
+        collection: files
 
     getLayoutView: ->
       new Show.Layout

@@ -15,13 +15,33 @@
           attachment_file_type: switch type
             when 'webpage' then 'html'
             else 'file'
-        App.execute 'breadcrumbs', document
+
         @newFolderDocumentView = @getNewFolderDocumentView folder, document, documents, type
+
         #@listenTo @newFolderDocumentView, "form:submitted", =>
-        @show @newFolderDocumentView
+        # FIXME Hummm, pas très propre tout ça
+        #
+        @show @newFolderDocumentView,
+          page:
+            title: "New #{type.capitalize()}"
+            breadcrumb: document
+            toolbar:
+              view: @toolbarView document
 
       @show @newFolderDocumentView,
-        loading: {entities: folder} unless options.folder?
+        loading: {entities: folder}
+
+    toolbarView: (document) ->
+      toolbarView = @getToolbarView document
+
+      toolbarView.on "create:folder:document:clicked", (document) =>
+        @newFolderDocumentView.trigger "create:folder:document:clicked", document
+
+      toolbarView
+
+    getToolbarView: (document) ->
+      new New.Toolbar
+        model: document
 
     getNewFolderDocumentView: (folder, document, documents, type) ->
       params =

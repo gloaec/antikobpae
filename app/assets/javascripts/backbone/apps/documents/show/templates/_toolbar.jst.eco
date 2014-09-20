@@ -1,0 +1,42 @@
+<button class="btn btn-fit-height grey-salt" type="button"
+      data-toggle="tooltip"
+      data-placement="top"
+      title="Print">
+  <i class="fa fa-print"></i>
+  <!--span class="hidden-xs hidden-sm hidden-md">Print</span-->
+</button>
+<button 
+  data-close-others="true" 
+  data-delay="1000" 
+  data-toggle="dropdown" 
+  data-placement="top"
+  title="Download"
+  class="btn btn-fit-height grey-salt" type="button">
+  <i class="fa fa-download"></i>
+  <!--span class="hidden-xs hidden-sm hidden-md">
+    Download
+    <i class="fa fa-angle-down"></i>
+  </span-->
+</button>
+<ul class="dropdown-menu pull-right" role="menu">
+  <li><a href="#"><i class="fa fa-<%= @icon %>"></i> Download original (<%= @attachment_file_type %>) </a></li>
+  <li><a href="#"><i class="fa fa-file-text"></i> Download plain text</a></li>
+  <li><a href="#"><i class="fa fa-file-pdf-o"></i> Download PDF</a></li>
+  <li><a href="#"><i class="fa fa-globe"></i> Download HTML</a></li>
+  <li class="divider"></li>
+  <li><a href="#"><i class="fa fa-code"></i> Embed document</a></li>
+</ul>
+<button class="btn btn-fit-height grey-salt" type="button"
+  data-toggle="tooltip"
+  data-placement="top"
+  title="Edit">
+  <i class="fa fa-edit"></i>
+  <!--span class="hidden-xs hidden-sm hidden-md">Edit</span-->
+</button>
+<button class="btn btn-fit-height grey-salt" type="button"
+  data-toggle="tooltip"
+  data-placement="top"
+  title="Delete">
+  <i class="fa fa-times"></i>
+  <!--span class="hidden-xs hidden-sm hidden-md">Delete</span-->
+</button>

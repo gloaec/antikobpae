@@ -2,8 +2,8 @@
 
   class List.Scan extends App.Views.ItemView
     template: "header_scans/list/_scan"
-    tagName: 'a',
-    className: 'list-group-item clearfix'
+    tagName: 'li',
+    className: ''
 
     initialize: ->
       @$el.prop 'href', @model.url()
@@ -46,6 +46,7 @@
     itemView: List.Scan
     emptyView: List.Empty
     itemViewContainer: "#header-scans"
+    tagName: "li"
 
     collectionEvents:
       'change': 'render'

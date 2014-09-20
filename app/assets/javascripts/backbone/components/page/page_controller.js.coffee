@@ -35,6 +35,7 @@
         breadcrumb: @getEntities(view)
         debug: false,
         loading: loading
+        toolbar: false
 
 
       ## TODO sync Entities.Page(title,subtitle) with
@@ -47,7 +48,7 @@
       @listenTo @layout, "show", =>
         @getTitleView config
         @getBreadcrumbsView config
-        @getToolbarView config
+        @getToolbarView config if config.toolbar?
         @getContentView view, config
 
       @show @layout,

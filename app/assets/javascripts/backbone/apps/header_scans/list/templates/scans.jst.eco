@@ -1,7 +1,18 @@
-<div id="header-scans" class="dropdown-tasks"></div>
-<div class="dropdown-tasks top5">
-  <a href="/scans" class="text-center list-group-item clearfix">
-    <strong>See All Scans</strong>
-    <i class="fa fa-angle-right"></i>
-  </a>
-</div>
+<li>
+    <p>
+         You have 12 pending scans
+    </p>
+</li>
+<li>
+    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 250px;">
+        <ul id="header-scans" style="overflow: hidden; width: auto; height: 250px;" class="dropdown-menu-list scroller" data-initialized="1"></ul>
+        <div class="slimScrollBar" style="); width: 7px; position: absolute; top: 0px; border-radius: 7px; z-index: 99; right: 1px; height: 171.703px; display: none; opacity: 0.4;"></div>
+        <div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: none repeat scroll 0% 0% rgb(234, 234, 234); opacity: 0.2; z-index: 90; right: 1px;"></div>
+    </div>
+</li>
+<li class="external">
+    <a href="/scans">
+        See all scans
+        <i class="fa fa-angle-right"></i>
+    </a>
+</li>

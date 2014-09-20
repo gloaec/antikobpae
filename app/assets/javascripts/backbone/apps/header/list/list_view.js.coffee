@@ -4,7 +4,7 @@
     template: "header/list/list_layout"
 
     regions:
-      headerScansRegion: "#header-scans-region"
+      headerScansRegion: Marionette.Region.Nowrap.extend el: "#header-scans-region"
       sidebarRegion:     "#sidebar-region"
 
     events:

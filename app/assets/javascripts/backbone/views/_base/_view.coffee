@@ -6,6 +6,7 @@
       Backbone.Validation.bind @
   
     showErrors: (errors) ->
+      console.error "Validation error", errors
       @$('.help-block').text ''
       @$('.has-error').removeClass 'has-error'
       if errors?

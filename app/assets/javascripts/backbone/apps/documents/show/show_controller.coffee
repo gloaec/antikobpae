@@ -18,6 +18,17 @@
           breadcrumb: document
           title: 'Loading...'
           title_attribute: 'name'
+          toolbar:
+            view: @toolbarView document
+            
+
+    toolbarView: (document) ->
+      toolbarView = @getToolbarView document
+      toolbarView
+
+    getToolbarView: (document) ->
+      new Show.Toolbar
+        model: document
 
     getDocumentView: (document) ->
       new Show.Document

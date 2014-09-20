@@ -39,7 +39,10 @@
       if entity instanceof App.Entities.Folder
         leaf.set parent: entity.get('parent')
         leaf.set name:   entity.get('name')
-        leaf.set icon:   'folder-open'
+        if entity == App.current_user.get('scans_folder')
+          leaf.set icon: 'bar-chart-o'
+        else
+          leaf.set icon: 'folder-open'
         leaf.set url:    entity.url()
       else if entity instanceof App.Entities.Document
         leaf.set parent: entity.get('folder')
@@ -47,8 +50,8 @@
         leaf.set icon:   entity.icon()
         leaf.set url:    entity.url()
       else if entity instanceof App.Entities.Scan
-        leaf.set parent: entity.get('folder').get('parent')
-        leaf.set name:   entity.get('folder').get('name')
+        leaf.set parent: entity.get('folder')
+        leaf.set name:   entity.get('name')
         leaf.set icon:   'bar-chart-o'
         leaf.set url:    entity.url()
       else if _.isObject(entity)
@@ -64,7 +67,10 @@
         breadcrumb.set parent: folder.get('parent')
         breadcrumb.set name:   folder.get('name')
         breadcrumb.set icon:   'folder-open'
-        breadcrumb.set url:    folder.url()
+        if folder == App.current_user.get('scans_folder')
+          breadcrumb.set url:  "/scans"
+        else
+          breadcrumb.set url:  folder.url()
       else
         breadcrumb.set name:   'Dashboard'
         breadcrumb.set icon:   'dashboard'

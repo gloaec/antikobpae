@@ -1,0 +1,4 @@
+<button class="btn btn-fit-height btn-primary create-folder-document" type="button">
+  <i class="fa fa-plus"></i>
+  <span class="hidden-xs">Import</span>
+</button>

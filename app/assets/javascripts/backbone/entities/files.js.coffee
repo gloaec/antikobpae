@@ -1,6 +1,7 @@
 @Antikobpae.module "Entities", (Entities, App, Backbone, Marionette, $, _) ->
 
-  class Entities.File extends Entities.Model
+  class Entities.File extends Entities.Document
+
 
   class Entities.FilesCollection extends Entities.Collection
 
@@ -48,9 +49,13 @@
 
   API =
     getFolderFiles: (folder) ->
-      files = new Entities.FilesCollection [], folder: folder
-      files.import folder.get('children'), '_folder'
-      files.import folder.get('documents'), 'document'
+      unless folder.get('files')?
+        files = new Entities.FilesCollection [], folder: folder
+        folder.set('files', files)
+      files = folder.get('files')
+      App.execute 'when:fetched', folder, ->
+        files.import folder.get('children'), '_folder'
+        files.import folder.get('documents'), 'document'
       files
       
     

@@ -1,5 +1,13 @@
 @Antikobpae.module "ScansApp.List", (List, App, Backbone, Marionette, $, _) ->
 
+  class List.Toolbar extends App.Views.ItemView
+    template: "scans/list/_toolbar"
+    className: "btn-group pull-right"
+
+    ui: {}
+
+    events: {}
+
   class List.Empty extends App.Views.ItemView
     template: "scans/list/_empty"
 

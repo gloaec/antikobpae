@@ -23,6 +23,33 @@
 @import "apps/spinner";
 @import "apps/header";
 @import "apps/footer";
+
+.dropdown-menu.dropdown-menu-right,
+.page-header.navbar .top-menu .navbar-nav > li.dropdown .dropdown-menu {
+    display: none !important;
+}
+.dropdown-menu.dropdown-menu-right.open,
+.page-header.navbar .top-menu .navbar-nav > li.dropdown .dropdown-menu.open,
+.dropdown-menu.scans {
+    display: block !important;
+}
+.navbar-toggle .icon-bar {
+    background-color: #606060;
+    border-bottom: 1px solid #000;
+}
+.navbar-toggle .icon-bar {
+    border-radius: 1px;
+    display: block;
+    height: 2px;
+    width: 22px;
+}
+.no-padding {
+    padding: 0;
+}
+.no-margin {
+    margin: 0;
+}
+
 //
 //.form-control::-webkit-input-placeholder { /* WebKit browsers */
 //    color:    #999;

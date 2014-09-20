@@ -1,44 +1,29 @@
-<div id="page-wrapper">
-    <form class="form" role="form">
-        <div class="row">
-          <div class="col-lg-12">
-            <h1 class="page-header clearfix">
-              <div class="input-group ">
-                <span class="input-group-addon">
-                  <i class="fa fa-globe"></i>
-                </span>
-                <input type="text" class="form-control attachment_file_name" placeholder="Webpage URL">
-                <span class="input-group-btn">
-                  <button class="btn text-muted" type="submit">
-                    <i class="fa fa-plus"></i>
-                  </button>
-                  <a href="javascript:window.history.back()" class="btn text-muted">
-                    <i class="fa fa-times"></i>
-                  </a>
-                </span>
-              </div>
-              <p class="help-block"></p>
-            </h1>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="form-group">
-              <p class="help-block"></p>
-              <iframe src="" id="preview">
-                <html>
-                  <body>
-                    <div class="well">
-                      <p>
-                        Preview
-                      </p>
-                    </div>
-                  </body>
-                </html>
-              </iframe>
+<form class="form" role="form">
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon">
+          <i class="fa fa-globe"></i>
+          <span class="hidden-xs">
+            Webpage URL
+          </span>
+        </span>
+        <input type="text" class="form-control attachment_file_name" placeholder="Webpage URL">
+      </div>
+      <p class="help-block"></p>
+    </div>
+    <div class="form-group">
+      <p class="help-block"></p>
+      <iframe src="" id="preview" class="col-lg-12 well no-padding" height="450px" width="100%">
+        <html>
+          <body>
+            <div class="well">
+              <p>
+                Preview
+              </p>
             </div>
-          </div>
-          <!-- /.col-lg-12 -->
-        </div>
-    </form>
-</div>
+          </body>
+        </html>
+      </iframe>
+    </div>
+  </div>
+</form>

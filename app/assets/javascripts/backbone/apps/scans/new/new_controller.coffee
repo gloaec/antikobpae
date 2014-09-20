@@ -4,7 +4,6 @@
 
     initialize: (options) ->
       scans = options.scans or= App.request "scan:entities"
-      console.log scans
       scan = new scans.model()
 
       @newView = @getNewView scan, scans
@@ -13,7 +12,21 @@
         #data = Backbone.Syphon.serialize newView
         #post.processForm data, posts
 			
-      @show @newView
+      @show @newView,
+        page:
+          title: "New Scan"
+          title_attribute: 'name'
+          breadcrumb: scan
+          toolbar:
+            view: @toolbarView scan
+
+    toolbarView: (scan) ->
+      toolbarView = @getToolbarView scan
+      toolbarView
+
+    getToolbarView: (scan) ->
+      new New.Toolbar
+        model: scan
 
     getNewView: (scan, scans) ->
       new New.Scan

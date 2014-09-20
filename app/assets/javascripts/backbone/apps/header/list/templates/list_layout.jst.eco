@@ -2,21 +2,16 @@
     <a href="/">
         <img class="logo-default" alt="logo" src="/assets/top-logo.png" height="25px">
     </a>
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
   </div>
+  <a data-target=".navbar-collapse" data-toggle="collapse" class="menu-toggler responsive-toggler" href="javascript:;"></a>
   <div class="top-menu">
     <ul class="nav navbar-nav pull-right">
-      <li class="dropdown dropdown-extended dropdown-notification">
+      <li class="dropdown dropdown-extended dropdown-tasks">
           <a data-close-others="true" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" href="#header-scans-region">
-            <span class="badge badge-default">7</span>
+            <span class="badge badge-primary">2</span>
             <i class="fa fa-tasks fa-fw"></i>
           </a>
-          <div id="header-scans-region" class="dropdown-menu dropdown-menu-right"></div>
+          <ul id="header-scans-region" class="dropdown-menu extended tasks scans"></ul>
       </li>
       <li class="dropdown dropdown-user">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#header-user-region">
@@ -24,13 +19,12 @@
               <span class="username username-hide-on-mobile"> Admin </span>
               <i class="fa fa-angle-down"></i>
           </a>
-          <div id="header-user-region" class="dropdown-menu">
-            <ul class="dropdown-menu">
-              <li><a href="/users/1/edit"><i class="icon-user"></i> <span title="translation missing: en.my_profile" class="translation_missing">My Profile</span></a></li> 
+          <ul id="header-user-region" class="dropdown-menu">
+              <li><a href="/users/1/edit"><i class="fa fa-user"></i> <span title="translation missing: en.my_profile" class="translation_missing">My Profile</span></a></li> 
               <li class="divider"></li>
-              <li><a rel="nofollow" data-reload="true" data-method="delete" href="/auth/users/sign_out" data-original-title=""><i class="icon-signout"></i> Sign out</a></li>
-            </ul>
-          </div>
+              <li><a rel="nofollow" data-reload="true" data-method="delete"
+href="/auth/users/sign_out" data-original-title=""><i class="fa fa-sign-out"></i> Sign out</a></li>
+          </ul>
       </li>
       <!-- /.dropdown -->
     </ul>
