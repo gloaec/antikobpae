@@ -56,12 +56,18 @@
 
   API =
     getDocuments: (params = {}) ->
-      _.defaults params, {}
+      _.defaults params,
+        typeahead: false
       documents = new Entities.DocumentsCollection
-      documents.url = "/documents"
+      if params.typeahead
+        documents.url = "/typeahead"
+      else
+        documents.url = "/documents"
       documents.fetch
         reset: true
-        data: params
+        data:
+          limit: params.limit
+          query: params.query
       documents
 
     getDocument: (id) ->
@@ -77,6 +83,11 @@
   
   App.reqres.setHandler "latest:document:entities", ->
     API.getDocuments limit: 10
+
+  App.reqres.setHandler "typeahead:document:entities", (searchTerm) ->
+    API.getDocuments
+      typeahead: true
+      query: searchTerm
     
 # Use this in your browser's console to initialize a JSONP request to see the API in action.
 # $.getJSON("http://api.rottentomatoes.com/api/public/v1.0/documents.json?callback=?", {apikey: "vzjnwecqq7av3mauck2238uj", q: "shining"})

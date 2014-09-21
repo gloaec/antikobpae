@@ -5,22 +5,7 @@
         </div>
     </li>
     -->
-    <li class="sidebar-search-wrapper">
-        <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
-        <!-- DOC: Apply "sidebar-search-bordered" class the below search form to have bordered search box -->
-        <!-- DOC: Apply "sidebar-search-bordered sidebar-search-solid" class the below search form to have bordered & solid search box -->
-        <form method="POST" action="extra_search.html" class="sidebar-search ">
-            <a class="remove" href="javascript:;">
-            <i class="fa fa-times"></i>
-            </a>
-            <div class="input-group">
-                <input type="text" placeholder="Search..." class="form-control">
-                <span class="input-group-btn">
-                <a class="btn submit" href="javascript:;"><i class="fa fa-search"></i></a>
-                </span>
-            </div>
-        </form>
-        <!-- END RESPONSIVE QUICK SEARCH FORM -->
+    <li id="search-region" class="sidebar-search-wrapper">
     </li>
     <li class="">
         <a href="/dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>

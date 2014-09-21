@@ -1,11 +1,14 @@
-@Antikobpae.module "SidebarApp.List", (List, App, Backbone, Marionette, $, _) ->
+@Antikobpae.module "SidebarApp.Show", (Show, App, Backbone, Marionette, $, _) ->
 
-  class List.Sidebar extends App.Views.ItemView
-    template: "sidebar/list/sidebar"
+  class Show.Layout extends App.Views.Layout
+    template: "sidebar/show/show_layout"
 
     ui:
       menu   : '#side-menu'
       sidebar: '.sidebar-collapse'
+
+    regions:
+      searchRegion: "#search-region"
 
     onRender: ->
       @ui.menu.metisMenu()

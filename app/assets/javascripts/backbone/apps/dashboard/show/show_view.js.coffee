@@ -6,4 +6,4 @@
     regions:
       scansRegion:     "#dashboard-scans-region"
       documentsRegion: "#dashboard-documents-region"
-      statsRegion:    "#dashboard-stats-region"
+      statsRegion:     "#dashboard-stats-region"

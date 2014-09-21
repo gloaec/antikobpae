@@ -6,7 +6,7 @@
 
     ui:
       uploadBtn     : '.new-folder-upload'
-      dropdown      : '.dropdown'
+      dropdownMenu  : '.dropdown-menu'
       dropdownToggle: '.dropdown-toggle'
 
     events:
@@ -16,7 +16,7 @@
       #"click .new-folder-upload"   : -> @trigger "new:folder:upload:clicked", @model
 
     onRender: ->
-      @initUploader()
+      _.defer => @initUploader()
 
     initUploader: (params={}) ->
 
@@ -47,7 +47,10 @@
 
       uploader.bind 'PostInit', (up, params) =>
         console.info "PostInit", up, params
-        @ui.dropdown.removeClass('open').css(opacity: 1)
+        @$el.removeClass('open').css(opacity: 1)
+
+      # Chrome FIX:
+      @$el.css(opacity: 0).addClass('open')
 
       # Must init first to avoid default binding
       uploader.init()
@@ -79,7 +82,6 @@
         console.info "File ##{file.id} Uploaded !"
         @collection.get(file.id).set progress: file.percent
 	
-      @ui.dropdown.css(opacity: 0).addClass('open')
 
 
   class Show.Folder extends App.Views.ItemView

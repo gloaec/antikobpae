@@ -1,9 +1,9 @@
 @Antikobpae.module "SidebarApp", (SidebarApp, App, Backbone, Marionette, $, _) ->
     
   API =
-    list: () ->
-      new SidebarApp.List.Controller
+    show: () ->
+      new SidebarApp.Show.Controller
         region: App.sidebarRegion
 
   SidebarApp.on "start", ->
-    API.list()
+    API.show()

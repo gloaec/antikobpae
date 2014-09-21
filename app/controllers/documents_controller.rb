@@ -49,9 +49,6 @@ class DocumentsController < ApplicationController
   end
 
   def search 
-    p "============================================================================"
-    p params[:query]
-    p "============================================================================"
     results = Content.search params[:query],
       :rank_mode => :bm25,
       :field_weights => {
@@ -59,17 +56,11 @@ class DocumentsController < ApplicationController
         :attachment_file_name => 6,
         :text => 3
       }, 
-      :page => params[:page], 
-      :per_page => 50
-    p "============================================================================"
-    p results.inspect
-    p "============================================================================"
-    @documents = results.map {|result| result.document}
-    @documents = @documents.paginate(
-      :page => results.current_page, 
-      :per_page => results.per_page, 
-      :total_entries => results.total_entries
-    )
+      :page => params[:page] || 1, 
+      :per_page => params[:perpage] || 50
+    respond_to do |format|
+      format.json  {render :json => results.map {|result| result.document }}
+    end
   end
 
   def download
