@@ -42,7 +42,7 @@ gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'anemone'
 gem 'thin'
-gem 'thinking-sphinx', :path => 'lib/thinking-sphinx'#, '3.0.2',
+gem 'thinking-sphinx', '3.1.1' #:path => 'lib/thinking-sphinx'#, '3.0.2',
 gem 'ts-delayed-delta', :git => 'git://github.com/onland/ts-delayed-delta.git', :require => 'thinking_sphinx/deltas/delayed_delta' 
 gem 'chardet'
 gem 'difflcs'

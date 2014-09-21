@@ -13,16 +13,6 @@ PATH
       devise (~> 2.0)
       net-ldap (~> 0.2.2)
 
-PATH
-  remote: lib/thinking-sphinx
-  specs:
-    thinking-sphinx (3.0.2)
-      activerecord (>= 3.1.0)
-      builder (>= 2.1.2)
-      innertube (>= 1.0.2)
-      middleware (>= 0.1.0)
-      riddle (>= 1.5.4)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -172,6 +162,8 @@ GEM
       rails (>= 3.0.0)
     iconv (1.0.4)
     innertube (1.1.0)
+    joiner (0.2.0)
+      activerecord (>= 3.1.0, < 4.1.0)
     journey (1.0.4)
     jquery-rails (3.0.2)
       railties (>= 3.0, < 5.0)
@@ -327,6 +319,13 @@ GEM
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
       rack (>= 1.0.0)
+    thinking-sphinx (3.1.1)
+      activerecord (>= 3.1.0)
+      builder (>= 2.1.2)
+      innertube (>= 1.0.2)
+      joiner (>= 0.2.0)
+      middleware (>= 0.1.0)
+      riddle (>= 1.5.11)
     thor (0.18.1)
     tilt (1.4.1)
     treetop (1.4.14)
@@ -414,7 +413,7 @@ DEPENDENCIES
   sprockets
   therubyracer
   thin
-  thinking-sphinx!
+  thinking-sphinx (= 3.1.1)
   ts-delayed-delta!
   turn
   uglifier (>= 1.0.3)

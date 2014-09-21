@@ -49,7 +49,10 @@ class DocumentsController < ApplicationController
   end
 
   def search 
-    results = Content.search params[:query], 
+    p "============================================================================"
+    p params[:query]
+    p "============================================================================"
+    results = Content.search params[:query],
       :rank_mode => :bm25,
       :field_weights => {
         :name => 10,
@@ -58,6 +61,9 @@ class DocumentsController < ApplicationController
       }, 
       :page => params[:page], 
       :per_page => 50
+    p "============================================================================"
+    p results.inspect
+    p "============================================================================"
     @documents = results.map {|result| result.document}
     @documents = @documents.paginate(
       :page => results.current_page, 

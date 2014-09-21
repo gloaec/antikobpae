@@ -8,7 +8,7 @@
                 <%= @documents.toLocaleString() %>
             </div>
             <div class="desc">
-                 Documents
+                 Document<%= "s" if @documents > 1 %>
             </div>
         </div>
         <a href="#" class="more">
@@ -26,7 +26,7 @@
                 <%= @webpages.toLocaleString() %>
             </div>
             <div class="desc">
-                 Webpages
+                 Webpage<%= "s" if @webpages > 1 %>
             </div>
         </div>
         <a href="#" class="more">
@@ -44,7 +44,7 @@
                 <%= @scanfiles.toLocaleString() %>
             </div>
             <div class="desc">
-                 Documents Scanned
+                 Scanned Document<%= "s" if @scanfiles > 1 %>
             </div>
         </div>
         <a href="#" class="more">
@@ -62,7 +62,7 @@
                 <%= @connections.toLocaleString() %>
             </div>
             <div class="desc">
-                 Connections
+                 Connection<%= "s" if @connections > 1 %>
             </div>
         </div>
         <a href="#" class="more">
@@ -80,7 +80,7 @@
                 <%= @similarities.toLocaleString() %>
             </div>
             <div class="desc">
-                 Similarities
+                 Similarit<%= if @similarities > 1 then "ies" else "y" %>
             </div>
         </div>
         <a href="#" class="more">
@@ -98,7 +98,7 @@
                 <%= @tasks.toLocaleString() %>
             </div>
             <div class="desc">
-                 Tasks pending
+                Pending Task<%= "s" if @tasks > 1 %>
             </div>
         </div>
         <a href="#" class="more">
