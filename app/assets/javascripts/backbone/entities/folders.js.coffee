@@ -33,6 +33,10 @@
       type: Backbone.Many
       key: 'children'
       collectionType: 'Antikobpae.Entities.FoldersCollection'
+    ,
+      type: Backbone.Many
+      key: 'files'
+      collectionType: 'Antikobpae.Entities.FilesCollection'
     ]
 
     defaults:
@@ -66,6 +70,13 @@
 	
 
   API =
+    newFolder: (parent) ->
+      new Entities.Folder
+        parent: parent
+        children: new Entities.FoldersCollection
+        documents: new Entities.DocumentsCollection
+        files: new Entities.FilesCollection
+
     getFolders: () ->
       folders = new Entities.FoldersCollection
       folders.fetch reset: true
@@ -77,7 +88,9 @@
       folder
 
     getFolderDocuments: (folder) ->
-      folder.get('documents').fetch()
+      unless folder.get('documents')?
+        documents = new Entities.DocumentsCollection [], folder: folder
+        folder.set('documents', documents)
       folder.get('documents')
 
 
@@ -86,6 +99,9 @@
     
   App.reqres.setHandler "folder:entity", (id) ->
     API.getFolder id
+
+  App.reqres.setHandler "new:folder:entity", (parent) ->
+    API.newFolder parent
 
   App.reqres.setHandler "folder:document:entities", (folder) ->
     API.getFolderDocuments folder

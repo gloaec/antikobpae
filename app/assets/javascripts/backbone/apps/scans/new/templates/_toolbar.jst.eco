@@ -5,9 +5,9 @@
   data-toggle="dropdown" 
   class="btn btn-fit-height grey-salt dropdown-toggle" type="button">
   <i class="fa fa-plus"></i>
-  <span class="hidden-xs">Add</span>
+  <span class="hidden-xs">Add Documents</span>
 </button>
-<ul class="dropdown-menu pull-right" role="menu">
+<ul class="dropdown-menu" role="menu">
   <li>
     <a class="new-folder-upload clearfix" href="#<%= @url %>/documents/new"
       data-toggle="tooltip"
@@ -28,12 +28,6 @@
       <i class="fa fa-file-text-o"></i>
         Create a new document
     </a>
-  </li>
-  <li class="divider"></li>
-  <li>
-    <a role="menuitem" tabindex="-1" class="new-folder-folder" href="<%= @url %>/folders/new">
-    <i class="fa fa-folder"></i> 
-    Create a new folder</a>
   </li>
   <li class="divider"></li>
   <li>

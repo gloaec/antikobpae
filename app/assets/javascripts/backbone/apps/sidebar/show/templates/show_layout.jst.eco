@@ -11,7 +11,7 @@
         <a href="/dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
     </li>
     <li>
-        <a href="/scans"><i class="fa fa-bar-chart-o"></i> My Scans</a>
+        <a href="/scans"><i class="fa fa-tasks"></i> My Scans</a>
     </li>
     <li>
         <a href="<%= @user.private_folder_url %>"><i class="fa fa-folder"></i> My Documents</a>

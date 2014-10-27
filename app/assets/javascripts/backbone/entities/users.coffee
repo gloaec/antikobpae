@@ -12,6 +12,10 @@
       type: Backbone.One
       key: 'scans_folder'
       relatedModel: 'Antikobpae.Entities.Folder'
+    ,
+      type: Backbone.One
+      key: 'tmp_folder'
+      relatedModel: 'Antikobpae.Entities.Folder'
     ]
 
     toJSON: ->

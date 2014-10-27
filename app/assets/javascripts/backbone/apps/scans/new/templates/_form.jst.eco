@@ -1,0 +1,14 @@
+<form class="form" role="form">
+  <div class="form-group">
+    <div class="input-group ">
+      <span class="input-group-addon">
+        <i class="fa fa-tag"></i>
+        <span class="hidden-xs">
+          Label
+        </span>
+      </span>
+      <input id="name" class="form-control" type="text" placeholder="Scan Reference" />
+    </div>
+    <p class="help-block"></p>
+  </div>
+</form>

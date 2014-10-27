@@ -9,7 +9,7 @@
         <div class="portlet box blue-steel">
             <div class="portlet-title line">
                 <div class="caption">
-                    <i class="fa fa-bar-chart-o"></i>
+                    <i class="fa fa-tasks"></i>
                     <span class="caption-subject bold uppercase"> Latest Scans</span>
                     <span class="caption-helper">2 entries</span>
                 </div>
@@ -30,7 +30,7 @@
         <div class="portlet solid bordered grey-cararra">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-bar-chart-o"></i> 
+                    <i class="fa fa-folder"></i> 
                     <span class="caption-subject bold uppercase"> Latest Documents</span>
                     <span class="caption-helper">4 entries</span>
                 </div>

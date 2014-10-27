@@ -1,5 +1,6 @@
 <a href="/scans/<%= @id %>">
   <span class="task">
+    <i class="fa fa-bar-chart-o"></i>
     <span class="desc name"></span>
     <span class="percent sprogress"></span>
   </span>

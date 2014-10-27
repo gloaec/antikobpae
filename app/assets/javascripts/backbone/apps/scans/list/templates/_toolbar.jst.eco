@@ -1,4 +1,4 @@
 <a href="/scans/new" class="btn btn-fit-height grey-salt dropdown-toggle">
   <i class="fa fa-plus"></i>
-  <span class="hidden-xs">Add</span>
+  <span class="hidden-xs">New Scan</span>
 </a>

@@ -53,6 +53,10 @@
     getByAuthorID: (id) ->
       @where author_id: id
 
+    getPendingDocuments: ->
+      new Entities.DocumentsCollection @filter (document) ->
+        document.get('status') < 3
+
 
   API =
     getDocuments: (params = {}) ->

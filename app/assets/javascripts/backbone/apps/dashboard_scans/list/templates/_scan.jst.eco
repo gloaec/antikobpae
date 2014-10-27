@@ -1,22 +1,19 @@
-<p>
-  <strong>
-    <i class="fa fa-bar-chart-o"></i> 
-    <span class="name"></span>
-  </strong>
-  <span class="pull-right text-muted sprogress"></span>
-</p>
-<div class="progress <%= 'progress-striped active' if @progress in [0.01..99.99] %>">
-  <div style="width: <%= @progress %>%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="<%= @progress %>" role="progressbar" class="progress-bar progress-bar-primary">
-    <span class="sr-only sprogress"></span>
+  <span class="scan clearfix">
+    <i class="fa fa-bar-chart-o"></i>
+    <span class="desc name"></span>
+    <span class="percent sprogress"></span>
+  </span>
+  <div class="progress <%= 'progress-striped active' if @progress in [0.01..99.99] %>">
+    <div style="width: <%= @progress %>%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="<%= @progress %>" role="progressbar" class="progress-bar progress-bar-primary">
+      <span class="sr-only sprogress"></span>
+    </div>
   </div>
-</div>
-<p>
 <% if @progress < 100: %>
   <span class="text-info">
     <i class="fa fa-spinner fa-spin"></i> 
     <span class="count_pending"></span> 
   </span>
-<% else %>
+<% end %>
   <span class="text-success">
     <i class="fa fa-check"></i> 
     <span class="count_passed"></span>
@@ -39,4 +36,3 @@
     / <i class="fa fa-link"></i> 
     <span class="count_sources"></span>
   </span>
-</p>

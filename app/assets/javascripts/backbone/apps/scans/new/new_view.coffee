@@ -2,7 +2,7 @@
 
   class New.Toolbar extends App.Views.ItemView
     template: "scans/new/_toolbar"
-    className: "btn-group pull-right"
+    className: "btn-group"
 
     ui:
       uploadBtn     : '.new-folder-upload'
@@ -15,7 +15,7 @@
       #"click .new-folder-upload"   : -> @trigger "new:folder:upload:clicked", @model
 
     onRender: ->
-      @initUploader()
+      _.defer => @initUploader()
 
     initUploader: (params={}) ->
 
@@ -46,13 +46,19 @@
 
       uploader.bind 'PostInit', (up, params) =>
         console.info "PostInit", up, params
-        @ui.dropdown.removeClass('open').css(opacity: 1)
+        @$el.removeClass('open').css(opacity: 1)
+
+      # Chrome FIX:
+      @$el.css(opacity: 0).addClass('open')
+
+      # Must init first to avoid default binding
+      uploader.init()
 
       uploader.bind 'FilesAdded', (up, files) =>
         $.each files, (i, file) =>
           console.info "File ##{file.id} added", file.percent
           @collection.add _.extend file,
-            name: _.truncate(file.name, 40)
+            name: file.name #_.truncate(file.name, 40)
             updated_at: new Date()
             tr_class: if i%2 then 'even' else 'odd'
             state: 0
@@ -60,8 +66,8 @@
             attachment_file_type: file.name.split('.').pop()
             user: App.current_user
             progress: 0
-        up.refresh() # Reposition Flash/Silverlight
-        up.start()
+        uploader.refresh() # Reposition Flash/Silverlight
+        uploader.start()
       
       uploader.bind 'UploadProgress', (up, file) =>
         console.info "Upload ##{file.id}", file.percent
@@ -74,12 +80,10 @@
       uploader.bind 'FileUploaded', (up, file) =>
         console.info "File ##{file.id} Uploaded !"
         @collection.get(file.id).set progress: file.percent
-	
-      @ui.dropdown.css(opacity: 0).addClass('open')
-      uploader.init()
 
-  class New.Scan extends App.Views.ItemView
-    template: "scans/new/new_scan"
+
+  class New.Form extends App.Views.ItemView
+    template: "scans/new/_form"
 
     initialize: ->
       @listenTo @model, 'validated', (_, __, attrs) => @showErrors(attrs)
@@ -95,12 +99,6 @@
       "#name"      : "name"
 
     onRender: ->
-      @ui.dataTable.dataTable
-        paging: false
-        searching: false
-        info: false
-        language:
-          emptyTable: "No files added"
       @stickit()
       @validateit()
 
@@ -114,3 +112,10 @@
             App.navigate "posts", trigger: true
           error: (post, jqXHR) =>
             @showErrors $.parseJSON(jqXHR.responseText).errors
+
+  class New.Layout extends App.Views.Layout
+    template: "scans/new/new_layout"
+
+    regions:
+      formRegion:  "#form-region"
+      filesRegion: "#files-region"

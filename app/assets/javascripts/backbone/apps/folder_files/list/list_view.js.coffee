@@ -90,6 +90,9 @@
     events:
       "click .new_folder": "newFolder"
 
+    collectionEvents:
+      'add': "render"
+
     initialize: ->
       @timer = setInterval =>
         if @collection.getPendingDocuments().isEmpty()

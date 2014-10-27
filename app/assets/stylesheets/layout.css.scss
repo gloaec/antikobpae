@@ -323,14 +323,16 @@ body {
     display: block !important;
     font-size: 12px;
 }
-.page-header.navbar .top-menu .navbar-nav > li.dropdown-tasks .dropdown-menu .task {
+.page-header.navbar .top-menu .navbar-nav > li.dropdown-tasks .dropdown-menu .task,
+.scan {
     margin-bottom: 5px;
 }
-.page-header.navbar .top-menu .navbar-nav > li.dropdown-tasks .dropdown-menu .task .desc {
+.page-header.navbar .top-menu .navbar-nav > li.dropdown-tasks .dropdown-menu.task .desc {
     font-size: 13px;
     font-weight: 300;
 }
-.page-header.navbar .top-menu .navbar-nav > li.dropdown-tasks .dropdown-menu .task .percent {
+.page-header.navbar .top-menu .navbar-nav > li.dropdown-tasks .dropdown-menu
+.task .percent, .scan .percent {
     display: inline-block;
     float: right;
     font-family: 'Open Sans',sans-serif;
@@ -341,6 +343,7 @@ body {
     display: block;
     height: 11px;
     margin: 0;
+    margin-bottom: 4px;
 }
 .page-header.navbar .top-menu .navbar-nav > li.dropdown-user .dropdown-toggle {
     padding: 14px 6px 12px 8px;

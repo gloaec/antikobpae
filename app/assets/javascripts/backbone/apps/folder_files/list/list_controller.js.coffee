@@ -3,10 +3,10 @@
   class List.Controller extends App.Controllers.Base
 
     initialize: (options) ->
-      {folder, files, region} = options
-      console.debug (options)
+      {folder, files, region, filter} = options
+      filter or= 'file'
       folder or= App.request "folder:entity", options.id
-      files or= App.request "folder:file:entities", folder
+      files  or= App.request "folder:#{filter}:entities", folder
 
       filesView = @getFilesView files
 

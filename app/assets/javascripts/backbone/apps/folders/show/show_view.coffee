@@ -83,7 +83,6 @@
         @collection.get(file.id).set progress: file.percent
 	
 
-
   class Show.Folder extends App.Views.ItemView
     template: "folders/show/_folder"
 

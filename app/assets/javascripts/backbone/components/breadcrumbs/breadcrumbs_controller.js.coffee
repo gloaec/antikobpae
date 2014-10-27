@@ -40,7 +40,7 @@
         leaf.set parent: entity.get('parent')
         leaf.set name:   entity.get('name')
         if entity == App.current_user.get('scans_folder')
-          leaf.set icon: 'bar-chart-o'
+          leaf.set icon: 'tasks'
         else
           leaf.set icon: 'folder-open'
         leaf.set url:    entity.url()
@@ -66,11 +66,12 @@
       if folder.get('parent')
         breadcrumb.set parent: folder.get('parent')
         breadcrumb.set name:   folder.get('name')
-        breadcrumb.set icon:   'folder-open'
         if folder == App.current_user.get('scans_folder')
           breadcrumb.set url:  "/scans"
+          breadcrumb.set icon: 'tasks'
         else
           breadcrumb.set url:  folder.url()
+          breadcrumb.set icon: 'folder-open'
       else
         breadcrumb.set name:   'Dashboard'
         breadcrumb.set icon:   'dashboard'
