@@ -63,7 +63,7 @@
         </a>
         <ul class="sub-menu" style="display: block;">
             <li>
-	<a href="#"><i class="fa fa-user"></i> Users</a>
+	            <a href="/users"><i class="fa fa-user"></i> Users</a>
             </li>
             <li>
 	<a href="#"><i class="fa fa-group"></i> Groups</a>

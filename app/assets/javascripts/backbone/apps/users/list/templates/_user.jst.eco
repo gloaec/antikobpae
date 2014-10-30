@@ -1,0 +1,24 @@
+<td data-order="<%= @is_admin %>">
+  <i class="fa fa-<%= @icon %>"></i>
+</td>
+<td>
+  <a href="/users/<%= @id %>">
+    <span class="name"></span>
+  </a>
+</td>
+<td data-order="<%= @email %>">
+  <span class="email"></span>
+</td>
+<td class="text-muted" data-order="<%= +@created_at %>">
+  <span class="updated_at"></span>
+  <div class="btn-toolbar pull-right" role="toolbar">
+    <div class="btn-group btn-group-xs">
+      <a href="/users/<%= @id %>/edit" class="btn grey-salt">
+        <i class="fa fa-edit"></i>
+      </a>
+      <a href="/users/<%= @id %>/delete" class="btn red-intense">
+        <i class="fa fa-trash-o"></i>
+      </a>
+    </div>
+  </div>
+</td>

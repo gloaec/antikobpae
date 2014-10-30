@@ -3,8 +3,11 @@ class UsersController < ApplicationController
   before_filter :require_existing_user, :only => [:edit, :update, :destroy]
   before_filter :require_deleted_user_isnt_admin, :only => :destroy
 
+  respond_to :json
+
   def index
     @users = User.all(:order => 'name')
+    respond_with(@users)
   end
 
   def new

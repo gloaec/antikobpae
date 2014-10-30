@@ -1,6 +1,6 @@
 @Antikobpae = do (Backbone, Marionette) ->
 
-  console.info 'Loading application '
+  console.info 'Loading application'
 
   App = new Marionette.Application
 

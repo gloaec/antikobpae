@@ -1,0 +1,73 @@
+<form class="form-horizontal" role="form">
+
+  <div class="form-group">
+    <label class="hidden-sm hidden-xs col-md-3 control-label">
+      Username
+    </label>
+    <div class="col-md-9">
+      <div class="input-group">
+        <span class="input-group-addon">
+          <i class="fa fa-tag"></i>
+        </span>
+        <input type="text" class="form-control" id="name" placeholder="Username">
+      </div>
+    </div>
+    <p class="help-block"></p>
+  </div>
+
+  <div class="form-group">
+    <label class="hidden-sm hidden-xs col-md-3 control-label">
+      Email
+    </label>
+    <div class="col-md-9">
+      <div class="input-group">
+        <span class="input-group-addon">
+          <i class="fa fa-envelope"></i>
+        </span>
+        <input type="text" class="form-control" id="email" placeholder="Email">
+      </div>
+    </div>
+    <p class="help-block"></p>
+  </div>
+
+  <div class="form-group">
+    <label class="hidden-sm hidden-xs col-md-3 control-label">
+      Password
+    </label>
+    <div class="col-md-9">
+      <div class="input-group">
+        <span class="input-group-addon">
+          <i class="fa fa-key"></i>
+        </span>
+        <input type="password" class="form-control" id="password" placeholder="Password">
+      </div>
+    </div>
+    <p class="help-block"></p>
+  </div>
+
+  <div class="form-group">
+    <label class="hidden-sm hidden-xs col-md-3 control-label">
+      Password (confirmation)
+    </label>
+    <div class="col-md-9">
+      <div class="input-group">
+        <span class="input-group-addon">
+          <i class="fa fa-key"></i>
+        </span>
+        <input type="password" class="form-control" id="password_confirmation" placeholder="Password (confirmation)">
+      </div>
+    </div>
+    <p class="help-block"></p>
+  </div>
+
+  <div class="form-group">
+    <label class="col-md-3 control-label">
+      Member of these groups
+    </label>
+    <div class="col-md-9">
+      <span class="btn-checkbox">
+        <button type="button" class="btn" data-color="primary">Admins</button>
+        <input type="checkbox" class="hidden" />
+      </span>
+    </div>
+</form>

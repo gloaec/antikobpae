@@ -1,0 +1,23 @@
+<!--h3 class="page-title">
+  <span class="name"></span>
+  <span class="pull-right">
+    <div class="dropdown">
+      <a href="#" class="text-muted"><i class="fa fa-print"></i></a>
+      <a href="#" class="text-muted dropdown-toggle" data-toggle="dropdown"><i class="fa fa-download"></i></a>
+      <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+        <li><a role="menuitem" tabindex="-1" href="#"><i class="fa fa-<%= @icon %>"></i> Download original (<%= @attachment_file_type %>) </a></li>
+        <li><a role="menuitem" tabindex="-1" href="#"><i class="fa fa-file-text"></i> Download plain text</a></li>
+        <li><a role="menuitem" tabindex="-1" href="#"><i class="fa fa-file-pdf-o"></i> Download PDF</a></li>
+        <li><a role="menuitem" tabindex="-1" href="#"><i class="fa fa-globe"></i> Download HTML</a></li>
+        <li class="divider"></li>
+        <li><a role="menuitem" tabindex="-1" href="#"><i class="fa fa-code"></i> Embed document</a></li>
+      </ul>
+      <a href="#" class="text-muted"><i class="fa fa-edit"></i></a>
+      <a href="#" class="text-muted"><i class="fa fa-times"></i></a>
+    </div>
+  </span>
+</h3-->
+<% tag = if @text_only then 'pre' else 'div' %>
+<<%= tag %> class="content">
+  <%- @content.text %>
+</<%= tag %>>

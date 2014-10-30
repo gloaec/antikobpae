@@ -3,8 +3,11 @@ class GroupsController < ApplicationController
   before_filter :require_existing_group, :only => [:edit, :update, :destroy]
   before_filter :require_group_isnt_admins_group, :only => [:edit, :update, :destroy]
 
+  respond_to :json
+
   def index
     @groups = Group.all(:order => 'name')
+    respond_with @groups
   end
 
   def new

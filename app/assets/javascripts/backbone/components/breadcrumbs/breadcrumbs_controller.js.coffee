@@ -54,6 +54,12 @@
         leaf.set name:   entity.get('name')
         leaf.set icon:   'bar-chart-o'
         leaf.set url:    entity.url()
+      else if entity instanceof App.Entities.User
+        leaf.set parent: new @breadcrumbs.model
+          name: "Users"
+          icon: 'list'
+          url: "/users"
+          parent: root
       else if _.isObject(entity)
         leaf.set parent: root
         leaf.set entity
@@ -70,8 +76,12 @@
           breadcrumb.set url:  "/scans"
           breadcrumb.set icon: 'tasks'
         else
-          breadcrumb.set url:  folder.url()
+          breadcrumb.set url:  folder.url?()
           breadcrumb.set icon: 'folder-open'
+        if folder.get('url')
+          breadcrumb.set url: folder.get('url')
+        if folder.get('icon')
+          breadcrumb.set icon: folder.get('icon')
       else
         breadcrumb.set name:   'Dashboard'
         breadcrumb.set icon:   'dashboard'

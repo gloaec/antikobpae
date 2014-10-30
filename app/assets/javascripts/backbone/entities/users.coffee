@@ -20,9 +20,12 @@
 
     toJSON: ->
       json = super
-      json['private_folder_url'] or= @get('private_folder').url()
-      json['scans_folder_url'] or= @get('scans_folder').url()
+      json['private_folder_url'] or= @get('private_folder')?.url()
+      json['scans_folder_url'] or= @get('scans_folder')?.url()
       json
+
+    icon: ->
+      if @get 'is_admin' then 'shield' else 'user'
 
   class Entities.UsersCollection extends Entities.Collection
 

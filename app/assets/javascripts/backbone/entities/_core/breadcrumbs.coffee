@@ -5,6 +5,9 @@
       name: "New"
       leaf: false
       root: false
+      url: "/"
+
+    url: "/"
       
   class Entities.BreadcrumbsCollection extends Entities.Collection
     model: Entities.Breadcrumb

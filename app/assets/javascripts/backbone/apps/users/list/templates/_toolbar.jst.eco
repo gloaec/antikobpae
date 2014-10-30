@@ -1,0 +1,4 @@
+<a href="/users/new" class="btn btn-fit-height grey-salt">
+  <i class="fa fa-plus"></i>
+  <span class="hidden-xs">New User</span>
+</a>

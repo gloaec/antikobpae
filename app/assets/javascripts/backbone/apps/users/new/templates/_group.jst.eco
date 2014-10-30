@@ -1,0 +1,2 @@
+<button type="button" class="btn name" data-color="primary"><%= @name %></button>
+<input type="checkbox" class="hidden" />

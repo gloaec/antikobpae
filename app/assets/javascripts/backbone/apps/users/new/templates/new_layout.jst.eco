@@ -1,0 +1,11 @@
+<form class="form-horizontal" role="form">
+
+  <div id="form-region"></div>
+
+  <div class="form-group">
+    <label class="col-md-3 control-label">
+      Member of these groups
+    </label>
+    <div id="groups-region" class="col-md-9">
+    </div>
+</form>
