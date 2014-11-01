@@ -15,18 +15,19 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(params[:user])#.merge({ :password_required => true }))
+    @user = User.new(params)#.merge({ :password_required => true }))
 
-    if params[:user][:password].blank?
-      params[:user].delete(:password)
-      params[:user].delete(:password_confirmation)
+    if params[:password].blank?
+      params.delete(:password)
+      params.delete(:password_confirmation)
     end
+
+    set_groups
     
     if @user.save
-      set_groups
-      redirect_to users_url
+      respond_with(@user)
     else
-      render :action => 'new'
+      respond_with(@user)
     end
   end
 
@@ -72,7 +73,7 @@ class UsersController < ApplicationController
 
   def set_groups
     if current_user.member_of_admins?
-      @user.group_ids = params[:user][:group_ids]
+      @user.group_ids = params[:groups].collect {|g| g[:id]}
       @user.groups << Group.find_by_name('Admins') if @user.is_admin
     end
   end

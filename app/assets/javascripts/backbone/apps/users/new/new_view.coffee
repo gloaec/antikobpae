@@ -10,12 +10,28 @@
     template: "users/new/_group"
     tagName: "span"
     className: "btn-checkbox"
+    
+    ui:
+      checkbox: 'input[type=checkbox]'
+
+    events:
+      'click' : 'toggleGroup'
+
+    toggleGroup: =>
+      console.log "TOGGLE", @model, @collection,
+      if @ui.checkbox.is(':checked')
+        @collection.add @model
+      else
+        @collection.remove @model
 
     onRender: ->
       @$el.btn_checkbox()
 
   class New.UserGroups extends App.Views.CollectionView
     itemView: New.UserGroup
+
+    itemViewOptions: ->
+      collection: @model.get 'groups'
 
   class New.Form extends App.Views.ItemView
     template: "users/new/_form"
@@ -24,28 +40,20 @@
       @listenTo @model, 'validated', (_, __, attrs) => @showErrors(attrs)
 
     ui:
-      "name"         : "#name"
-
-    events:
-      'submit form' : 'formSubmitted'
+      "name"                   : "#name"
+      "email"                  : "#email"
+      "password"               : "#password"
+      "password_confirmation"  : "#password_confirmation"
 
     bindings:
-      "#name"      : "name"
+      "#name"                  : "name"
+      "#email"                 : "email"
+      "#password"              : "password"
+      "#password_confirmation" : "password_confirmation"
 
     onRender: ->
       @stickit()
       @validateit()
-
-    formSubmitted: (e) ->
-      e.preventDefault()
-      if @model.isValid(true)
-        @model.save null,
-          success: =>
-            @collection.add @model
-            App.execute "flash:success", "Post ##{@model.id} successfully created"
-            App.navigate "posts", trigger: true
-          error: (post, jqXHR) =>
-            @showErrors $.parseJSON(jqXHR.responseText).errors
 
   class New.Layout extends App.Views.Layout
     template: "users/new/new_layout"
@@ -53,3 +61,27 @@
     regions:
       formRegion:   "#form-region"
       groupsRegion: "#groups-region"
+
+    ui:
+      'form' : 'form'
+
+    events:
+      'submit form'            : 'formSubmitted'
+
+    initialize: ()->
+      @listenTo @, 'create:user:clicked', @createUserClicked
+
+    createUserClicked: (user) ->
+      @ui.form.submit()
+
+    formSubmitted: (e) =>
+      e.preventDefault()
+      if @options.model.isValid(true)
+        @options.model.save null,
+          success: =>
+            @collection.add @model
+            App.execute "flash:success", "User ##{@model.id} successfully created"
+            App.navigate "users", trigger: true
+          error: (post, jqXHR) =>
+            @showErrors $.parseJSON(jqXHR.responseText).errors
+

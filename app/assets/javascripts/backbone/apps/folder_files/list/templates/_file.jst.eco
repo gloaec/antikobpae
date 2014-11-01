@@ -23,6 +23,6 @@
   </div-->
 </td>
 <td>
-  <span class="label label-sm label-<%= @status_class() %> status">Unknown</span>
+  <span class="label label-sm <%= @status_class() %> status">Unknown</span>
 </td>
 

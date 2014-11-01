@@ -1,1 +1,20 @@
-<div id="dashboard-documents" class="list-group dropdown-tasks no-margin"></div>
+<!-- BEGIN PORTLET-->
+<div class="portlet solid grey-cararra">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-folder"></i> 
+            <span class="caption-subject"> Latest Documents</span>
+            <span class="caption-helper">4 entries</span>
+        </div>
+        <div class="actions">
+            <a class="btn btn-circle btn-default" href="#">
+                <i class="fa fa-plus"></i>
+                Add
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div id="dashboard-documents" class="list-group dropdown-tasks no-margin"></div>
+    </div>
+</div>
+<!-- END PORTLET-->

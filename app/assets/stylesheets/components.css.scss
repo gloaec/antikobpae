@@ -374,6 +374,37 @@ Utilities
 /***
 Responsive Utils
 ***/
+
+    #page-logo {
+        position: fixed;
+        z-index: 99999;
+        top: 10px;
+        left: 14px;
+    }
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    #page-logo {
+        position: fixed;
+        z-index: 99999;
+        top: 10px;
+        left: 24px;
+    }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width:992px) {
+    #page-logo {
+        position: fixed;
+        z-index: 99999;
+        top: 10px;
+        left: 20px;
+    }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+}
+
 @media (max-width: 1024px) {
   .hidden-1024 {
     display: none;

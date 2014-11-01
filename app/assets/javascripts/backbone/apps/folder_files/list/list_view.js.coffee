@@ -2,10 +2,10 @@
 
   status_class = (status) ->
     switch status
-      when 1 then 'default'
-      when 2 then 'info'
-      when 3 then 'success'
-      else 'warning hidden'
+      when 1 then 'label-default'
+      when 2 then 'label-info'
+      when 3 then 'bg-green'
+      else 'label-warning hidden'
   
 
   class List.Empty extends App.Views.ItemView
@@ -64,8 +64,8 @@
       console.log 'edit'
 
     onStatusChange: =>
-      @ui.status.removeClass "label-default label-warning label-info label-success"
-      @ui.status.addClass "label-#{status_class @model.get 'status'}"
+      @ui.status.removeClass "label-default label-warning label-info bg-green"
+      @ui.status.addClass status_class @model.get 'status'
 
     onRender: ->
       @stickit()

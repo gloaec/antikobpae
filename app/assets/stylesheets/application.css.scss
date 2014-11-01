@@ -24,6 +24,14 @@
 @import "apps/header";
 @import "apps/footer";
 
+body{
+   background: #eee url(http://subtlepatterns.com/patterns/linedpaper.png);
+}
+
+#page-2 {
+    background: #3d3d3d;
+}
+
 .dropdown-menu.dropdown-menu-right,
 .page-header.navbar .top-menu .navbar-nav > li.dropdown .dropdown-menu {
     display: none !important;

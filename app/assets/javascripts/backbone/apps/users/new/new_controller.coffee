@@ -7,7 +7,7 @@
       groups = options.groups or= App.request "group:entities"
       user   = new users.model()
 
-      @layout = @getLayoutView()
+      @layout = @getLayoutView user, users
 
       @listenTo @layout, "show", =>
         @userGroupsView user, groups
@@ -22,9 +22,6 @@
         loading:
           entities: user
     
-    getLayoutView: ->
-      new Show.Layout
-
     formView: (user, users) ->
       formView = @getFormView user, users
 
@@ -44,7 +41,7 @@
       toolbarView = @getToolbarView user, users
 
       toolbarView.on "create:user:clicked", (user) =>
-        @newFolderDocumentView.trigger "create:user:clicked", user
+        @layout.trigger "create:user:clicked", user
 
       toolbarView
 
@@ -63,6 +60,7 @@
         model: user
         collection: users
 
-    getLayoutView: ->
+    getLayoutView: (user, users) ->
       new New.Layout
-
+        model: user
+        collection: users

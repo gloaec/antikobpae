@@ -1,6 +1,7 @@
   <div class="page-logo">
     <a href="/">
-        <img class="logo-default" alt="logo" src="/assets/top-logo.png" height="25px">
+        <img class="logo-default" alt="logo" src="/assets/top-logo.png"
+height="25px" style="z-index: 99999;">
     </a>
   </div>
   <a data-target=".navbar-collapse" data-toggle="collapse" class="menu-toggler responsive-toggler" href="javascript:;"></a>

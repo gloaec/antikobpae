@@ -16,7 +16,29 @@
       type: Backbone.One
       key: 'tmp_folder'
       relatedModel: 'Antikobpae.Entities.Folder'
+    ,
+      type: Backbone.Many
+      key: 'groups'
+      relatedModel: 'Antikobpae.Entities.Group'
     ]
+
+    validation:
+      name:
+        required: true
+        msg: 'Username is required'
+      email: [
+        required: true
+        msg: 'Email cannot be empty'
+      ,
+        pattern: 'email'
+      ]
+      password:
+        required: true
+      password_confirmation:
+        equalTo: 'password'
+
+    defaults:
+      groups: new App.Entities.GroupsCollection
 
     toJSON: ->
       json = super
