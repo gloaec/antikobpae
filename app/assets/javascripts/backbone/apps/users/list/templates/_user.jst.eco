@@ -16,7 +16,7 @@
       <a href="/users/<%= @id %>/edit" class="btn grey-salt">
         <i class="fa fa-edit"></i>
       </a>
-      <a href="/users/<%= @id %>/delete" class="btn red-intense">
+      <a href="#/users/<%= @id %>/delete" class="btn red-intense delete">
         <i class="fa fa-trash-o"></i>
       </a>
     </div>

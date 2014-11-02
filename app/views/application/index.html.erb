@@ -16,10 +16,10 @@
             </div>
             <div class="page-content-wrapper">
                 <div class="page-content">
-                    <!--div id="flash-region"></div>
-                    <div class="page-bar">
+                    <!--<div class="page-bar">
                         <div id="breadcrumbs-region"></div>
                     </div-->
+                    <div class="flash-region"></div>
                     <div id="main-region" class="clearfix"></div>
                 </div>
             </div>
@@ -48,8 +48,9 @@ height="25px" style="z-index: 99999;">
 <% content_for :body_js do %>
   <%= javascript_tag do %>
 
-    (function() {
+    $(function() {
         var pageWrap = document.getElementById( 'pagewrap' ),
+            pageLogo = $( '#page-logo' ),
             pages = [].slice.call( pageWrap.querySelectorAll( 'div.page-region' ) ),
             currentPage = 0,
             triggerLoading = [].slice.call( pageWrap.querySelectorAll( 'a.pageload-link' ) ),
@@ -60,6 +61,7 @@ height="25px" style="z-index: 99999;">
             // after some time hide loader
             setTimeout( function() {
                 loader.hide();
+                pageLogo.hide();
 
                 classie.removeClass( pages[ currentPage ], 'show' );
                 // update..
@@ -70,13 +72,11 @@ height="25px" style="z-index: 99999;">
         }
 
         init();
-    })();
 
-    $(function() {
-      Antikobpae.current_user = new
-      Antikobpae.Entities.User(<%= current_user.to_json.html_safe %>);
-      Antikobpae.current_user.set({ authenticity_token: '<%= form_authenticity_token %>' });
-      Antikobpae.start();
+        Antikobpae.current_user = new
+        Antikobpae.Entities.User(<%= current_user.to_json.html_safe %>);
+        Antikobpae.current_user.set({ authenticity_token: '<%= form_authenticity_token %>' });
+        Antikobpae.start();
     });
 
   <% end %>

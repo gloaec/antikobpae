@@ -17,11 +17,11 @@ height="25px" style="z-index: 99999;">
       <li class="dropdown dropdown-user">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#header-user-region">
               <i class="fa fa-user fa-fw"></i>
-              <span class="username username-hide-on-mobile"> Admin </span>
+              <span class="username username-hide-on-mobile"> <%= @user.name %> </span>
               <i class="fa fa-angle-down"></i>
           </a>
           <ul id="header-user-region" class="dropdown-menu">
-              <li><a href="/users/1/edit"><i class="fa fa-user"></i> <span title="translation missing: en.my_profile" class="translation_missing">My Profile</span></a></li> 
+              <li><a href="/users/<%= @user.id %>/edit"><i class="fa fa-user"></i> <span title="translation missing: en.my_profile" class="translation_missing">My Profile</span></a></li> 
               <li class="divider"></li>
               <li><a rel="nofollow" data-reload="true" data-method="delete"
 href="/auth/users/sign_out" data-original-title=""><i class="fa fa-sign-out"></i> Sign out</a></li>

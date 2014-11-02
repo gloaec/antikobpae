@@ -185,21 +185,22 @@ body{
 //    white-space: pre-wrap;
 //    white-space: pre-line;
 //}
-//
-//.dataTables_empty {
-//    @extend .well;
-//    text-align: center;
-//}
-//
-//.well.empty,
-//.dataTables_empty {
-//    padding-top: 50px !important;
-//    padding-bottom: 50px !important;
-//    background-image: url(/assets/arrow-top-right.png);
-//    background-repeat: no-repeat;
-//    background-position: top right;
-//}
-//
+
+.dataTables_empty {
+    @extend .well;
+    text-align: center;
+}
+
+.well.empty,
+.dataTables_empty {
+    padding-top: 50px !important;
+    padding-bottom: 50px !important;
+    background-image: url(/assets/arrow-top-right.png);
+    background-repeat: no-repeat;
+    background-position: top right;
+    margin-bottom: 0px;
+}
+
 ////.jumbotron {
 ////    background-color: transparent;
 ////    background-image: url(/assets/home-bg2.png);

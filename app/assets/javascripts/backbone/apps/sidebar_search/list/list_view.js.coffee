@@ -11,12 +11,17 @@
     template: "sidebar_search/list/_form"
     
     ui:
-      "input" : "input"
+      input: "input[type='text']"
+      clear: ".clear"
 
     events:
       "submit form" : "formSubmitted"
       "keyup input" : "keyPressed"
-    
+      "click .clear": "clearClicked"
+ 
+    onRender: ->
+      @ui.clear.hide()
+
     keyPressed: (e) ->
       val = $.trim @ui.input.val()
       if val.length > 2
@@ -28,12 +33,22 @@
       else
         clearTimeout @timer
         @trigger "search:typeahead"
+      if val.length == 0
+        @ui.clear.hide()
+      else
+        @ui.clear.show()
       @val = val
 
     formSubmitted: (e) ->
       e.preventDefault()
       val = $.trim @ui.input.val()
       @trigger "search:submitted", val
+
+    clearClicked: (e) ->
+      clearTimeout @timer
+      @trigger "search:typeahead"
+      @ui.input.val('')
+      @ui.clear.hide()
   
   class List.Document extends App.Views.ItemView
     template: "sidebar_search/list/_document"

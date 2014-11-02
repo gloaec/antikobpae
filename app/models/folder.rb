@@ -15,7 +15,7 @@ class Folder < ActiveRecord::Base
   accepts_nested_attributes_for :documents, :parent, :children
   
   attr_accessor :is_copied_folder
-  attr_accessible :name, :user_id, :private, :documents
+  attr_accessible :name, :user_id, :private, :documents, :parent
   
 
   validates_uniqueness_of :name, :scope => :parent_id

@@ -113,7 +113,6 @@
         paging: true
         info: true
         language:
-          search: "_INPUT_"
           emptyTable: "Folder is empty"
           searchPlaceholder: "Filter files..."
           zeroRecords: "No files matching"

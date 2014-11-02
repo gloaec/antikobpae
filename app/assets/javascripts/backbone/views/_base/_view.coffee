@@ -11,7 +11,7 @@
       @$('.has-error').removeClass 'has-error'
       if errors?
         for attr_name, msg of errors
-          msg = msg.first() if _.isArray msg
+          msg = msg[0] if _.isArray msg
           selector = _(Object.keys(@bindings)).find (selector) =>
             @bindings[selector] == attr_name
           if selector?

@@ -28,10 +28,20 @@
         onGet: (value) -> "created #{moment(value).fromNow()}"
 
     events:
-      "click"         : -> @trigger "user:clicked", @model
+      "click .show"   : -> @trigger "user:clicked", @model
       "click .edit"   : -> @trigger "edit:user:clicked", @model
-      "click .delete" : -> @trigger "delete:user:clicked", @model
+      "click .delete" : "onDeleteUserClicked" #-> @trigger "delete:user:clicked", @model
       "dblclick .name": "onEditUserNameClicked"
+
+    onDeleteUserClicked: (e) =>
+      e.stopPropagation()
+      bootbox.confirm "Are you sure you want to delete user '#{@model.get 'name'}'", (response) =>
+        if response
+          @model.destroy
+            success: =>
+              App.execute 'flash:success', "User '#{@model.get 'name'}' successfully deleted"
+              App.navigate '/users', trigger: true
+
 
     onEditUserNameClicked: ->
       console.log 'edit'

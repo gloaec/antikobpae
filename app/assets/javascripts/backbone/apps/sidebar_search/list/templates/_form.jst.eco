@@ -6,9 +6,12 @@
     <i class="fa fa-times"></i>
     </a>
     <div class="input-group">
+        <span class="input-group-btn">
+            <a class="btn clear" href="javascript:;"><i class="fa fa-times"></i></a>
+        </span>
         <input type="text" placeholder="Search..." class="form-control">
         <span class="input-group-btn">
-        <a class="btn submit" href="javascript:;"><i class="fa fa-search"></i></a>
+            <a class="btn submit" href="javascript:;"><i class="fa fa-search"></i></a>
         </span>
     </div>
 </form>

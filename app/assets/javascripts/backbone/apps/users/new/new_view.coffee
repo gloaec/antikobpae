@@ -38,6 +38,7 @@
 
     initialize: ->
       @listenTo @model, 'validated', (_, __, attrs) => @showErrors(attrs)
+      @listenTo @, 'form:submitted', @formSubmitted
 
     ui:
       "name"                   : "#name"
@@ -55,6 +56,18 @@
       @stickit()
       @validateit()
 
+    formSubmitted: (user) =>
+      if @model.isValid(true)
+        @model.save null,
+          success: =>
+            @collection.add @model
+            App.execute "flash:success", "User ##{@model.id} successfully created"
+            App.navigate "users", trigger: true
+          error: (post, jqXHR) =>
+            console.error post, jqXHR.responseJSON.errors
+            @showErrors jqXHR.responseJSON.errors
+
+
   class New.Layout extends App.Views.Layout
     template: "users/new/new_layout"
 
@@ -66,22 +79,12 @@
       'form' : 'form'
 
     events:
-      'submit form'            : 'formSubmitted'
+      'submit form' : (e) ->
+        e.preventDefault()
+        @trigger 'form:submitted', @model
 
     initialize: ()->
       @listenTo @, 'create:user:clicked', @createUserClicked
 
     createUserClicked: (user) ->
       @ui.form.submit()
-
-    formSubmitted: (e) =>
-      e.preventDefault()
-      if @options.model.isValid(true)
-        @options.model.save null,
-          success: =>
-            @collection.add @model
-            App.execute "flash:success", "User ##{@model.id} successfully created"
-            App.navigate "users", trigger: true
-          error: (post, jqXHR) =>
-            @showErrors $.parseJSON(jqXHR.responseText).errors
-

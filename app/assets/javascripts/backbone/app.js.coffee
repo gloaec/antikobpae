@@ -9,7 +9,7 @@
     sidebarRegion:      "#sidebar-region"
     mainRegion:         "#main-region"
     footerRegion:       "#footer-region"
-    flashRegion:        Marionette.Region.Flashes.extend el: "#flash-region"
+    flashRegion:        Marionette.Region.Flashes.extend el: ".flash-region"
     breadcrumbsRegion:  Marionette.Region.Breadcrumbs.extend el: "#breadcrumbs-region"
     dialogRegion:       Marionette.Region.Dialog.extend el: "#dialog-region"
   

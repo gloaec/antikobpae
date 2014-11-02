@@ -10,19 +10,17 @@ class User < ActiveRecord::Base
   belongs_to :private_folder, :class_name => "Folder" 
   belongs_to :scans_folder, :class_name => "Folder" #, :foreign_key => "scans_folder_id"
 
-  #attr_accessor :password_confirmation, :password_required, :dont_clear_reset_password_token
-  attr_accessible :name, :email, :is_admin, :password, :password_confirmation, :password_required
+  attr_accessor :password_confirmation, :password_required, :dont_clear_reset_password_token
+  attr_accessible :name, :email, :is_admin, :password, :password_confirmation, :password_required, :scans_folder, :private_folder
 
   validates_presence_of :name, :email
   validates_uniqueness_of :name, :email
-=begin
   validates_confirmation_of :password
   validates_length_of :password, :in => 6..20, :allow_blank => true
-  validates_presence_of :password, :if => :password_required
+  #validates_presence_of :password, :if => :password_required
   validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/
 
   before_save :clear_reset_password_token, :unless => :dont_clear_reset_password_token
-=end  
   after_create :create_root_folder_and_admins_group, :if => :is_admin
   after_create :create_personnal_and_scan_folders
   after_create :create_admin_permissions, :if => :is_admin
@@ -94,8 +92,13 @@ class User < ActiveRecord::Base
   end
   
   def create_personnal_and_scan_folders
-  	self.private_folder = Folder.root.children.create(:name => name+"'s Documents", :private => true)
-    self.scans_folder = Folder.root.children.create(:name => name+"'s Scans", :private => true)
+    p "=========================================================================="
+    p "=========================================================================="
+    p "After create trigger"
+    p "=========================================================================="
+    p "=========================================================================="
+  	self.create_private_folder(name: name+"'s Documents", private: true, parent: Folder.root)
+    self.create_scans_folder(name: name+"'s Scans", private: true, parent: Folder.root)
     save(:validate => false)
   end
 

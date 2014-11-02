@@ -8,6 +8,7 @@
       breadcrumbsRegion : '#page-breadcrumbs-region'
       toolbarRegion     : '#page-toolbar-region'
       contentRegion     : '#page-content-region'
+      #flashRegion       : Marionette.Region.Flashes.extend el: ".flash-region"
 
   class Page.TitleView extends App.Views.ItemView
     template: "page/title_view"

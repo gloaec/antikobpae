@@ -381,6 +381,10 @@ Responsive Utils
         top: 10px;
         left: 14px;
     }
+    .flash-region {
+        margin: -20px -10px 0;
+    }
+    
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
     #page-logo {
@@ -388,6 +392,9 @@ Responsive Utils
         z-index: 99999;
         top: 10px;
         left: 24px;
+    }
+    .flash-region {
+        margin: -20px -20px 0px;
     }
 }
 
@@ -398,6 +405,9 @@ Responsive Utils
         z-index: 99999;
         top: 10px;
         left: 20px;
+    }
+    .flash-region {
+        margin: -25px -20px 20px;
     }
 }
 
@@ -2167,6 +2177,9 @@ select.input-sm {
 }
 .input-group .input-group-addon > i {
   color: #999999;
+}
+.sidebar-search .input-group-btn a.clear .fa {
+    vertical-align: top;
 }
 
 /* Input spinner */

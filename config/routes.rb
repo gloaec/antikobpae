@@ -40,6 +40,10 @@ Antikobpae::Application.routes.draw do
   resources :users, :except => :show
   resources :groups, :except => :show
   
+  resources :users, :only => :create do
+    resources :folders
+  end
+
   resources :clipboard, :only => [:create, :destroy] do
     member do
       post 'copy'

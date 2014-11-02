@@ -48,7 +48,7 @@ class UsersController < ApplicationController
   # Note: @user is set in require_existing_user
   def destroy
     @user.destroy
-    redirect_to users_url
+    respond_with @user
   end
 
   private

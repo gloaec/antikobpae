@@ -18,7 +18,7 @@
         success(model, resp, options) if success
       attributes = @attributes
       attributes = _.pick attributes, @whitelist if @whitelist?
-      attrubutes = _.omit attributes, @blacklist if @blacklist?
+      attributes = _.omit attributes, @blacklist if @blacklist?
       options.data = JSON.stringify _.extend(attributes, attrs)
       options.type = if @get('id')? then "PUT" else "POST"
       options.contentType = "application/json"

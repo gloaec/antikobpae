@@ -45,6 +45,8 @@
 
       @layout = @getLayoutView config
       
+      #App.flashRegion = @layout.flashRegion
+
       @listenTo @layout, "show", =>
         @getTitleView config
         @getBreadcrumbsView config

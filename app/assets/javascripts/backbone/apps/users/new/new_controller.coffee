@@ -25,7 +25,8 @@
     formView: (user, users) ->
       formView = @getFormView user, users
 
-      @listenTo formView, "form:submitted", =>
+      @layout.on "form:submitted", (user) =>
+        formView.trigger "form:submitted", user
 
       @show formView, region: @layout.formRegion
 

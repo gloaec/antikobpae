@@ -11142,7 +11142,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sSearch": "Search:",
+			"sSearch": "<span class='hidden-xs'>Filter </span>",
 	
 	
 			/**
@@ -13016,7 +13016,7 @@
 		 *  @type int
 		 *  @default 10
 		 */
-		"_iDisplayLength": 10,
+		"_iDisplayLength": 50,
 	
 		/**
 		 * Paging start point - aiDisplay index
