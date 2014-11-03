@@ -1,7 +1,7 @@
-@Antikobpae.module "DocumentsApp.Show", (Show, App, Backbone, Marionette, $, _) ->
+@Antikobpae.module "UsersApp.Show", (Show, App, Backbone, Marionette, $, _) ->
 
   class Show.Toolbar extends App.Views.ItemView
-    template: "documents/show/_toolbar"
+    template: "users/show/_toolbar"
     className: "btn-group pull-right"
 
     ui:
@@ -13,12 +13,23 @@
       @ui.buttons.tooltip()
 
 
-  class Show.Document extends App.Views.ItemView
-    template: "documents/show/document"
+  class Show.User extends App.Views.ItemView
+    template: "users/show/user"
 
     bindings:
-      '.name'                 : 'name'
-      '.attachment_file_name' : 'attachment_file_name'
+      '.name'  : 'name'
+      '.email' : 'email'
       
     onRender: ->
       @stickit()
+
+  class Show.UserGroup extends App.Views.ItemView
+    template: "users/show/_group"
+    tagName: "span"
+    className: "btn-checkbox"
+
+  class Show.UserGroups extends App.Views.CollectionView
+    itemView: Show.UserGroup
+
+    itemViewOptions: ->
+      collection: @model.get 'groups'

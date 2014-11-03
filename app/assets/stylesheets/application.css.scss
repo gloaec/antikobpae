@@ -15,6 +15,7 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "font-awesome";
+@import "fontcustom/fontcustom";
 @import "plugins";
 @import "layout";
 @import "default";
@@ -24,8 +25,19 @@
 @import "apps/header";
 @import "apps/footer";
 
-body{
-   background: #eee url(http://subtlepatterns.com/patterns/linedpaper.png);
+body, html, .pagewrap {
+   height: 100%;
+}
+#page-1, #page-2 {
+   min-height: 100%;
+}
+
+body {
+   background: #eee url(/assets/linedpaper.png);
+}
+
+.dataTable {
+    width: 100% !important;
 }
 
 #page-2 {

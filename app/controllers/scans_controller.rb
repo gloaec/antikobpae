@@ -9,17 +9,19 @@ class ScansController < ApplicationController
   before_filter :require_update_permission, :only => [:edit, :update]
   before_filter :require_delete_permission, :only => :destroy
   
+  respond_to :json
+
   def statements
     @folder = current_user.scans_folder
   	@scans = []
     @folder.children.each do |folder|
     	@scans << folder.scan
     end
-    render :json => @scans.to_json(:include => {:scan_files => {:methods => [:count_sources , :count_file_sources, :count_web_sources, :count_recursive_sources]}})
+    respond_with @scans.to_json(:include => {:scan_files => {:methods => [:count_sources , :count_file_sources, :count_web_sources, :count_recursive_sources]}})
   end
   
   def statement 
-    render :json => @scan.to_json(:include => {:scan_files => {:methods => [:count_sources , :count_file_sources, :count_web_sources, :count_recursive_sources]}})
+    respond_with @scan.to_json(:include => {:scan_files => {:methods => [:count_sources , :count_file_sources, :count_web_sources, :count_recursive_sources]}})
   end
 
   def start 
@@ -48,7 +50,7 @@ class ScansController < ApplicationController
     if params[:limit]
       @scans = @scans.first(params[:limit].to_i)
     end
-    render :json => @scans.to_json(
+    respond_with @scans.to_json(
       :methods => [
         :progress,
         :count_documents,

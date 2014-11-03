@@ -17,9 +17,8 @@
         App.vent.trigger "delete:user:clicked", user
 
       @show usersView,
-        loading:
-          entities: users
         page:
+          entities: users
           title: 'Loading'
           breadcrumb:
             icon: 'list'

@@ -28,10 +28,15 @@
         onGet: (value) -> "created #{moment(value).fromNow()}"
 
     events:
+      "click"         : "onUserClicked"
       "click .show"   : -> @trigger "user:clicked", @model
       "click .edit"   : -> @trigger "edit:user:clicked", @model
       "click .delete" : "onDeleteUserClicked" #-> @trigger "delete:user:clicked", @model
       "dblclick .name": "onEditUserNameClicked"
+
+    onUserClicked: (e) ->
+      @model.select()
+      @$el.addClass 'active'
 
     onDeleteUserClicked: (e) =>
       e.stopPropagation()
@@ -58,17 +63,23 @@
     template: "users/list/users"
     itemView: List.User
     emptyView: List.Empty
-    itemViewContainer: "tbody"
+    itemViewContainer: "#users"
 
     ui:
-      "users"  : "#users > table"
+      "users"  : "table"
 
     events:
       "click .new_folder": "newFolder"
+    
+    collectionEvents:
+      'reset': -> alert 'reset'
+      'change': -> alert 'change'
+
+    initialize: ->
+      @render()
 
     newFolder: ->
       @folder = new @collection.model()
-      console.log 'new folder', @folder
       @collection.add @folder
       @render()
 
@@ -82,5 +93,4 @@
           searchPlaceholder: "Filter users..."
           zeroRecords: "No files matching"
         aoColumns: [{sWidth: 1}, {}, {}, {}]
-      @validateit()
 

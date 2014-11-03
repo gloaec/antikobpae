@@ -2,9 +2,10 @@
 
   status_class = (status) ->
     switch status
-      when 1 then 'label-default'
-      when 2 then 'label-info'
-      when 3 then 'bg-green'
+      when -1 then 'label-danger'
+      when 1  then 'label-default'
+      when 2  then 'label-info'
+      when 3  then 'bg-green'
       else 'label-warning hidden'
   
 
@@ -40,9 +41,11 @@
       ".status"       :
         observe: "status"
         onGet: (value) -> switch value
-          when 1 then "Pending"
-          when 2 then "Indexing"
-          when 3 then "Indexed"
+          when -1 then "Error"
+          when 0  then "Uploading"
+          when 1  then "Pending"
+          when 2  then "Indexing"
+          when 3  then "Indexed"
           else 'Unknown'
       ".created_at" :
         observe: "created_at"
@@ -95,9 +98,7 @@
 
     initialize: ->
       @timer = setInterval =>
-        if @collection.getPendingDocuments().isEmpty()
-          clearInterval @timer
-        else
+        unless @collection.getPendingDocuments().isEmpty()
           @collection.fetch reset: false
       , 2000
 

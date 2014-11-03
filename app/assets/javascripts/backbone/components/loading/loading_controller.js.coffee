@@ -5,8 +5,9 @@
     initialize: (options) ->
       { view, config } = options
       
+      return if _.isBoolean(config) and !config
       config = if _.isBoolean(config) then {} else config
-      
+
       _.defaults config,
         loadingType: "spinner"
         entities: @getEntities(view)

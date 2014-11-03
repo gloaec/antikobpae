@@ -37,7 +37,7 @@ Antikobpae::Application.routes.draw do
   match '/typeahead' => 'documents#typeahead'
   match '/search' => 'documents#search'
   
-  resources :users, :except => :show
+  resources :users
   resources :groups, :except => :show
   
   resources :users, :only => :create do

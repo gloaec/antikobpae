@@ -31,6 +31,7 @@ class User < ActiveRecord::Base
   def as_json(options={})
     options = options.merge({})
     json = super(options)
+    json[:member_of_admins] = self.member_of_admins?
     json[:scans_folder] = self.scans_folder.as_json
     json[:private_folder] = self.private_folder.as_json
     json

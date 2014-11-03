@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_filter :require_admin, :except => [:edit, :update]
-  before_filter :require_existing_user, :only => [:edit, :update, :destroy]
+  before_filter :require_existing_user, :only => [:show, :edit, :update, :destroy]
   before_filter :require_deleted_user_isnt_admin, :only => :destroy
 
   respond_to :json
@@ -12,6 +12,7 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    respond_with(@user)
   end
 
   def create
@@ -32,7 +33,13 @@ class UsersController < ApplicationController
   end
 
   # Note: @user is set in require_existing_user
+  def show
+    respond_with(@user.to_json(include: :groups))
+  end
+
+  # Note: @user is set in require_existing_user
   def edit
+    respond_with(@user)
   end
 
   # Note: @user is set in require_existing_user

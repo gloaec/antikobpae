@@ -30,7 +30,7 @@ class Document < ActiveRecord::Base
   validate :check_file
   validates_attachment_presence :attachment, :message => I18n.t(:blank, :scope => [:activerecord, :errors, :messages])
   validates_presence_of [:folder_id, :name]
-  validates_format_of :name, :with => /^[^\/\\\?\*:|"<>]+$/, :message => I18n.t(:invalid_characters, :scope => [:activerecord, :errors, :messages])
+  #validates_format_of :name, :with => /^[^\/\\\?\*:|"<>]+$/, :message => I18n.t(:invalid_characters, :scope => [:activerecord, :errors, :messages])
   validates_format_of :attachment_file_type, :with => %r{^(file|docx|doc|pdf|odt|txt|html|rtf)$}i, :message => I18n.t(:file_format_not_supported)
   validates_uniqueness_of :name, :scope => 'folder_id', :message => I18n.t(:exists_already, :scope => [:activerecord, :errors, :messages])
 
@@ -75,14 +75,25 @@ class Document < ActiveRecord::Base
   end
   
   def process_document
-    puts "==========================================================================="
-    puts "<Document ##{id}> Processing Document..."
-    generate_html
-    generate_txt
-    generate_cut
-    generate_db
-    generate_index
-    puts "==========================================================================="
+    begin
+      puts "==========================================================================="
+      puts "<Document ##{id}> Processing Document..."
+      generate_html
+      generate_txt
+      generate_cut
+      generate_db
+      generate_index
+      puts "==========================================================================="
+    rescue Exception => e
+      self.update_attribute(:status, -1)
+      puts "=> ERROR: #{e.message}"
+      File.open([attachment.path,'html'].join('.'), 'w:UTF-8') do |f|
+        f.puts "<div class='option error'><h1>Uncaught Error</h1>"
+        f.puts "<p>Antikopbae experienced an error processing this document. Here are the details of what when wrong:</p>"
+        f.puts "<h3>#{e.message}</h3>"
+        f.puts "<pre>#{$@.join "\n"}</pre></div>"
+      end
+    end
   end
 
   private 
@@ -93,7 +104,7 @@ class Document < ActiveRecord::Base
   end
   
   def prepare_processing
-    if status < 2
+    if status < 2 and status >= 0
       unless File.exists?(attachment.path)
           FileUtils.mkdir_p File.dirname(attachment.path)
           FileUtils.touch attachment.path
@@ -232,7 +243,9 @@ class Document < ActiveRecord::Base
       doc = Nokogiri::HTML(File.open([attachment.path,'html'].join('.'),'r:UTF-8').read, nil, 'UTF-8')
       
       self.name = title = doc.css('title').inner_text.gsub(/[\/\\\?\*:|"<>]+/, ' ') unless doc.css('title').blank?
-      
+      # FIXME useless ?
+      self.name = title = self.attachment_file_name.truncate(40) if self.name.blank?
+
       count = 1
       until self.folder.documents.find_by_name(self.name).nil? 
         self.name = "#{title} (#{count})"

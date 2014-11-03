@@ -1,4 +1,8 @@
-<a href="/users/new" class="btn btn-fit-height grey-salt">
+<a href="/users/delete" class="btn btn-fit-height btn-danger">
+  <i class="fa fa-trash-o"></i>
+  <span class="hidden-xs">Delete Selected</span>
+</a>
+<a href="/users/new" class="btn btn-fit-height btn-success">
   <i class="fa fa-plus"></i>
   <span class="hidden-xs">New User</span>
 </a>

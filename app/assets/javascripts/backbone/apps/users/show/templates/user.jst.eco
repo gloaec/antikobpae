@@ -10,14 +10,26 @@
         <li><a role="menuitem" tabindex="-1" href="#"><i class="fa fa-file-pdf-o"></i> Download PDF</a></li>
         <li><a role="menuitem" tabindex="-1" href="#"><i class="fa fa-globe"></i> Download HTML</a></li>
         <li class="divider"></li>
-        <li><a role="menuitem" tabindex="-1" href="#"><i class="fa fa-code"></i> Embed document</a></li>
+        <li><a role="menuitem" tabindex="-1" href="#"><i class="fa fa-code"></i> Embed user</a></li>
       </ul>
       <a href="#" class="text-muted"><i class="fa fa-edit"></i></a>
       <a href="#" class="text-muted"><i class="fa fa-times"></i></a>
     </div>
   </span>
 </h3-->
-<% tag = if @text_only then 'pre' else 'div' %>
-<<%= tag %> class="content">
-  <%- @content.text %>
-</<%= tag %>>
+<dl class="dl-horizontal">
+  <dt>Username</dt>
+  <dd><i class="fa fa-tag"></i> <span class="name"></span></dd>
+  <dt>Email</dt>
+  <dd><i class="fa fa-envelope"></i> <span class="email"></span></dd>
+  <dt>Password</dt>
+  <dd><i class="fa fa-key"></i> <span class="password">********</span></dd>
+  <dt>Member of these groups</dt>
+  <dd id="user-groups-region">
+    <ul class="fa-ul">
+      <% for group in @groups: %>
+        <li><i class="fa-li fa fa-group"></i> <%= group.name %></li>
+      <% end %>
+    </ul>
+  </dd>
+</dl>

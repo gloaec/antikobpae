@@ -68,15 +68,16 @@ height="25px" style="z-index: 99999;">
                 currentPage = currentPage ? 0 : 1;
                 classie.addClass( pages[ currentPage ], 'show' );
 
+                Antikobpae.current_user = new
+                Antikobpae.Entities.User(<%= current_user.to_json.html_safe %>);
+                Antikobpae.current_user.set({ authenticity_token: '<%= form_authenticity_token %>' });
+                Antikobpae.start();
+
             }, 2000 );
         }
 
         init();
 
-        Antikobpae.current_user = new
-        Antikobpae.Entities.User(<%= current_user.to_json.html_safe %>);
-        Antikobpae.current_user.set({ authenticity_token: '<%= form_authenticity_token %>' });
-        Antikobpae.start();
     });
 
   <% end %>

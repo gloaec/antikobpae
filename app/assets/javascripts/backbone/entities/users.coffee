@@ -47,7 +47,9 @@
       json
 
     icon: ->
-      if @get 'is_admin' then 'shield' else 'user'
+      if @get 'is_admin' then 'shield'
+      else if @get 'member_of_admins' then 'shield icon-antikobpae'
+      else 'user'
 
   class Entities.UsersCollection extends Entities.Collection
 

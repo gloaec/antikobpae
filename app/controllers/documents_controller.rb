@@ -117,7 +117,7 @@ class DocumentsController < ApplicationController
       @document.attachment_file_type = 'html'
       @document.text_only = false
       uri = URI.parse(URI::escape(@document.attachment_file_name))
-      @document.name = [uri.host,'-',SecureRandom.hex(6)].join 
+      @document.name = @document.attachment_file_name
     end
     
     if @document.save!

@@ -1,35 +1,35 @@
-@Antikobpae.module "DocumentsApp.Show", (Show, App, Backbone, Marionette) ->
+@Antikobpae.module "UsersApp.Show", (Show, App, Backbone, Marionette) ->
 
   class Show.Controller extends App.Controllers.Base
 
     initialize: (options) ->
 
-      if options.document
-        document = options.document
-        document.fetch()
+      if options.user
+        user = options.user
+        user.fetch()
       else
-        document = App.request "document:entity", options.id
+        user = App.request "user:entity", options.id
 
-      documentView = @getDocumentView document
+      userView = @getUserView user
 
-      @show documentView,
+      @show userView,
         loading: true
         page:
-          breadcrumb: document
+          breadcrumb: user
           title: 'Loading...'
           title_attribute: 'name'
           toolbar:
-            view: @toolbarView document
+            view: @toolbarView user
             
 
-    toolbarView: (document) ->
-      toolbarView = @getToolbarView document
+    toolbarView: (user) ->
+      toolbarView = @getToolbarView user
       toolbarView
 
-    getToolbarView: (document) ->
+    getToolbarView: (user) ->
       new Show.Toolbar
-        model: document
+        model: user
 
-    getDocumentView: (document) ->
-      new Show.Document
-        model: document
+    getUserView: (user) ->
+      new Show.User
+        model: user

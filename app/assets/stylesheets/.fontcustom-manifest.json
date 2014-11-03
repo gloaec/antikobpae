@@ -1,0 +1,17 @@
+{
+  "fonts": [
+    "/home/ghis/Workspace/antikobpae/app/assets/stylesheets/fontcustom/fontcustom_e33196ddacb0212d49c2d13a2ff7e793.ttf",
+    "/home/ghis/Workspace/antikobpae/app/assets/stylesheets/fontcustom/fontcustom_e33196ddacb0212d49c2d13a2ff7e793.woff",
+    "/home/ghis/Workspace/antikobpae/app/assets/stylesheets/fontcustom/fontcustom_e33196ddacb0212d49c2d13a2ff7e793.eot",
+    "/home/ghis/Workspace/antikobpae/app/assets/stylesheets/fontcustom/fontcustom_e33196ddacb0212d49c2d13a2ff7e793.svg"
+  ],
+  "templates": [
+    "/home/ghis/Workspace/antikobpae/app/assets/stylesheets/fontcustom/fontcustom.css",
+    "/home/ghis/Workspace/antikobpae/app/assets/stylesheets/fontcustom/fontcustom-preview.html"
+  ],
+  "glyphs": [
+    "pen-circle",
+    "antikobpae",
+    "eole"
+  ]
+}

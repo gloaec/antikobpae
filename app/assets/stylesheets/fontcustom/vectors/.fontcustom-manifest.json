@@ -1,0 +1,15 @@
+{
+  "fonts": [
+    "/home/ghis/Workspace/eole-ead/app/static/fonts/eoleicons_fd536083b379338cef0c2b9e45327116.ttf",
+    "/home/ghis/Workspace/eole-ead/app/static/fonts/eoleicons_fd536083b379338cef0c2b9e45327116.woff",
+    "/home/ghis/Workspace/eole-ead/app/static/fonts/eoleicons_fd536083b379338cef0c2b9e45327116.eot",
+    "/home/ghis/Workspace/eole-ead/app/static/fonts/eoleicons_fd536083b379338cef0c2b9e45327116.svg"
+  ],
+  "templates": [
+    "/home/ghis/Workspace/eole-ead/app/static/css/lib/_eoleicons.scss"
+  ],
+  "glyphs": [
+    "pen-circle",
+    "eole"
+  ]
+}

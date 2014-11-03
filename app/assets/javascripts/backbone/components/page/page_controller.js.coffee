@@ -33,8 +33,9 @@
         title_attribute: 'name'
         subtitle: ""
         breadcrumb: @getEntities(view)
+        entities: if loading.entities? then loading.entities else @getEntities(view)
         debug: false,
-        loading: loading
+        loading: true
         toolbar: false
 
 
@@ -54,7 +55,7 @@
         @getContentView view, config
 
       @show @layout,
-        loading: true
+        loading: if loading? then loading else config.loading
     
     getEntities: (view) ->
       ## return the entities manually set during configuration, or just pull 

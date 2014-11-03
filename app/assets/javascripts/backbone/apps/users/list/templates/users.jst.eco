@@ -1,14 +1,13 @@
-<div id="users" class="anchor">
+<div class="anchor">
   <table class="table table-hover">
     <thead>
       <tr>
         <th></th>
         <th>Username</th>
-        <th>Email</th>
+        <th class="hidden-xs">Email</th>
         <th>Modified</th>
       </tr>
     </thead>
-    <tbody>
-    </tbody>
+    <tbody id="users"></tbody>
   </table>
 </div>

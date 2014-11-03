@@ -8,7 +8,8 @@
       else
         "/documents"
 
-    defaults: {}
+    defaults:
+      status: 0
 
     relations: [
       type: Backbone.One
@@ -55,7 +56,8 @@
 
     getPendingDocuments: ->
       new Entities.DocumentsCollection @filter (document) ->
-        document.get('status') < 3
+        status = document.get('status')
+        status < 3 and status >= 0
 
 
   API =

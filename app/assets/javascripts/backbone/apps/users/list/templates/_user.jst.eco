@@ -1,4 +1,4 @@
-<td data-order="<%= @is_admin %>">
+<td data-order="<%= @icon %>">
   <i class="fa fa-<%= @icon %>"></i>
 </td>
 <td>
@@ -6,7 +6,7 @@
     <span class="name"></span>
   </a>
 </td>
-<td data-order="<%= @email %>">
+<td class="hidden-xs" data-order="<%= @email %>">
   <span class="email"></span>
 </td>
 <td class="text-muted" data-order="<%= +@created_at %>">
@@ -16,9 +16,11 @@
       <a href="/users/<%= @id %>/edit" class="btn grey-salt">
         <i class="fa fa-edit"></i>
       </a>
-      <a href="#/users/<%= @id %>/delete" class="btn red-intense delete">
-        <i class="fa fa-trash-o"></i>
-      </a>
+      <% unless @is_admin: %>
+        <a href="#/users/<%= @id %>/delete" class="btn red-intense delete">
+          <i class="fa fa-trash-o"></i>
+        </a>
+      <% end %>
     </div>
   </div>
 </td>
