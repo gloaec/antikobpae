@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/Empact/pdfjs-rails.git
+  revision: 0ae88c92b0eec3428740c7bc3f31b0942b2042a7
+  specs:
+    pdfjs-rails (0.0.9)
+
+GIT
   remote: git://github.com/onland/ts-delayed-delta.git
   revision: 440b0918b09bad99d3a3a8e135b3647a475b9994
   specs:
@@ -400,6 +406,7 @@ DEPENDENCIES
   parallel
   passenger
   pdf-reader
+  pdfjs-rails!
   plupload-rails
   rails (~> 3.2)
   rake

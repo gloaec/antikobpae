@@ -50,6 +50,7 @@ gem 'plupload-rails'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 gem 'jquery-tmpl-rails'
+gem 'pdfjs-rails', :git => 'git://github.com/Empact/pdfjs-rails.git'
 gem 'color'
 gem 'sprockets'
 

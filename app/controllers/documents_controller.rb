@@ -12,7 +12,7 @@ class DocumentsController < ApplicationController
   before_filter :require_update_permission, :only => [:edit, :update]
   before_filter :require_delete_permission, :only => :destroy
 
-  respond_to :json
+  respond_to :json, :pdf
 
   def index
     @documents = current_user.documents.order("updated_at").limit(params[:limit]).reverse
@@ -21,7 +21,24 @@ class DocumentsController < ApplicationController
 
   # @document and @folder are set in require_existing_file
   def show
-    respond_with(@document, include: [:content])
+    #respond_with(@document, include: [:content])
+    respond_to do |format|
+      format.json do
+        render json: @document, include: [:content]
+      end
+  	  format.pdf do
+        if File.exists? [@document.attachment.path,'pdf'].join('.')
+          if true #Rails.env == :development
+  	  	    send_data File.read([@document.attachment.path,'pdf'].join('.'))
+          else
+  	  	    send_file [@document.attachment.path,'pdf'].join('.'),
+              filename: [File.basename(@document.name,File.extname(@document.name)),'pdf'].join('.')
+          end
+        else
+  	      render :pdf => @document.name, :wkhtmltopdf => AppConfig.wkhtmltopdf_bin
+        end
+      end
+    end
   end
   
   def xmlpipe
@@ -65,9 +82,9 @@ class DocumentsController < ApplicationController
 
   def download
   	respond_to do |format|
-  	  format.orig do
-  	  	send_file [@document.attachment.path,@document.attachment_file_type].join('.'), :filename => [@document.name,@document.attachment_file_type].join('.')
-  	  end
+  	  #format.orig do
+  	  #	send_file [@document.attachment.path,@document.attachment_file_type].join('.'), :filename => [@document.name,@document.attachment_file_type].join('.')
+  	  #end
   	  format.html do
   	  	send_file [@document.attachment.path,'html'].join('.'), :filename => [@document.name,'html'].join('.')
   	  end
@@ -75,7 +92,17 @@ class DocumentsController < ApplicationController
   	  	send_file [@document.attachment.path,'txt'].join('.'), :filename => [@document.name,'txt'].join('.')
   	  end
   	  format.pdf do
-  	    render :pdf => @document.name, :wkhtmltopdf => AppConfig.wkhtmltopdf_bin
+        if File.exists? [@document.attachment.path,'pdf'].join('.')
+          if Rails.env == :development
+  	  	    send_data File.read([@document.attachment.path,'pdf'].join('.')),
+              filename: [File.basename(@document.name,File.extname(@document.name)),'pdf'].join('.')
+          else
+  	  	    send_file [@document.attachment.path,'pdf'].join('.'),
+              filename: [File.basename(@document.name,File.extname(@document.name)),'pdf'].join('.')
+          end
+        else
+  	      render :pdf => @document.name, :wkhtmltopdf => AppConfig.wkhtmltopdf_bin
+        end
   	  end
   	end
     #send_file @document.attachment.path, :filename => @document.attachment_file_name

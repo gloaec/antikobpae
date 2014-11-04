@@ -40,6 +40,7 @@
 //= require plupload.settings
 //= require jquery.plupload.queue
 //= require metronic
+//= require pdf
 //= require_tree ../../../vendor/assets/javascripts
 //= require_tree ./backbone/config
 //= require backbone/app
