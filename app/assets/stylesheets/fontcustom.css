@@ -4,11 +4,11 @@
 
 @font-face {
   font-family: "fontcustom";
-  src: url("/assets/fontcustom/fontcustom_e33196ddacb0212d49c2d13a2ff7e793.eot");
-  src: url("/assets/fontcustom/fontcustom_e33196ddacb0212d49c2d13a2ff7e793.eot?#iefix") format("embedded-opentype"),
-       url("/assets/fontcustom/fontcustom_e33196ddacb0212d49c2d13a2ff7e793.woff") format("woff"),
-       url("/assets/fontcustom/fontcustom_e33196ddacb0212d49c2d13a2ff7e793.ttf") format("truetype"),
-       url("/assets/fontcustom/fontcustom_e33196ddacb0212d49c2d13a2ff7e793.svg#fontcustom") format("svg");
+  src: url("fontcustom_e33196ddacb0212d49c2d13a2ff7e793.eot");
+  src: url("fontcustom_e33196ddacb0212d49c2d13a2ff7e793.eot?#iefix") format("embedded-opentype"),
+       url("fontcustom_e33196ddacb0212d49c2d13a2ff7e793.woff") format("woff"),
+       url("fontcustom_e33196ddacb0212d49c2d13a2ff7e793.ttf") format("truetype"),
+       url("fontcustom_e33196ddacb0212d49c2d13a2ff7e793.svg#fontcustom") format("svg");
   font-weight: normal;
   font-style: normal;
 }

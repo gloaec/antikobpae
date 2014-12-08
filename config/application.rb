@@ -57,6 +57,7 @@ module Antikobpae
     end
     
     config.assets.paths << Rails.root.join("app", "assets", "flashs")
+    #config.assets.paths << Rails.root.join("app", "assets", "fonts")
     config.assets.paths << File.join(Rails.root,'public','javascripts') 
     
     config.jquery_templates.prefix = "templates"
