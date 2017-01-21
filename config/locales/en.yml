@@ -218,6 +218,9 @@
   name: Name
   email: Email
   submit: Submit
+  home: Home
+  documents: Documents
+  admin: Admin
 
   # locales
   en: English

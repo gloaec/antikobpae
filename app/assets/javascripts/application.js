@@ -9,15 +9,9 @@
 //= require jquery-tmpl
 //= require twitter/bootstrap
 //= require_tree ../templates
-//= require plupload
+//= require plupload.dev
 //= require jquery.plupload.queue 
 //= require plupload.settings 
-//= require plupload.flash        
-//= require plupload.silverlight  
-//= require plupload.html4        
-//= require plupload.html5        
-//= require plupload.gears        
-//= require plupload.browserplus
 //= require i18n
 //= require i18n/translations
 //= require_tree .

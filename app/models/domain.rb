@@ -10,7 +10,11 @@ class Domain < ActiveRecord::Base
   accepts_nested_attributes_for :folder
 
   def crawl(seed_uri, path)
-    path_folder = folder.children.find_by_name(path) || folder.children.create(:name => path)
+    if path.empty?
+      path_folder = folder
+    else
+      path_folder = folder.children.find_by_name(path) || folder.children.create(:name => path)
+    end
     uri = nil
 
     begin

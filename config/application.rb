@@ -61,6 +61,19 @@ module AntiKobpae
     
     config.jquery_templates.prefix = "templates"
 
+   config.action_mailer.delivery_method = :smtp
+   config.action_mailer.smtp_settings = {
+     :domain => "gmail.com",
+     :address => 'smtp.gmail.com',
+     :port => 587,
+     :user_name => 'ghis182@gmail.com',
+     :password => 'gl824272',
+     :authentication => 'plain'
+   }
+  config.action_controller.asset_host = 'http://localhost:3000'
+  config.action_mailer.asset_host = config.action_controller.asset_host
+  config.action_mailer.default_url_options = { host: config.action_controller.asset_host }
+  routes.default_url_options = { host: config.action_controller.asset_host }
     
 
     config.yml = OpenStruct.new(YAML.load_file("#{Rails.root}/config/antikobpae.yml")[::Rails.env].symbolize_keys) #OpenStruct.new(YAML.load_file("#{Rails.root}/config/antikobpae.yml")[Rails.env].symbolize_keys) if require 'ostruct'

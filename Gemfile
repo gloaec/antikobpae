@@ -1,16 +1,15 @@
 source 'http://rubygems.org'
 
 gem 'rake'
-gem 'rails', '3.2.0'
+gem 'rails', '3.2.22'
 
 gem 'activesupport'
 gem 'therubyracer'
-gem 'mysql2','0.3.12b4'
+gem 'mysql2', '~> 0.3.10'
 gem 'mongodb'
 gem 'devise'
 gem 'devise_ldap_authenticatable', :path => 'lib/devise_ldap_authenticatable'
-gem 'capistrano'
-gem 'rvm-capistrano'
+gem 'capistrano', '~> 2'
 gem 'capistrano_colors'
 gem 'passenger'
 gem 'rb-readline'
@@ -51,6 +50,7 @@ gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 gem 'jquery-tmpl-rails'
 gem 'color'
+gem 'iconv'
 
 
 group :assets do

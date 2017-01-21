@@ -29,9 +29,10 @@ class Document < ActiveRecord::Base
  
   validate :check_file
   validates_attachment_presence :attachment, :message => I18n.t(:blank, :scope => [:activerecord, :errors, :messages])
+  validates_attachment_content_type :attachment, :content_type => ["text/plain", "text/html"]
   validates_presence_of [:folder_id, :name]
   validates_format_of :name, :with => /^[^\/\\\?\*:|"<>]+$/, :message => I18n.t(:invalid_characters, :scope => [:activerecord, :errors, :messages])
-  validates_format_of :attachment_file_type, :with => %r{^(file|docx|doc|pdf|odt|txt|html|rtf)$}i, :message => I18n.t(:file_format_not_supported)
+  validates_attachment_file_name :attachment, :matches => [/file\Z/,/docx\Z/,/doc\Z/,/pdf\Z/,/odt\Z/,/txt\Z/,/html\Z/,/rtf\Z/], :message => I18n.t(:file_format_not_supported)
   validates_uniqueness_of :name, :scope => 'folder_id', :message => I18n.t(:exists_already, :scope => [:activerecord, :errors, :messages])
 
   after_save :prepare_processing
@@ -110,7 +111,7 @@ class Document < ActiveRecord::Base
         raise EncodeError, [output,'=> `chardet` binaries not found'].join("\n")
       end
     
-      data = /^[^:]+:\s?([^\s]+)\s?\(\s?confidence:\s?([^\)]+\s?)/.match(output)
+      data = /^[^:]+:\s?([^\s]+)\s?with\sconfidence\s?([^\)]+\s?)/.match(output)
     
       raise EncodeError, [output,'=> `chardet` Problem'].join("\n") if data.nil?
       encoding, confidence = ["ISO-8859-2"].include?(data[1]) ? "TIS-620" : data[1], data[2]
@@ -142,14 +143,14 @@ class Document < ActiveRecord::Base
     when 'txt'
       generate_utf8
 	    FileUtils.cp [attachment.path,attachment_file_type].join('.'), [attachment.path,'html'].join('.')
-	  when 'file'
+    when 'file'
       FileUtils.cp attachment.path, [attachment.path,'html'].join('.')
 	  when 'html'  
 	    
 	    #unless self.from == 'web' or
       unless File.exists?([attachment.path,'html'].join('.'))
 	    
-  	require 'open-uri'
+  	    require 'open-uri'
         require 'net/http'
         require 'net/https'
         retry_exceptions = [Timeout::Error, Errno::ETIMEDOUT, Errno::ECONNRESET]
@@ -163,41 +164,41 @@ class Document < ActiveRecord::Base
           uri = URI.parse(CGI.escape(self.attachment_file_name))
         end
         
-  	retries = 3
-  	response = nil
-  	encoding = nil
+  	    retries = 3
+  	    response = nil
+  	    encoding = nil
 
-  	puts "<Document ##{id}> Retrieving contents from: #{self.attachment_file_name}"
+  	    puts "<Document ##{id}> Retrieving contents from: #{self.attachment_file_name}"
 	
-  	begin
-  	    file = open(uri)
-  	    File.open(attachment.path, "wb") do |f|
-  	      f.write file.read
-            end
-        rescue *retry_exceptions => e
-          retries -= 1
-          puts "=> ERROR: #{e.message} - #{retries} retries left"
-          if retries > 0
-            sleep 0.42 and retry
-          else
-            puts "=> ERROR: #{e.message}"
-            File.open(attachment.path, "wb") do |f|
-              f.write "<div class='option error'><h1>WebPage Timeout</h1>"
-              f.write "<p>The server couldn't retrieve this webpage content because is was getting too long..</p></div>"
-            end
-  	        return
-          end
-        rescue *ignore_exceptions => e
-          uri = self.attachment_file_name
-          retries -= 1
-          retry if retries > 1
-  	  puts "=> ERROR: #{e.message}"
-          File.open(attachment.path, "wb") do |f|
-            f.write "<div class='option error'><h1>WebPage Timeout</h1>"
-            f.write "<p>The server couldn't retrieve this webpage content because is was getting too long..</p></div>"
-          end
-  	  return
-  	end
+  	    begin
+  	        file = open(uri)
+  	        File.open(attachment.path, "wb") do |f|
+  	          f.write file.read
+                end
+            rescue *retry_exceptions => e
+              retries -= 1
+              puts "=> ERROR: #{e.message} - #{retries} retries left"
+              if retries > 0
+                sleep 0.42 and retry
+              else
+                puts "=> ERROR: #{e.message}"
+                File.open(attachment.path, "wb") do |f|
+                  f.write "<div class='option error'><h1>WebPage Timeout</h1>"
+                  f.write "<p>The server couldn't retrieve this webpage content because is was getting too long..</p></div>"
+                end
+  	            return
+              end
+            rescue *ignore_exceptions => e
+              uri = self.attachment_file_name
+              retries -= 1
+              retry if retries > 1
+  	      puts "=> ERROR: #{e.message}"
+              File.open(attachment.path, "wb") do |f|
+                f.write "<div class='option error'><h1>WebPage Timeout</h1>"
+                f.write "<p>The server couldn't retrieve this webpage content because is was getting too long..</p></div>"
+              end
+  	      return
+  	    end
       end
       
       file_type = File.extname(self.attachment_file_name)[1..-1]

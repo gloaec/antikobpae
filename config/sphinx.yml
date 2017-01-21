@@ -4,7 +4,7 @@ development:
     - Metadata
   max_matches: 20
   mem_limit: 256M
-  bin_path: '/usr/local/bin'
+  bin_path: /usr/bin/
   searchd_binary_name: searchd
   indexer_binary_name: indexer
   #wordforms: "/full/path/to/wordforms.txt"
