@@ -6,8 +6,8 @@ development:
   reconnect: false
   database: antikobpae_development
   pool: 10
-  username: root
-  password: turtoise
+  username: ""
+  password: ""
   socket: /tmp/mysql.sock
   timeout: 2147483
   wait_timeout: 2147483
@@ -20,8 +20,8 @@ test:
     reconnect: false
     database: antikobpae_test
     pool: 5
-    username: root
-    password: turtoise
+    username: ""
+    password: ""
     socket: /tmp/mysql.sock
     timeout: 10000
     reconnect: true
@@ -32,8 +32,8 @@ production:
     reconnect: false
     database: antikobpae_production
     pool: 5
-    username: root
-    password: turtoise
+    username: ""
+    password: ""
     socket: /tmp/mysql.sock
     timeout: 10000
     reconnect: true
